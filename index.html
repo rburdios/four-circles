@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Four Circles — Design brought into focus</title>
+  <meta name="description" content="Four Circles is a design studio made at the intersection of skill, purpose, and need.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Inter:wght@400;500&family=Merriweather:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="nav" id="top">
+    <div class="nav__inner">
+      <a href="#top" class="nav-brand">
+        <img src="assets/logo-mark.svg" alt="" class="nav-brand__mark">
+        <img src="assets/logo-wordmark.svg" alt="Four Circles" class="nav-brand__word">
+      </a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="#services">What we do</a>
+        <a href="#beliefs">About Us</a>
+        <a href="mailto:hello@fourcircles.com" class="nav-links__cta">Let's Talk</a>
+      </nav>
+
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="top-region">
+      <div class="top-region__bg" aria-hidden="true"></div>
+
+      <section class="hero">
+        <div class="hero__content reveal">
+          <div class="hero__copy">
+            <h1>Design brought<br>into focus</h1>
+            <p>Made at the intersection of skill, purpose, and need.</p>
+          </div>
+          <a href="mailto:hello@fourcircles.com" class="btn-primary">Connect with us</a>
+        </div>
+      </section>
+
+      <section class="services" id="services">
+        <div class="section-heading reveal">
+          <span class="label">What we do</span>
+          <h2>Our services</h2>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal">
+            <img src="assets/icon-digital.png" alt="" class="card__icon">
+            <h3>Digital Experiences</h3>
+            <p>Human-centered experiences that feel intuitive, useful, and distinctly yours.</p>
+            <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Digital Experiences">
+              <img src="assets/icon-arrow.svg" alt="">
+            </a>
+          </article>
+
+          <article class="card reveal">
+            <img src="assets/icon-brand.png" alt="" class="card__icon">
+            <h3>Brand &amp; Identity</h3>
+            <p>Flexible identities built from a clear visual idea and a consistent point of view.</p>
+            <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Brand &amp; Identity">
+              <img src="assets/icon-arrow.svg" alt="">
+            </a>
+          </article>
+
+          <article class="card reveal">
+            <img src="assets/icon-product.png" alt="" class="card__icon">
+            <h3>Product Design</h3>
+            <p>Thoughtful interfaces and systems that make complex tasks feel simple.</p>
+            <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Product Design">
+              <img src="assets/icon-arrow.svg" alt="">
+            </a>
+          </article>
+
+          <article class="card reveal">
+            <img src="assets/icon-creative.png" alt="" class="card__icon">
+            <h3>Creative Systems</h3>
+            <p>Reusable components and scalable patterns that keep every touchpoint connected.</p>
+            <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Creative Systems">
+              <img src="assets/icon-arrow.svg" alt="">
+            </a>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <section class="beliefs" id="beliefs">
+      <img src="assets/circles-graphic.svg" alt="" class="beliefs__graphic">
+
+      <div class="beliefs__inner">
+        <div class="beliefs__heading reveal">
+          <span class="label label--light">Our beliefs</span>
+          <h2>Built on purpose.<br>Driven by creativity.</h2>
+        </div>
+
+        <ul class="beliefs__list reveal">
+          <li>
+            <span class="belief__num" style="color:#fbb360">01. Passion</span>
+            <span class="belief__desc">The intersection between joy and creativity</span>
+          </li>
+          <li>
+            <span class="belief__num" style="color:#99bd95">02. Mission</span>
+            <span class="belief__desc">The convergence purpose, contribution, and fulfilment</span>
+          </li>
+          <li>
+            <span class="belief__num" style="color:#adc2df">03. Vocation</span>
+            <span class="belief__desc">The overlap between what the world needs and our calling</span>
+          </li>
+          <li>
+            <span class="belief__num" style="color:#cbab83">04. Profession</span>
+            <span class="belief__desc">Where different ideas, people, and disciplines overlap</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
