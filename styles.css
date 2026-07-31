@@ -234,6 +234,14 @@ button {
 .top-region__bg {
   position: absolute;
   inset: 0;
+  /* capped and centered at the same max-width as the content container
+     (left:0 + right:0 + max-width + margin:auto is the standard trick
+     for centering an absolutely-positioned box) — on screens wider than
+     that, the photo stops growing and stays centered behind the hero
+     instead of stretching edge-to-edge, so it can never drift into the
+     copy on ultrawide monitors */
+  max-width: var(--container-max);
+  margin: 0 auto;
   background-image: url('assets/hero-glass.png');
   background-size: cover;
   background-position: 68% 42%;
@@ -288,6 +296,20 @@ button {
   font-family: var(--font-body);
   font-size: 16px;
   color: var(--text-black);
+}
+
+.hero__preheader {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  color: var(--text-dark);
+}
+
+.hero__preheader-word {
+  font-weight: 600;
 }
 
 /* =============================================
