@@ -9,20 +9,15 @@
   --text-black: #141414;
   --accent-teal: #0c4459;
   --accent-teal-light: #0f485d;
-  --card-bg-start: rgba(252, 246, 243, 0.6);
-  --card-bg-end: rgba(235, 231, 231, 0.6);
+  --card-bg-start: rgba(255, 255, 255, 0.2);
+  --card-bg-end: rgba(235, 231, 231, 0.2);
   --card-border: #dbd6d6;
-  --dark-bg: #27313d;
-  --belief-passion: #fbb360;
-  --belief-mission: #99bd95;
-  --belief-vocation: #adc2df;
-  --belief-profession: #cbab83;
 
-  /* Shared with the belief colors, aliased for the service icons */
-  --icon-orange: var(--belief-passion);
-  --icon-green: var(--belief-mission);
-  --icon-blue: var(--belief-vocation);
-  --icon-tan: var(--belief-profession);
+  /* Shared brand accent palette, used across the service icons */
+  --icon-orange: #fbb360;
+  --icon-green: #99bd95;
+  --icon-blue: #adc2df;
+  --icon-tan: #cbab83;
   --icon-line: #55534e;
 
   --font-serif: 'Merriweather', Georgia, serif;
@@ -593,84 +588,6 @@ button {
 }
 
 /* =============================================
-   BELIEFS
-   ============================================= */
-.beliefs {
-  position: relative;
-  background: var(--dark-bg);
-  padding: 60px var(--side-padding);
-  overflow: hidden;
-}
-
-.beliefs__graphic {
-  position: absolute;
-  left: -40px;
-  bottom: -90px;
-  width: 480px;
-  max-width: 42vw;
-  transform: rotate(5.74deg);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.beliefs__inner {
-  position: relative;
-  z-index: 1;
-  max-width: var(--container-max);
-  margin: 0 auto;
-  display: flex;
-  gap: 32px;
-  align-items: center;
-}
-
-.beliefs__heading {
-  flex: 1 0 0;
-  min-width: 280px;
-}
-
-.beliefs__heading h2 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 1.4;
-  color: #ffffff;
-}
-
-.beliefs__list {
-  flex: 1.4 0 0;
-  min-width: 320px;
-  display: flex;
-  flex-direction: column;
-}
-
-.beliefs__list li {
-  display: flex;
-  align-items: center;
-  gap: 48px;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.beliefs__list li:last-child {
-  border-bottom: none;
-}
-
-.belief__num {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  width: 165px;
-  flex-shrink: 0;
-}
-
-.belief__desc {
-  font-family: var(--font-sans);
-  font-weight: 300;
-  font-size: 20px;
-  color: #ffffff;
-  flex: 1;
-}
-
-/* =============================================
    SCROLL REVEAL
    ============================================= */
 .reveal-init {
@@ -706,16 +623,6 @@ button {
   .cards {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
-  }
-
-  .beliefs__inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 40px;
-  }
-
-  .beliefs__graphic {
-    max-width: 55vw;
   }
 }
 
@@ -783,38 +690,6 @@ button {
 
   .cards {
     grid-template-columns: 1fr;
-  }
-
-  .beliefs {
-    padding-top: 48px;
-    padding-bottom: 260px;
-  }
-
-  .beliefs__heading h2 {
-    font-size: 28px;
-  }
-
-  .beliefs__list li {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 18px 0;
-  }
-
-  .belief__num {
-    width: auto;
-  }
-
-  .belief__desc {
-    font-size: 17px;
-  }
-
-  .beliefs__graphic {
-    left: 50%;
-    bottom: -70px;
-    transform: translateX(-50%) rotate(5.74deg);
-    max-width: 80vw;
-    width: 340px;
   }
 }
 
