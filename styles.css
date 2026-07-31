@@ -2,23 +2,32 @@
    DESIGN TOKENS
    ============================================= */
 :root {
-  --bg-warm-start: #ead9cf;
-  --bg-warm-end: #f5e7de;
+  --bg-warm-start: #fbf7f2;
+  --bg-warm-end: #f8f2ed;
   --text-dark: #3f3f3f;
   --text-card: #363636;
   --text-black: #141414;
   --accent-teal: #0c4459;
-  --card-bg: #fffbfb;
-  --card-border: #ededed;
+  --accent-teal-light: #0f485d;
+  --card-bg-start: rgba(252, 246, 243, 0.6);
+  --card-bg-end: rgba(235, 231, 231, 0.6);
+  --card-border: #dbd6d6;
   --dark-bg: #27313d;
   --belief-passion: #fbb360;
   --belief-mission: #99bd95;
   --belief-vocation: #adc2df;
   --belief-profession: #cbab83;
 
+  /* Shared with the belief colors, aliased for the service icons */
+  --icon-orange: var(--belief-passion);
+  --icon-green: var(--belief-mission);
+  --icon-blue: var(--belief-vocation);
+  --icon-tan: var(--belief-profession);
+  --icon-line: #55534e;
+
   --font-serif: 'Merriweather', Georgia, serif;
   --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Public Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --side-padding: 140px;
   --container-max: 1440px;
@@ -88,9 +97,9 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-teal);
+  background: linear-gradient(to bottom, var(--accent-teal), var(--accent-teal-light));
   color: #ffffff;
-  font-family: var(--font-body);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   padding: 12px 24px;
   border-radius: 8px;
@@ -110,7 +119,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(269deg, var(--bg-warm-start) 3%, var(--bg-warm-end) 98.5%);
+  background: linear-gradient(176deg, var(--bg-warm-start) 15.5%, var(--bg-warm-end) 85.5%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -209,7 +218,7 @@ button {
    ============================================= */
 .top-region {
   position: relative;
-  background: linear-gradient(269deg, var(--bg-warm-start) 3%, var(--bg-warm-end) 98.5%);
+  background: linear-gradient(176deg, var(--bg-warm-start) 15.5%, var(--bg-warm-end) 85.5%);
   overflow: hidden;
 }
 
@@ -243,7 +252,7 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: 48px;
-  max-width: 762px;
+  max-width: 600px;
 }
 
 .hero__copy {
@@ -253,11 +262,11 @@ button {
 }
 
 .hero__copy h1 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 80px;
-  line-height: 1.1;
-  letter-spacing: 0.5px;
+  font-size: 52px;
+  line-height: 1.15;
+  letter-spacing: 1.04px;
   color: var(--text-dark);
 }
 
@@ -281,8 +290,8 @@ button {
 }
 
 .section-heading h2 {
-  font-family: var(--font-serif);
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-weight: 600;
   font-size: 36px;
   line-height: 1.4;
   color: var(--text-dark);
@@ -295,7 +304,7 @@ button {
 }
 
 .card {
-  background: var(--card-bg);
+  background: linear-gradient(to bottom, var(--card-bg-start), var(--card-bg-end));
   border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 20px 24px 32px;
@@ -303,6 +312,7 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+  box-shadow: 1px 9px 8.3px rgba(0, 0, 0, 0.01), 0 1px 0.1px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
 }
 
@@ -314,19 +324,24 @@ button {
 .card__icon {
   width: 100px;
   height: 100px;
-  object-fit: contain;
   margin: 0 auto 2px;
 }
 
+.service-icon {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
 .card h3 {
-  font-family: var(--font-serif);
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-weight: 600;
   font-size: 20px;
   color: var(--text-card);
 }
 
 .card p {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-weight: 300;
   font-size: 16px;
   line-height: 1.5;
@@ -349,6 +364,350 @@ button {
 
 .card:hover .card__arrow {
   transform: translateX(4px);
+}
+
+/* =============================================
+   SERVICE ICON ANIMATIONS
+
+   Calm, precise entrance + ambient loop system for the four
+   inline service icons. Everything here is driven by two
+   states set on the parent .card by icon-animations.js:
+
+     .is-visible   -> entrance draw-in has been triggered (once)
+     .is-settled   -> entrance finished, "lock-in" moment plays
+     .is-ambient   -> idle loop is allowed to run
+     .is-in-view   -> card is currently on screen (keeps the
+                      idle loop paused off-screen)
+     .is-hover     -> pointer/keyboard focus is on the card
+
+   Base state = "already drawn", so the page never breaks if
+   JS fails to load (progressive enhancement, same pattern as
+   the scroll-reveal system below).
+   ============================================= */
+
+/* icon-defs holds only <linearGradient> stops, never rendered */
+.icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.grad-stop-orange { stop-color: var(--icon-orange); }
+.grad-stop-blue { stop-color: var(--icon-blue); }
+
+/* ---- shared drawable-line primitive ---- */
+.icon-draw {
+  fill: none;
+  stroke: var(--icon-line);
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-opacity: 0.9;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0; /* drawn by default: no-JS / reduced-motion fallback */
+}
+
+/* ---- shared node (dot) primitive ---- */
+.icon-node {
+  fill: var(--icon-line);
+  opacity: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(1);
+}
+
+/* card hover / keyboard focus: a gentle brighten, never a jump */
+.card:hover .icon-draw,
+.card:focus-within .icon-draw {
+  stroke-opacity: 1;
+}
+
+.icon-draw,
+.icon-node {
+  transition: stroke-opacity 0.35s ease, filter 0.35s ease;
+}
+
+/* =============================================
+   ENTRANCE — plays once when a card first enters the viewport
+   ============================================= */
+/* fill-mode "both" (not just "forwards") is the key detail here: it lets
+   the keyframes' own 0% state cover the pre-animation delay, so we never
+   need a separate static opacity/dashoffset fallback on these rules. That
+   matters later — a lock-in or ambient rule on the same element only ever
+   needs to replace the `animation` shorthand to animate a *different*
+   property (a transform bounce, an opacity pulse). When it does, this
+   element's dashoffset/opacity simply falls back to its plain resting
+   CSS (the unconditional base rules below), which is already the correct
+   finished look — instead of getting stuck on a static "undrawn" value
+   that had been living only on this rule. */
+.card.is-visible .icon-draw {
+  animation: icon-draw-in var(--dur, 700ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes icon-draw-in {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+.card.is-visible .icon-node {
+  animation: icon-node-in 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes icon-node-in {
+  from { opacity: 0; transform: scale(0.75); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Digital Experiences: node colors */
+.card[data-icon="digital"] .icon-curve { stroke: url(#grad-digital-curve); }
+
+/* Digital Experiences: one highlight travels the curve once settled,
+   then repeats softly as the ambient loop. Uses offset-path; browsers
+   without support simply never show the dot (icon still reads fine). */
+.icon-pulse-dot {
+  fill: #fff;
+  opacity: 0;
+}
+
+.icon-pulse-dot--digital {
+  offset-path: path('M32,82 C46,96 50,58 66,66 C78,72 74,50 92,44');
+  offset-rotate: 0deg;
+}
+
+.card[data-icon="digital"].is-settled .icon-pulse-dot--digital {
+  animation: icon-digital-pulse-once 900ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+}
+
+@keyframes icon-digital-pulse-once {
+  0% { offset-distance: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+/* =============================================
+   AMBIENT LOOPS — near-imperceptible, paused unless the card
+   is both settled (.is-ambient) and on screen (.is-in-view)
+   ============================================= */
+
+/* --- Digital Experiences: highlight drifts the curve, ~6.5s, with a pause --- */
+.card[data-icon="digital"].is-ambient.is-in-view .icon-pulse-dot--digital {
+  animation: icon-digital-pulse-loop 6.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes icon-digital-pulse-loop {
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 0.9; }
+  62% { offset-distance: 100%; opacity: 0.9; }
+  70% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.card[data-icon="digital"].is-ambient.is-in-view .icon-node {
+  animation: icon-digital-node-glow 6.5s ease-in-out infinite;
+}
+
+.card[data-icon="digital"].is-ambient.is-in-view .icon-node--start {
+  animation-delay: 0s;
+}
+
+.card[data-icon="digital"].is-ambient.is-in-view .icon-node--end {
+  animation-delay: 4.03s; /* ~62% of loop, when the highlight passes it */
+}
+
+@keyframes icon-digital-node-glow {
+  0%, 92%, 100% { filter: brightness(1); }
+  4% { filter: brightness(1.35); }
+}
+
+/* --- Brand & Identity --- */
+.card[data-icon="brand"] .icon-loop--1 { stroke: var(--icon-orange); }
+.card[data-icon="brand"] .icon-loop--2 { stroke: var(--icon-green); }
+.card[data-icon="brand"] .icon-loop--3 { stroke: var(--icon-blue); }
+.card[data-icon="brand"] .icon-loop--4 { stroke: var(--icon-tan); }
+
+.card[data-icon="brand"] .icon-center {
+  fill: none;
+  stroke: var(--icon-line);
+  stroke-width: 1.6;
+  opacity: 1;
+  /* the diamond is a plain square rotated via CSS transform (not the SVG
+     transform attribute) so it can share a transform chain with the
+     scale keyframes below without one silently overriding the other */
+  transform: rotate(45deg) scale(1);
+}
+
+/* center: fades/scales in first, then a tiny settle once loops resolve */
+.card[data-icon="brand"].is-visible .icon-center {
+  animation: icon-brand-center-in 1710ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes icon-brand-center-in {
+  0% { opacity: 0; transform: rotate(45deg) scale(0.85); }
+  24% { opacity: 1; transform: rotate(45deg) scale(1); }
+  88% { opacity: 1; transform: rotate(45deg) scale(1); }
+  94% { transform: rotate(45deg) scale(1.03); }
+  100% { transform: rotate(45deg) scale(1); }
+}
+
+/* ambient: gentle emphasis passes clockwise through the four loops.
+   Equal duration + staggered delay keeps the four loops permanently
+   out of phase, so the "pass" keeps traveling clockwise forever. */
+.card[data-icon="brand"].is-ambient.is-in-view .icon-loop--1 { animation: icon-loop-emphasis 7.5s ease-in-out infinite; }
+.card[data-icon="brand"].is-ambient.is-in-view .icon-loop--2 { animation: icon-loop-emphasis 7.5s ease-in-out infinite; animation-delay: 1.875s; }
+.card[data-icon="brand"].is-ambient.is-in-view .icon-loop--3 { animation: icon-loop-emphasis 7.5s ease-in-out infinite; animation-delay: 3.75s; }
+.card[data-icon="brand"].is-ambient.is-in-view .icon-loop--4 { animation: icon-loop-emphasis 7.5s ease-in-out infinite; animation-delay: 5.625s; }
+
+@keyframes icon-loop-emphasis {
+  0%, 82%, 100% { stroke-opacity: 0.9; filter: saturate(1); }
+  8% { stroke-opacity: 1; filter: saturate(1.1); }
+}
+
+/* --- Product Design --- */
+.card[data-icon="product"] .icon-spoke--a,
+.card[data-icon="product"] .icon-node--a { stroke: var(--icon-tan); fill: var(--icon-tan); }
+.card[data-icon="product"] .icon-spoke--b,
+.card[data-icon="product"] .icon-node--b { stroke: var(--icon-orange); fill: var(--icon-orange); }
+.card[data-icon="product"] .icon-spoke--c,
+.card[data-icon="product"] .icon-node--c { stroke: var(--icon-blue); fill: var(--icon-blue); }
+
+/* lock-in: ring contracts slightly, spokes brighten briefly, once settled */
+.card[data-icon="product"].is-settled .icon-ring {
+  animation: icon-ring-lock-in 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes icon-ring-lock-in {
+  0% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.card[data-icon="product"].is-settled .icon-spoke {
+  animation: icon-spoke-lock-in 500ms ease-out both;
+}
+
+@keyframes icon-spoke-lock-in {
+  0% { stroke-opacity: 0.9; }
+  35% { stroke-opacity: 1; }
+  100% { stroke-opacity: 0.9; }
+}
+
+/* ambient: a subtle pulse moves from center to one node at a time,
+   rotating across loops (same phase-offset technique as Brand) */
+.card[data-icon="product"].is-ambient.is-in-view .icon-spoke--a { animation: icon-spoke-pulse 6s ease-in-out infinite; }
+.card[data-icon="product"].is-ambient.is-in-view .icon-spoke--b { animation: icon-spoke-pulse 6s ease-in-out infinite; animation-delay: 2s; }
+.card[data-icon="product"].is-ambient.is-in-view .icon-spoke--c { animation: icon-spoke-pulse 6s ease-in-out infinite; animation-delay: 4s; }
+
+@keyframes icon-spoke-pulse {
+  0%, 78%, 100% { stroke-opacity: 0.85; }
+  10% { stroke-opacity: 1; }
+}
+
+.card[data-icon="product"].is-ambient.is-in-view .icon-node--a { animation: icon-node-pulse 6s ease-in-out infinite; }
+.card[data-icon="product"].is-ambient.is-in-view .icon-node--b { animation: icon-node-pulse 6s ease-in-out infinite; animation-delay: 2s; }
+.card[data-icon="product"].is-ambient.is-in-view .icon-node--c { animation: icon-node-pulse 6s ease-in-out infinite; animation-delay: 4s; }
+
+@keyframes icon-node-pulse {
+  0%, 78%, 100% { filter: brightness(1); }
+  10% { filter: brightness(1.25); }
+}
+
+/* --- Creative Systems --- */
+.card[data-icon="creative"] .icon-dot { fill: var(--icon-line); }
+.card[data-icon="creative"] .icon-ripple--orange { stroke: var(--icon-orange); }
+.card[data-icon="creative"] .icon-ripple--gold { stroke: var(--icon-tan); }
+.card[data-icon="creative"] .icon-ripple--blue { stroke: var(--icon-blue); }
+
+.card[data-icon="creative"].is-visible .icon-dot {
+  animation: icon-creative-dot-in 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes icon-creative-dot-in {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* finishing touch: every ring briefly brightens together, then settles */
+.card[data-icon="creative"].is-settled .icon-ripple {
+  animation: icon-ripple-flash 500ms ease-out both;
+}
+
+@keyframes icon-ripple-flash {
+  0% { stroke-opacity: 0.9; }
+  40% { stroke-opacity: 1; }
+  100% { stroke-opacity: 0.9; }
+}
+
+/* ambient: one slow ripple — center grows a touch, then the emphasis
+   travels outward ring by ring, with a pause before it repeats */
+.card[data-icon="creative"].is-ambient.is-in-view .icon-dot {
+  animation: icon-dot-ripple 7.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes icon-dot-ripple {
+  0%, 78%, 100% { transform: scale(1); }
+  6% { transform: scale(1.08); }
+  14% { transform: scale(1); }
+}
+
+.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple {
+  animation: icon-ripple-ripple 7.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* inner ring segments (first in the DOM) brighten earliest */
+.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple:nth-of-type(-n+3) { animation-delay: 0.1s; }
+.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple:nth-of-type(n+4):nth-of-type(-n+6) { animation-delay: 0.35s; }
+.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple:nth-of-type(n+7):nth-of-type(-n+9) { animation-delay: 0.6s; }
+.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple:nth-of-type(n+10) { animation-delay: 0.85s; }
+
+@keyframes icon-ripple-ripple {
+  0%, 70%, 100% { stroke-opacity: 0.85; }
+  15% { stroke-opacity: 1; }
+}
+
+/* =============================================
+   HOVER / FOCUS — shortened ambient replay, added by JS as
+   .is-hover-pulse and removed automatically. Kept separate
+   from the card's own translateY hover motion.
+   ============================================= */
+.card.is-hover-pulse[data-icon="digital"] .icon-pulse-dot--digital {
+  animation: icon-digital-pulse-once 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.card.is-hover-pulse[data-icon="brand"] .icon-loop {
+  animation: icon-loop-emphasis 900ms ease-in-out both;
+}
+
+.card.is-hover-pulse[data-icon="product"] .icon-spoke,
+.card.is-hover-pulse[data-icon="product"] .icon-node {
+  animation: icon-spoke-pulse 800ms ease-in-out both;
+}
+
+.card.is-hover-pulse[data-icon="creative"] .icon-ripple {
+  animation: icon-ripple-flash 700ms ease-out both;
+}
+
+/* =============================================
+   REDUCED MOTION — show the finished icon immediately, no
+   loops, only a gentle opacity change remains on hover/focus
+   ============================================= */
+@media (prefers-reduced-motion: reduce) {
+  .icon-draw,
+  .icon-node,
+  .icon-pulse-dot,
+  .icon-dot {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  /* the diamond keeps its 45deg rotation — only the scale/settle motion is dropped */
+  .icon-center {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: rotate(45deg) !important;
+    filter: none !important;
+  }
+
+  .icon-pulse-dot { opacity: 0 !important; }
 }
 
 /* =============================================
@@ -451,10 +810,6 @@ button {
   :root {
     --side-padding: 64px;
   }
-
-  .hero__copy h1 {
-    font-size: 64px;
-  }
 }
 
 @media (max-width: 1080px) {
@@ -463,7 +818,7 @@ button {
   }
 
   .hero__copy h1 {
-    font-size: 52px;
+    font-size: 44px;
   }
 
   .cards {

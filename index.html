@@ -7,10 +7,20 @@
   <meta name="description" content="Four Circles is a design studio made at the intersection of skill, purpose, and need.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Inter:wght@400;500&family=Merriweather:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Inter:wght@400;500&family=Public+Sans:wght@300;400;500&family=Merriweather:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <!-- Shared SVG defs (gradients reused by inline icons below) -->
+  <svg class="icon-defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <linearGradient id="grad-digital-curve" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" class="grad-stop-orange"></stop>
+        <stop offset="100%" class="grad-stop-blue"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
 
   <header class="nav" id="top">
     <div class="nav__inner">
@@ -40,8 +50,8 @@
       <section class="hero">
         <div class="hero__content reveal">
           <div class="hero__copy">
-            <h1>Design brought<br>into focus</h1>
-            <p>Made at the intersection of skill, purpose, and need.</p>
+            <h1>We make design complexity look easy</h1>
+            <p>Through brand, product, and digital design, we turn scattered inputs into clear, cohesive experiences.</p>
           </div>
           <a href="mailto:hello@fourcircles.com" class="btn-primary">Connect with us</a>
         </div>
@@ -54,8 +64,21 @@
         </div>
 
         <div class="cards">
-          <article class="card reveal">
-            <img src="assets/icon-digital.png" alt="" class="card__icon">
+          <article class="card reveal" data-icon="digital">
+            <div class="card__icon">
+              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- 1. frame draws first, corner to corner, ~700ms (path, not rect:
+                     pathLength on non-path shapes is unreliable in older Safari) -->
+                <path class="icon-draw icon-frame" d="M30,28 H90 A16,16 0 0 1 106,44 V76 A16,16 0 0 1 90,92 H30 A16,16 0 0 1 14,76 V44 A16,16 0 0 1 30,28 Z" pathLength="1" style="--delay:0ms;--dur:700ms"></path>
+                <!-- 2. journey curve draws left-to-right after the frame, ~750ms -->
+                <path class="icon-draw icon-curve" d="M32,82 C46,96 50,58 66,66 C78,72 74,50 92,44" pathLength="1" style="--delay:700ms;--dur:750ms"></path>
+                <!-- 3. nodes reveal only once the curve reaches them -->
+                <circle class="icon-node icon-node--start" cx="32" cy="82" r="3.4" style="--delay:760ms;fill:var(--icon-orange)"></circle>
+                <circle class="icon-node icon-node--end" cx="92" cy="44" r="3.4" style="--delay:1430ms;fill:var(--icon-blue)"></circle>
+                <!-- 4. one highlight travels the path once entrance settles, then loops gently -->
+                <circle class="icon-pulse-dot icon-pulse-dot--digital" r="2.6"></circle>
+              </svg>
+            </div>
             <h3>Digital Experiences</h3>
             <p>Human-centered experiences that feel intuitive, useful, and distinctly yours.</p>
             <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Digital Experiences">
@@ -63,8 +86,19 @@
             </a>
           </article>
 
-          <article class="card reveal">
-            <img src="assets/icon-brand.png" alt="" class="card__icon">
+          <article class="card reveal" data-icon="brand">
+            <div class="card__icon">
+              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- 1. four loops draw one at a time, clockwise from top-left, ~120ms apart
+                     (paths, not circles: pathLength on <circle> is unreliable in older Safari) -->
+                <path class="icon-draw icon-loop icon-loop--1" d="M24,48 A24,24 0 1 1 72,48 A24,24 0 1 1 24,48" pathLength="1" style="--delay:400ms;--dur:600ms"></path>
+                <path class="icon-draw icon-loop icon-loop--2" d="M48,48 A24,24 0 1 1 96,48 A24,24 0 1 1 48,48" pathLength="1" style="--delay:520ms;--dur:600ms"></path>
+                <path class="icon-draw icon-loop icon-loop--3" d="M48,72 A24,24 0 1 1 96,72 A24,24 0 1 1 48,72" pathLength="1" style="--delay:640ms;--dur:600ms"></path>
+                <path class="icon-draw icon-loop icon-loop--4" d="M24,72 A24,24 0 1 1 72,72 A24,24 0 1 1 24,72" pathLength="1" style="--delay:760ms;--dur:600ms"></path>
+                <!-- 2. center diamond fades in first and settles once all loops resolve -->
+                <rect class="icon-node icon-center" x="55" y="55" width="10" height="10"></rect>
+              </svg>
+            </div>
             <h3>Brand &amp; Identity</h3>
             <p>Flexible identities built from a clear visual idea and a consistent point of view.</p>
             <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Brand &amp; Identity">
@@ -72,8 +106,24 @@
             </a>
           </article>
 
-          <article class="card reveal">
-            <img src="assets/icon-product.png" alt="" class="card__icon">
+          <article class="card reveal" data-icon="product">
+            <div class="card__icon">
+              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- 1. outer structure (path, not rect: see Digital Experiences note) -->
+                <path class="icon-draw icon-frame" d="M36,18 H84 A18,18 0 0 1 102,36 V84 A18,18 0 0 1 84,102 H36 A18,18 0 0 1 18,84 V36 A18,18 0 0 1 36,18 Z" pathLength="1" style="--delay:0ms;--dur:650ms"></path>
+                <!-- 2. central ring + core (path, not circle: see Brand & Identity note) -->
+                <path class="icon-draw icon-ring" d="M46,60 A14,14 0 1 1 74,60 A14,14 0 1 1 46,60" pathLength="1" style="--delay:650ms;--dur:450ms"></path>
+                <circle class="icon-node icon-core" cx="60" cy="60" r="4.5" style="--delay:900ms"></circle>
+                <!-- 3. connecting spokes draw outward, staggered ~100ms (path, not line: see note above) -->
+                <path class="icon-draw icon-spoke icon-spoke--a" d="M60,60 L90,26" pathLength="1" style="--delay:1100ms;--dur:350ms"></path>
+                <path class="icon-draw icon-spoke icon-spoke--b" d="M60,60 L90,92" pathLength="1" style="--delay:1200ms;--dur:350ms"></path>
+                <path class="icon-draw icon-spoke icon-spoke--c" d="M60,60 L28,90" pathLength="1" style="--delay:1300ms;--dur:350ms"></path>
+                <!-- 4. anchor nodes reveal as each spoke arrives -->
+                <circle class="icon-node icon-node--a" cx="90" cy="26" r="3.2" style="--delay:1350ms"></circle>
+                <circle class="icon-node icon-node--b" cx="90" cy="92" r="3.2" style="--delay:1450ms"></circle>
+                <circle class="icon-node icon-node--c" cx="28" cy="90" r="3.2" style="--delay:1550ms"></circle>
+              </svg>
+            </div>
             <h3>Product Design</h3>
             <p>Thoughtful interfaces and systems that make complex tasks feel simple.</p>
             <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Product Design">
@@ -81,8 +131,29 @@
             </a>
           </article>
 
-          <article class="card reveal">
-            <img src="assets/icon-creative.png" alt="" class="card__icon">
+          <article class="card reveal" data-icon="creative">
+            <div class="card__icon">
+              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- 1. the foundational decision: one dot, first -->
+                <circle class="icon-node icon-dot" cx="60" cy="62" r="4.5"></circle>
+                <!-- 2. ripple rings draw outward, ring by ring, segments staggered ~80ms -->
+                <path class="icon-draw icon-ripple" d="M73.79,63.04 A14,6 0 0 1 60.0,68.0" pathLength="1" style="--delay:350ms;--dur:400ms"></path>
+                <path class="icon-draw icon-ripple" d="M51.0,66.6 A14,6 0 0 1 47.88,59.0" pathLength="1" style="--delay:430ms;--dur:400ms"></path>
+                <path class="icon-draw icon-ripple" d="M55.21,56.36 A14,6 0 0 1 72.12,59.0" pathLength="1" style="--delay:510ms;--dur:400ms"></path>
+
+                <path class="icon-draw icon-ripple" d="M83.64,63.74 A24,10 0 0 1 60.0,72.0" pathLength="1" style="--delay:590ms;--dur:420ms"></path>
+                <path class="icon-draw icon-ripple icon-ripple--orange" d="M44.57,69.66 A24,10 0 0 1 39.22,57.0" pathLength="1" style="--delay:670ms;--dur:420ms"></path>
+                <path class="icon-draw icon-ripple" d="M51.79,52.6 A24,10 0 0 1 80.78,57.0" pathLength="1" style="--delay:750ms;--dur:420ms"></path>
+
+                <path class="icon-draw icon-ripple icon-ripple--gold" d="M93.48,64.43 A34,14 0 0 1 60.0,76.0" pathLength="1" style="--delay:830ms;--dur:440ms"></path>
+                <path class="icon-draw icon-ripple" d="M38.15,72.72 A34,14 0 0 1 30.56,55.0" pathLength="1" style="--delay:910ms;--dur:440ms"></path>
+                <path class="icon-draw icon-ripple" d="M48.37,48.84 A34,14 0 0 1 89.44,55.0" pathLength="1" style="--delay:990ms;--dur:440ms"></path>
+
+                <path class="icon-draw icon-ripple icon-ripple--blue" d="M105.3,65.3 A46,19 0 0 1 60.0,81.0" pathLength="1" style="--delay:1070ms;--dur:460ms"></path>
+                <path class="icon-draw icon-ripple" d="M30.43,76.55 A46,19 0 0 1 20.16,52.5" pathLength="1" style="--delay:1150ms;--dur:460ms"></path>
+                <path class="icon-draw icon-ripple" d="M44.27,44.15 A46,19 0 0 1 99.84,52.5" pathLength="1" style="--delay:1230ms;--dur:460ms"></path>
+              </svg>
+            </div>
             <h3>Creative Systems</h3>
             <p>Reusable components and scalable patterns that keep every touchpoint connected.</p>
             <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Creative Systems">
