@@ -115,20 +115,14 @@ button {
 /* =============================================
    NAVIGATION
    ============================================= */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: linear-gradient(176deg, var(--bg-warm-start) 15.5%, var(--bg-warm-end) 85.5%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
+/* position/z-index come from ".top-region .nav" below — this rule sits
+   inside .top-region so it renders transparently over the hero photo,
+   matching the Figma design, instead of its own solid bar. */
 .nav__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px var(--side-padding);
+  padding: 20px var(--side-padding) 0;
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -242,7 +236,7 @@ button {
    HERO
    ============================================= */
 .hero {
-  padding: 48px var(--side-padding) 60px;
+  padding: 24px var(--side-padding) 60px;
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -732,8 +726,8 @@ button {
 
   .nav-links {
     position: fixed;
-    inset: 72px 0 0 0;
-    height: calc(100vh - 72px);
+    inset: 80px 0 0 0;
+    height: calc(100vh - 80px);
     background: var(--bg-warm-end);
     flex-direction: column;
     justify-content: flex-start;
