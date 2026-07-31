@@ -221,64 +221,29 @@ button {
 }
 
 /* =============================================
-   TOP REGION (nav + hero share this background layer)
-
-   Scoped to nav + hero only — not services below — so the lens artwork
-   can be vertically centered against a bounded, sensible height
-   instead of guessing where the "middle" of the whole page is.
+   TOP REGION (Hero + Services share the warm bg)
    ============================================= */
 .top-region {
   position: relative;
   background: linear-gradient(176deg, var(--bg-warm-start) 15.5%, var(--bg-warm-end) 85.5%);
-  /* deliberately NOT overflow:hidden here: nav lives directly inside
-     this element and needs position:sticky, which silently breaks on
-     any ancestor with non-visible overflow (see the html/body note
-     above this file — same trap). .top-region__bg clips itself
-     instead, since it's a sibling of nav, not an ancestor of it. */
+  /* no overflow:hidden here — .top-region__bg is already inset:0-bounded to
+     this box, and overflow on an ancestor is a common way to silently
+     break position:sticky on the nav living inside it */
 }
 
-/* The artwork sits in its own absolutely-positioned, WIDTH-CAPPED box
-   rather than filling the entire hero with background-size:cover —
-   cover-ing the full viewport width is exactly what let the lenses
-   balloon and drift on ultrawide screens. But the box itself still
-   uses object-fit:cover internally (not a fixed-aspect <img>), so the
-   photo fills that box completely with no hard rectangular edge where
-   its own background would otherwise show a seam against the page
-   gradient — only the BOX is capped and right-anchored, not the image's
-   natural size. */
 .top-region__bg {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  background-image: url('assets/hero-glass.png');
+  background-size: cover;
+  background-position: 68% 42%;
   z-index: 0;
-  pointer-events: none;
 }
 
-.top-region__bg-img {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  /* anchors to the right edge of a centered max-width container, not
-     the raw viewport edge — on an ultrawide monitor this keeps the
-     lenses near the copy instead of drifting toward the far edge of
-     the screen, with extra background revealed outside the container */
-  right: max(0px, calc((100vw - var(--container-max)) / 2));
-  /* 43vw lands at ~620px right around the 1440px container-max itself,
-     so once the container stops growing (viewport > 1440px) this is
-     already effectively capped at its max — the clamp's ceiling is a
-     deliberate backstop, not the only thing doing the work */
-  width: clamp(480px, 43vw, 620px);
-  height: 100%;
-  object-fit: cover;
-  object-position: 70% center;
-  /* feathers the image's own left edge into transparency so the page's
-     gradient shows through underneath instead of a hard rectangular
-     seam — the old full-bleed background-size:cover never needed this
-     because the photo extended edge-to-edge across the whole hero;
-     capping its width (the fix for the ultrawide growth problem) means
-     it now has a real edge that has to blend on its own */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 18%);
-  mask-image: linear-gradient(to right, transparent 0%, black 18%);
+.top-region .hero,
+.top-region .services {
+  position: relative;
+  z-index: 1;
 }
 
 .top-region .nav {
@@ -291,29 +256,12 @@ button {
    HERO
    ============================================= */
 .hero {
-  position: relative;
-  z-index: 1;
   padding: 8px var(--side-padding) 60px;
   max-width: var(--container-max);
   margin: 0 auto;
 }
 
-/* Soft readability fade behind the copy, in the site's own background
-   color — not a hard white rectangle and not a dimmed-down photo — for
-   the breakpoints where the converging lines pass behind the text. */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: min(60%, 760px);
-  background: linear-gradient(90deg, var(--bg-warm-start) 0%, rgba(251, 247, 242, 0.85) 62%, rgba(251, 247, 242, 0) 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-
 .hero__content {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -346,14 +294,7 @@ button {
    SERVICES
    ============================================= */
 .services {
-  /* .top-region now wraps only nav + hero (see the hero art comment
-     above), so services carries the tail end of that same gradient
-     itself, keeping the page reading as one continuous background. */
-  background: var(--bg-warm-end);
   padding: 60px var(--side-padding) 100px;
-}
-
-.services__inner {
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -374,9 +315,6 @@ button {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  /* keeps each card at its own natural height when one expands, instead
-     of the grid stretching every sibling in the row to match it */
-  align-items: start;
 }
 
 .card {
@@ -424,269 +362,22 @@ button {
   color: var(--text-card);
 }
 
-/* =============================================
-   EXPANDABLE SERVICE CARDS
-
-   Each card's collapsed state (icon, title, description, toggle) never
-   changes size. The extra layer — overview, deliverables, problem
-   solved, CTA — lives in .card__panel and expands in place using a
-   grid-template-rows 0fr -> 1fr transition, which animates smoothly to
-   the content's natural height without JS ever measuring pixels.
-
-   ".cards { align-items: start }" (below, in the grid rule) is the
-   detail that keeps this civil on desktop: without it, a 4-column grid
-   row stretches every sibling to match its tallest cell, so opening
-   one card would visually inflate the other three to match. With it,
-   each card keeps its own natural height and the row simply reserves
-   room for whichever card is tallest.
-   ============================================= */
-.card__toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.card__arrow {
   margin-top: 14px;
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--accent-teal);
-}
-
-.card__toggle-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--accent-teal);
-  flex-shrink: 0;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
-}
-
-.card__toggle-icon svg {
-  stroke: #ffffff;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.card:hover .card__toggle-icon,
-.card__toggle:focus-visible .card__toggle-icon {
-  transform: translateX(3px);
-}
-
-/* open state: the plus rotates into an "x" rather than swapping icons */
-.card.is-open .card__toggle-icon svg {
-  transform: rotate(45deg);
-}
-
-.card.is-open .card__toggle-icon {
-  transform: none;
-}
-
-.card__panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  width: 100%;
-  transition: grid-template-rows 480ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.card.is-open .card__panel {
-  grid-template-rows: 1fr;
-}
-
-.card__panel-inner {
   overflow: hidden;
-  min-height: 0;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1), transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.25s ease;
 }
 
-.card.is-open .card__panel-inner {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 80ms; /* let the height start moving first, then fade content in */
+.card__arrow img {
+  width: 100%;
+  height: 100%;
 }
 
-.card__panel-block {
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.card__panel-block p {
-  font-family: var(--font-body);
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--text-card);
-}
-
-.card__panel-label {
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--accent-teal);
-}
-
-.card__panel-list {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.card__panel-list li {
-  position: relative;
-  padding-left: 14px;
-  font-family: var(--font-body);
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text-card);
-}
-
-.card__panel-list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 9px;
-  width: 5px;
-  height: 1px;
-  background: var(--icon-line);
-}
-
-.card__cta {
-  margin-top: 22px;
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--accent-teal);
-  transition: transform 0.25s ease, color 0.25s ease;
-}
-
-.card__cta:hover,
-.card__cta:focus-visible {
-  transform: translateX(3px);
-  color: var(--accent-teal-light);
-}
-
-/* active-card styling: restrained, no bright outline or saturated fill */
-.card.is-open {
-  border-color: #c9c2b9;
-  background: linear-gradient(to bottom, #ffffff, #f3f0eb);
-  box-shadow: 0 18px 36px rgba(63, 63, 63, 0.08);
-}
-
-.card.is-open .icon-draw {
-  stroke-opacity: 1;
-}
-
-.card.is-open .card__toggle {
-  color: var(--accent-teal-light);
-}
-
-/* =============================================
-   CONTACT
-   ============================================= */
-.contact {
-  background: #ffffff;
-  padding: 80px var(--side-padding) 100px;
-}
-
-.contact__inner {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(240px, 360px) 1fr;
-  gap: 64px;
-  align-items: start;
-}
-
-.contact__heading h2 {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 32px;
-  line-height: 1.25;
-  color: var(--text-dark);
-  margin: 8px 0 12px;
-}
-
-.contact__heading p {
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text-card);
-  max-width: 320px;
-}
-
-.contact__form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  max-width: 560px;
-}
-
-.form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-row label {
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  color: var(--text-dark);
-}
-
-.form-row input,
-.form-row select,
-.form-row textarea {
-  font-family: var(--font-body);
-  font-size: 15px;
-  color: var(--text-dark);
-  background: var(--bg-warm-end);
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-  padding: 12px 14px;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.form-row input:focus,
-.form-row select:focus,
-.form-row textarea:focus {
-  outline: none;
-  border-color: var(--accent-teal);
-  box-shadow: 0 0 0 3px rgba(12, 68, 89, 0.12);
-}
-
-.form-row textarea {
-  resize: vertical;
-  min-height: 96px;
-}
-
-.contact__submit {
-  align-self: flex-start;
-  margin-top: 4px;
-}
-
-.contact__note {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--text-card);
-  opacity: 0.7;
+.card:hover .card__arrow {
+  transform: translateX(4px);
 }
 
 /* =============================================
@@ -919,15 +610,6 @@ button {
   }
 
   .icon-pulse-dot { opacity: 0 !important; }
-
-  /* expanded content still reveals — it just doesn't animate height/
-     opacity/position to get there */
-  .card__panel,
-  .card__panel-inner,
-  .card__toggle-icon,
-  .card__toggle-icon svg {
-    transition: none !important;
-  }
 }
 
 /* =============================================
@@ -948,28 +630,9 @@ button {
 /* =============================================
    RESPONSIVE
    ============================================= */
-/* Ultrawide: the clamp() on .top-region__bg-img already stops the
-   artwork from growing past ~620px, but this breakpoint makes that
-   explicit and keeps the whole hero composition (not just the image)
-   from feeling like it's just been stretched to fill the screen. */
-@media (min-width: 1800px) {
-  .top-region__bg-img {
-    width: 620px;
-  }
-}
-
 @media (max-width: 1280px) {
   :root {
     --side-padding: 64px;
-  }
-}
-
-/* Mid-size desktop / tablet: give the artwork more room to move right
-   and shrink into before it risks touching the copy, rather than
-   hiding it outright. */
-@media (max-width: 1200px) {
-  .top-region__bg-img {
-    width: clamp(420px, 40vw, 560px);
   }
 }
 
@@ -980,18 +643,6 @@ button {
 
   .hero__copy h1 {
     font-size: 44px;
-  }
-
-  .hero__content {
-    max-width: 480px;
-  }
-
-  .top-region__bg-img {
-    width: clamp(360px, 42vw, 460px);
-  }
-
-  .hero::before {
-    width: min(66%, 620px);
   }
 
   .cards {
@@ -1036,8 +687,7 @@ button {
 
   .hero {
     padding-top: 32px;
-    padding-bottom: 220px; /* reserves room for the artwork, now stacked below the copy */
-    min-height: 0;
+    padding-bottom: 40px;
   }
 
   .hero__copy h1 {
@@ -1049,24 +699,9 @@ button {
     font-size: 15px;
   }
 
-  /* Below the copy instead of behind it: cropped toward the lower-right
-     so the four-lens concept still reads, without risking any text
-     legibility issues since nothing overlaps the copy anymore. */
-  .top-region__bg-img {
-    top: auto;
-    bottom: -18px;
-    right: -40px;
-    width: 340px;
-    height: 260px;
-    object-position: 65% center;
-    /* fades the top-left corner too, not just the left edge — on mobile
-       the crop shows a top edge as well as a left one */
-    -webkit-mask-image: linear-gradient(115deg, transparent 0%, transparent 8%, black 30%);
-    mask-image: linear-gradient(115deg, transparent 0%, transparent 8%, black 30%);
-  }
-
-  .hero::before {
-    display: none; /* no longer needed — artwork no longer sits behind the copy */
+  .top-region__bg {
+    background-position: 78% 50%;
+    opacity: 0.85;
   }
 
   .services {
@@ -1081,15 +716,6 @@ button {
   .cards {
     grid-template-columns: 1fr;
   }
-
-  .contact {
-    padding: 56px var(--side-padding) 72px;
-  }
-
-  .contact__inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -1100,10 +726,5 @@ button {
   .nav-brand__word {
     width: 96px;
     height: 7.82px;
-  }
-
-  .top-region__bg-img {
-    width: 280px;
-    height: 220px;
   }
 }
