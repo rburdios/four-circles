@@ -9,9 +9,15 @@
   --text-black: #141414;
   --accent-teal: #0c4459;
   --accent-teal-light: #0f485d;
-  --card-bg-start: rgba(255, 255, 255, 0.2);
-  --card-bg-end: rgba(235, 231, 231, 0.2);
+  --card-bg-start: rgba(255, 255, 255, 0.4);
+  --card-bg-end: rgba(235, 231, 231, 0.4);
   --card-border: #dbd6d6;
+
+  /* Each service card's own accent border color */
+  --card-border-digital: #c85f38;
+  --card-border-brand: #577d39;
+  --card-border-product: #2d98c0;
+  --card-border-creative: #d28c2b;
 
   /* Shared brand accent palette, used across the service icons */
   --icon-orange: #fbb360;
@@ -244,7 +250,7 @@ button {
   margin: 0 auto;
   background-image: url('assets/hero-glass.png');
   background-size: cover;
-  background-position: 68% 42%;
+  background-position: 64% 36%;
   z-index: 0;
 }
 
@@ -273,7 +279,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 48px;
+  gap: 32px;
   max-width: 600px;
 }
 
@@ -286,9 +292,8 @@ button {
 .hero__copy h1 {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 48px;
-  line-height: 54px;
-  letter-spacing: 0.96px;
+  font-size: 56px;
+  line-height: 64px;
   color: var(--text-dark);
 }
 
@@ -296,20 +301,6 @@ button {
   font-family: var(--font-body);
   font-size: 16px;
   color: var(--text-black);
-}
-
-.hero__preheader {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.96px;
-  text-transform: uppercase;
-  color: var(--text-dark);
-}
-
-.hero__preheader-word {
-  font-weight: 600;
 }
 
 /* =============================================
@@ -356,6 +347,13 @@ button {
   transform: translateY(-4px);
   box-shadow: 0 16px 40px rgba(63, 63, 63, 0.1);
 }
+
+/* each card carries its own accent border, matching the service colors
+   used elsewhere (icons, the belief list) */
+.card[data-icon="digital"] { border-color: var(--card-border-digital); }
+.card[data-icon="brand"] { border-color: var(--card-border-brand); }
+.card[data-icon="product"] { border-color: var(--card-border-product); }
+.card[data-icon="creative"] { border-color: var(--card-border-creative); }
 
 .card__icon {
   width: 100px;
@@ -714,7 +712,6 @@ button {
 
   .hero__copy h1 {
     font-size: 40px;
-    letter-spacing: 0.3px;
   }
 
   .hero__copy p {
