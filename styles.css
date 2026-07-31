@@ -280,7 +280,9 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: 32px;
-  max-width: 600px;
+  /* matches Figma's copy column exactly (565px) — wider than this and
+     the supporting paragraph runs further per line than intended */
+  max-width: 565px;
 }
 
 .hero__copy {
@@ -332,6 +334,10 @@ button {
 
 .card {
   background: linear-gradient(to bottom, var(--card-bg-start), var(--card-bg-end));
+  /* frosted glass: the translucent gradient alone isn't enough — the
+     blur is what actually reads as "frosted" rather than just faded */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 20px 24px 32px;
