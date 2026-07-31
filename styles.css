@@ -41,13 +41,17 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* overflow-x lives here, not on body — overflow anything-but-visible on
+     body turns it into its own scroll container distinct from the real
+     viewport, which silently breaks position:sticky for every descendant
+     (the nav, in this case) */
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-body);
   color: var(--text-dark);
   line-height: 1.5;
-  overflow-x: hidden;
   background: var(--bg-warm-end);
 }
 
@@ -110,14 +114,28 @@ button {
 /* =============================================
    NAVIGATION
    ============================================= */
-/* position/z-index come from ".top-region .nav" below — this rule sits
-   inside .top-region so it renders transparently over the hero photo,
-   matching the Figma design, instead of its own solid bar. */
+/* Sticky and transparent by default so it reads as part of the hero
+   photo (see .top-region .nav below for why it's a child of
+   .top-region). A solid backing only fades in once the page is
+   scrolled (.is-scrolled, toggled by script.js) so text stays legible
+   over whatever content ends up behind it. */
+.nav {
+  background: transparent;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav.is-scrolled {
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
 .nav__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px var(--side-padding) 0;
+  padding: 16px var(--side-padding);
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -208,7 +226,9 @@ button {
 .top-region {
   position: relative;
   background: linear-gradient(176deg, var(--bg-warm-start) 15.5%, var(--bg-warm-end) 85.5%);
-  overflow: hidden;
+  /* no overflow:hidden here — .top-region__bg is already inset:0-bounded to
+     this box, and overflow on an ancestor is a common way to silently
+     break position:sticky on the nav living inside it */
 }
 
 .top-region__bg {
@@ -220,18 +240,23 @@ button {
   z-index: 0;
 }
 
-.top-region .nav,
 .top-region .hero,
 .top-region .services {
   position: relative;
   z-index: 1;
 }
 
+.top-region .nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
 /* =============================================
    HERO
    ============================================= */
 .hero {
-  padding: 24px var(--side-padding) 60px;
+  padding: 8px var(--side-padding) 60px;
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -633,8 +658,8 @@ button {
 
   .nav-links {
     position: fixed;
-    inset: 80px 0 0 0;
-    height: calc(100vh - 80px);
+    inset: 72px 0 0 0;
+    height: calc(100vh - 72px);
     background: var(--bg-warm-end);
     flex-direction: column;
     justify-content: flex-start;
