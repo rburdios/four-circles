@@ -264,7 +264,7 @@ button {
    HERO
    ============================================= */
 .hero {
-  padding: 8px var(--side-padding) 60px;
+  padding: 48px var(--side-padding) 60px;
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -286,9 +286,9 @@ button {
 .hero__copy h1 {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 52px;
-  line-height: 1.15;
-  letter-spacing: 1.04px;
+  font-size: 48px;
+  line-height: 54px;
+  letter-spacing: 0.96px;
   color: var(--text-dark);
 }
 
