@@ -369,20 +369,19 @@ button {
 /* =============================================
    SERVICE ICON ANIMATIONS
 
-   Calm, precise entrance + ambient loop system for the four
-   inline service icons. Everything here is driven by two
-   states set on the parent .card by icon-animations.js:
+   Calm, precise draw-in animation for the four inline service
+   icons, triggered ONLY by hover or keyboard focus — never on
+   load or scroll, and nothing loops while idle. Driven by two
+   states set on the parent .card by icon-animations.js on each
+   hover/focus:
 
-     .is-visible   -> entrance draw-in has been triggered (once)
-     .is-settled   -> entrance finished, "lock-in" moment plays
-     .is-ambient   -> idle loop is allowed to run
-     .is-in-view   -> card is currently on screen (keeps the
-                      idle loop paused off-screen)
-     .is-hover     -> pointer/keyboard focus is on the card
+     .is-visible   -> draw-in animation is playing
+     .is-settled   -> draw-in finished, "lock-in" moment plays
 
-   Base state = "already drawn", so the page never breaks if
-   JS fails to load (progressive enhancement, same pattern as
-   the scroll-reveal system below).
+   Base state (no classes) = "already drawn", so the icon looks
+   complete at rest and the page never breaks if JS fails to
+   load (progressive enhancement, same pattern as the
+   scroll-reveal system below).
    ============================================= */
 
 /* icon-defs holds only <linearGradient> stops, never rendered */
@@ -423,16 +422,16 @@ button {
 }
 
 /* =============================================
-   ENTRANCE — plays once when a card first enters the viewport
+   DRAW-IN — plays on every hover / keyboard focus (see script.js)
    ============================================= */
 /* fill-mode "both" (not just "forwards") is the key detail here: it lets
    the keyframes' own 0% state cover the pre-animation delay, so we never
    need a separate static opacity/dashoffset fallback on these rules. That
-   matters later — a lock-in or ambient rule on the same element only ever
-   needs to replace the `animation` shorthand to animate a *different*
+   matters below — a lock-in (.is-settled) rule on the same element only
+   ever needs to replace the `animation` shorthand to animate a *different*
    property (a transform bounce, an opacity pulse). When it does, this
    element's dashoffset/opacity simply falls back to its plain resting
-   CSS (the unconditional base rules below), which is already the correct
+   CSS (the unconditional base rules above), which is already the correct
    finished look — instead of getting stuck on a static "undrawn" value
    that had been living only on this rule. */
 .card.is-visible .icon-draw {
@@ -458,9 +457,9 @@ button {
 /* Digital Experiences: node colors */
 .card[data-icon="digital"] .icon-curve { stroke: url(#grad-digital-curve); }
 
-/* Digital Experiences: one highlight travels the curve once settled,
-   then repeats softly as the ambient loop. Uses offset-path; browsers
-   without support simply never show the dot (icon still reads fine). */
+/* Digital Experiences: one highlight travels the curve once settled.
+   Uses offset-path; browsers without support simply never show the
+   dot (icon still reads fine without it). */
 .icon-pulse-dot {
   fill: #fff;
   opacity: 0;
@@ -483,39 +482,9 @@ button {
 }
 
 /* =============================================
-   AMBIENT LOOPS — near-imperceptible, paused unless the card
-   is both settled (.is-ambient) and on screen (.is-in-view)
+   PER-ICON COLORS + LOCK-IN — the finishing touch each icon
+   plays once its hover-triggered draw-in has finished (.is-settled)
    ============================================= */
-
-/* --- Digital Experiences: highlight drifts the curve, ~6.5s, with a pause --- */
-.card[data-icon="digital"].is-ambient.is-in-view .icon-pulse-dot--digital {
-  animation: icon-digital-pulse-loop 6.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-@keyframes icon-digital-pulse-loop {
-  0% { offset-distance: 0%; opacity: 0; }
-  8% { opacity: 0.9; }
-  62% { offset-distance: 100%; opacity: 0.9; }
-  70% { opacity: 0; }
-  100% { opacity: 0; }
-}
-
-.card[data-icon="digital"].is-ambient.is-in-view .icon-node {
-  animation: icon-digital-node-glow 6.5s ease-in-out infinite;
-}
-
-.card[data-icon="digital"].is-ambient.is-in-view .icon-node--start {
-  animation-delay: 0s;
-}
-
-.card[data-icon="digital"].is-ambient.is-in-view .icon-node--end {
-  animation-delay: 4.03s; /* ~62% of loop, when the highlight passes it */
-}
-
-@keyframes icon-digital-node-glow {
-  0%, 92%, 100% { filter: brightness(1); }
-  4% { filter: brightness(1.35); }
-}
 
 /* --- Brand & Identity --- */
 .card[data-icon="brand"] .icon-loop--1 { stroke: var(--icon-orange); }
@@ -547,19 +516,6 @@ button {
   100% { transform: rotate(45deg) scale(1); }
 }
 
-/* ambient: gentle emphasis passes clockwise through the four loops.
-   Equal duration + staggered delay keeps the four loops permanently
-   out of phase, so the "pass" keeps traveling clockwise forever. */
-.card[data-icon="brand"].is-ambient.is-in-view .icon-loop--1 { animation: icon-loop-emphasis 7.5s ease-in-out infinite; }
-.card[data-icon="brand"].is-ambient.is-in-view .icon-loop--2 { animation: icon-loop-emphasis 7.5s ease-in-out infinite; animation-delay: 1.875s; }
-.card[data-icon="brand"].is-ambient.is-in-view .icon-loop--3 { animation: icon-loop-emphasis 7.5s ease-in-out infinite; animation-delay: 3.75s; }
-.card[data-icon="brand"].is-ambient.is-in-view .icon-loop--4 { animation: icon-loop-emphasis 7.5s ease-in-out infinite; animation-delay: 5.625s; }
-
-@keyframes icon-loop-emphasis {
-  0%, 82%, 100% { stroke-opacity: 0.9; filter: saturate(1); }
-  8% { stroke-opacity: 1; filter: saturate(1.1); }
-}
-
 /* --- Product Design --- */
 .card[data-icon="product"] .icon-spoke--a,
 .card[data-icon="product"] .icon-node--a { stroke: var(--icon-tan); fill: var(--icon-tan); }
@@ -588,26 +544,6 @@ button {
   100% { stroke-opacity: 0.9; }
 }
 
-/* ambient: a subtle pulse moves from center to one node at a time,
-   rotating across loops (same phase-offset technique as Brand) */
-.card[data-icon="product"].is-ambient.is-in-view .icon-spoke--a { animation: icon-spoke-pulse 6s ease-in-out infinite; }
-.card[data-icon="product"].is-ambient.is-in-view .icon-spoke--b { animation: icon-spoke-pulse 6s ease-in-out infinite; animation-delay: 2s; }
-.card[data-icon="product"].is-ambient.is-in-view .icon-spoke--c { animation: icon-spoke-pulse 6s ease-in-out infinite; animation-delay: 4s; }
-
-@keyframes icon-spoke-pulse {
-  0%, 78%, 100% { stroke-opacity: 0.85; }
-  10% { stroke-opacity: 1; }
-}
-
-.card[data-icon="product"].is-ambient.is-in-view .icon-node--a { animation: icon-node-pulse 6s ease-in-out infinite; }
-.card[data-icon="product"].is-ambient.is-in-view .icon-node--b { animation: icon-node-pulse 6s ease-in-out infinite; animation-delay: 2s; }
-.card[data-icon="product"].is-ambient.is-in-view .icon-node--c { animation: icon-node-pulse 6s ease-in-out infinite; animation-delay: 4s; }
-
-@keyframes icon-node-pulse {
-  0%, 78%, 100% { filter: brightness(1); }
-  10% { filter: brightness(1.25); }
-}
-
 /* --- Creative Systems --- */
 .card[data-icon="creative"] .icon-dot { fill: var(--icon-line); }
 .card[data-icon="creative"] .icon-ripple--orange { stroke: var(--icon-orange); }
@@ -634,58 +570,10 @@ button {
   100% { stroke-opacity: 0.9; }
 }
 
-/* ambient: one slow ripple — center grows a touch, then the emphasis
-   travels outward ring by ring, with a pause before it repeats */
-.card[data-icon="creative"].is-ambient.is-in-view .icon-dot {
-  animation: icon-dot-ripple 7.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-@keyframes icon-dot-ripple {
-  0%, 78%, 100% { transform: scale(1); }
-  6% { transform: scale(1.08); }
-  14% { transform: scale(1); }
-}
-
-.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple {
-  animation: icon-ripple-ripple 7.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-/* inner ring segments (first in the DOM) brighten earliest */
-.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple:nth-of-type(-n+3) { animation-delay: 0.1s; }
-.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple:nth-of-type(n+4):nth-of-type(-n+6) { animation-delay: 0.35s; }
-.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple:nth-of-type(n+7):nth-of-type(-n+9) { animation-delay: 0.6s; }
-.card[data-icon="creative"].is-ambient.is-in-view .icon-ripple:nth-of-type(n+10) { animation-delay: 0.85s; }
-
-@keyframes icon-ripple-ripple {
-  0%, 70%, 100% { stroke-opacity: 0.85; }
-  15% { stroke-opacity: 1; }
-}
-
 /* =============================================
-   HOVER / FOCUS — shortened ambient replay, added by JS as
-   .is-hover-pulse and removed automatically. Kept separate
-   from the card's own translateY hover motion.
-   ============================================= */
-.card.is-hover-pulse[data-icon="digital"] .icon-pulse-dot--digital {
-  animation: icon-digital-pulse-once 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.card.is-hover-pulse[data-icon="brand"] .icon-loop {
-  animation: icon-loop-emphasis 900ms ease-in-out both;
-}
-
-.card.is-hover-pulse[data-icon="product"] .icon-spoke,
-.card.is-hover-pulse[data-icon="product"] .icon-node {
-  animation: icon-spoke-pulse 800ms ease-in-out both;
-}
-
-.card.is-hover-pulse[data-icon="creative"] .icon-ripple {
-  animation: icon-ripple-flash 700ms ease-out both;
-}
-
-/* =============================================
-   REDUCED MOTION — show the finished icon immediately, no
-   loops, only a gentle opacity change remains on hover/focus
+   REDUCED MOTION — show the finished icon immediately; hover
+   and focus keep only the plain opacity change (see the
+   .card:hover / .card:focus-within rule above), no draw-in
    ============================================= */
 @media (prefers-reduced-motion: reduce) {
   .icon-draw,
