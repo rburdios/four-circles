@@ -2,31 +2,23 @@
    DESIGN TOKENS
    ============================================= */
 :root {
-  --bg-warm-start: #fbf7f2;
-  --bg-warm-end: #f8f2ed;
+  --bg-page: #f6edee;
   --text-dark: #3f3f3f;
   --text-card: #363636;
   --text-black: #141414;
-  --accent-teal: #0c4459;
-  --accent-teal-light: #0f485d;
-  --card-bg-start: rgba(255, 255, 255, 0.4);
-  --card-bg-end: rgba(235, 231, 231, 0.4);
-  --card-border: #dbd6d6;
 
-  /* Each service card's own accent border color */
-  --card-border-digital: #c85f38;
-  --card-border-brand: #577d39;
-  --card-border-product: #2d98c0;
-  --card-border-creative: #d28c2b;
+  /* Brand gradient palette (Passion / Mission / Vocation / Profession) */
+  --brand-coral: #ef8e6a;
+  --brand-pink: #cc2e7a;
+  --brand-purple: #9a73ff;
+  --brand-blue: #0e8de1;
 
-  /* Shared brand accent palette, used across the service icons */
-  --icon-orange: #fbb360;
-  --icon-green: #99bd95;
-  --icon-blue: #adc2df;
-  --icon-tan: #cbab83;
+  /* Resting icon color: a thin dark gray line, per design direction —
+     the brand colors only appear as icons animate on hover. */
   --icon-line: #55534e;
 
-  --font-serif: 'Merriweather', Georgia, serif;
+  --card-border: #ffffff;
+
   --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Public Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
@@ -58,7 +50,7 @@ body {
   font-family: var(--font-body);
   color: var(--text-dark);
   line-height: 1.5;
-  background: var(--bg-warm-end);
+  background: var(--bg-page);
 }
 
 a {
@@ -84,44 +76,58 @@ button {
    UTILITIES
    ============================================= */
 .label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 12px;
-  letter-spacing: 0.96px;
+  letter-spacing: 1.44px;
   text-transform: uppercase;
   color: var(--text-dark);
-  margin-bottom: 8px;
+  margin-bottom: 3px;
 }
 
-.label--light {
-  color: #ffffff;
+.label__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-pink);
+  flex-shrink: 0;
+}
+
+.label__dot--dark {
+  background: var(--text-dark);
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(to bottom, var(--accent-teal), var(--accent-teal-light));
+  gap: 10px;
+  background: #000000;
   color: #ffffff;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
   font-size: 14px;
   padding: 12px 24px;
-  border-radius: 8px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  border-radius: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(12, 68, 89, 0.28);
-  background: #0e5470;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
+}
+
+.btn-primary__arrow {
+  flex-shrink: 0;
 }
 
 /* =============================================
    NAVIGATION
    ============================================= */
 /* Sticky and transparent by default so it reads as part of the hero
-   photo (see .top-region .nav below for why it's a child of
+   art (see .top-region .nav below for why it's a child of
    .top-region). A solid backing only fades in once the page is
    scrolled (.is-scrolled, toggled by script.js) so text stays legible
    over whatever content ends up behind it. */
@@ -131,7 +137,7 @@ button {
 }
 
 .nav.is-scrolled {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(246, 237, 238, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
@@ -227,11 +233,11 @@ button {
 }
 
 /* =============================================
-   TOP REGION (Hero + Services share the warm bg)
+   TOP REGION (Nav + Hero + Services share the hero art)
    ============================================= */
 .top-region {
   position: relative;
-  background: linear-gradient(176deg, var(--bg-warm-start) 15.5%, var(--bg-warm-end) 85.5%);
+  background: var(--bg-page);
   /* no overflow:hidden here — .top-region__bg is already inset:0-bounded to
      this box, and overflow on an ancestor is a common way to silently
      break position:sticky on the nav living inside it */
@@ -243,14 +249,17 @@ button {
   /* capped and centered at the same max-width as the content container
      (left:0 + right:0 + max-width + margin:auto is the standard trick
      for centering an absolutely-positioned box) — on screens wider than
-     that, the photo stops growing and stays centered behind the hero
+     that, the art stops growing and stays centered behind the hero
      instead of stretching edge-to-edge, so it can never drift into the
      copy on ultrawide monitors */
   max-width: var(--container-max);
   margin: 0 auto;
-  background-image: url('assets/hero-glass.png');
-  background-size: cover;
-  background-position: 64% 36%;
+  background-image:
+    linear-gradient(179deg, rgba(246, 237, 238, 0) 52.5%, rgba(255, 237, 236, 0.92) 99%),
+    url('assets/hero-glass.png');
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover;
+  background-position: center, 62% 30%;
   z-index: 0;
 }
 
@@ -270,7 +279,7 @@ button {
    HERO
    ============================================= */
 .hero {
-  padding: 48px var(--side-padding) 60px;
+  padding: 80px var(--side-padding) 60px;
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -280,9 +289,7 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: 32px;
-  /* matches Figma's copy column exactly (565px) — wider than this and
-     the supporting paragraph runs further per line than intended */
-  max-width: 565px;
+  max-width: 492px;
 }
 
 .hero__copy {
@@ -294,9 +301,13 @@ button {
 .hero__copy h1 {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 56px;
-  line-height: 64px;
+  font-size: 64px;
+  line-height: 70px;
   color: var(--text-dark);
+}
+
+.hero__dot {
+  color: var(--brand-purple);
 }
 
 .hero__copy p {
@@ -309,43 +320,39 @@ button {
    SERVICES
    ============================================= */
 .services {
-  padding: 60px var(--side-padding) 100px;
+  padding: 32px var(--side-padding) 60px;
   max-width: var(--container-max);
   margin: 0 auto;
 }
 
 .section-heading {
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .section-heading h2 {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 36px;
-  line-height: 1.4;
+  font-size: 32px;
+  line-height: 50px;
   color: var(--text-dark);
 }
 
 .cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 24px;
 }
 
 .card {
-  background: linear-gradient(to bottom, var(--card-bg-start), var(--card-bg-end));
-  /* frosted glass: the translucent gradient alone isn't enough — the
-     blur is what actually reads as "frosted" rather than just faded */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--card-border);
+  background: #ffffff;
+  border: 2px solid var(--card-border);
   border-radius: 12px;
   padding: 20px 24px 32px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-  box-shadow: 1px 9px 8.3px rgba(0, 0, 0, 0.01), 0 1px 0.1px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 1px 9px 4.15px rgba(0, 0, 0, 0.01), 0 1px 0.05px rgba(0, 0, 0, 0.05), 0 4px 4px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
 }
 
@@ -353,13 +360,6 @@ button {
   transform: translateY(-4px);
   box-shadow: 0 16px 40px rgba(63, 63, 63, 0.1);
 }
-
-/* each card carries its own accent border, matching the service colors
-   used elsewhere (icons, the belief list) */
-.card[data-icon="digital"] { border-color: var(--card-border-digital); }
-.card[data-icon="brand"] { border-color: var(--card-border-brand); }
-.card[data-icon="product"] { border-color: var(--card-border-product); }
-.card[data-icon="creative"] { border-color: var(--card-border-creative); }
 
 .card__icon {
   width: 100px;
@@ -382,7 +382,7 @@ button {
 
 .card p {
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-card);
@@ -407,235 +407,388 @@ button {
 }
 
 /* =============================================
-   SERVICE ICON ANIMATIONS
-
-   Calm, precise draw-in animation for the four inline service
-   icons, triggered ONLY by hover or keyboard focus — never on
-   load or scroll, and nothing loops while idle. Driven by two
-   states set on the parent .card by icon-animations.js on each
-   hover/focus:
-
-     .is-visible   -> draw-in animation is playing
-     .is-settled   -> draw-in finished, "lock-in" moment plays
-
-   Base state (no classes) = "already drawn", so the icon looks
-   complete at rest and the page never breaks if JS fails to
-   load (progressive enhancement, same pattern as the
-   scroll-reveal system below).
+   SERVICE ICONS — thin dark-gray lines at rest. The brand
+   gradient only appears as part of each hover animation, and
+   each motion is built around what that service actually does
+   (see the comments in index.html for the reasoning per icon).
+   :is(:hover, :focus-within) covers mouse and keyboard alike.
    ============================================= */
-
-/* icon-defs holds only <linearGradient> stops, never rendered */
 .icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-.grad-stop-orange { stop-color: var(--icon-orange); }
-.grad-stop-blue { stop-color: var(--icon-blue); }
+.grad-stop-coral { stop-color: var(--brand-coral); }
+.grad-stop-pink { stop-color: var(--brand-pink); }
+.grad-stop-purple { stop-color: var(--brand-purple); }
+.grad-stop-blue { stop-color: var(--brand-blue); }
 
-/* ---- shared drawable-line primitive ---- */
-.icon-draw {
+/* ---- Digital Experiences: a path arriving at a target ---- */
+.icon-line--path,
+.icon-line--start,
+.icon-ring,
+.icon-dot--target {
   fill: none;
   stroke: var(--icon-line);
-  stroke-width: 2.1;
+  stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-opacity: 0.9;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0; /* drawn by default: no-JS / reduced-motion fallback */
+  transition: stroke 0.4s ease;
 }
 
-/* ---- shared node (dot) primitive ---- */
-.icon-node {
+.icon-dot--target {
   fill: var(--icon-line);
-  opacity: 1;
+  transition: fill 0.4s ease;
+}
+
+.icon-line--start {
+  transform-box: fill-box;
+}
+
+.icon-ring {
   transform-box: fill-box;
   transform-origin: center;
-  transform: scale(1);
 }
 
-/* card hover / keyboard focus: a gentle brighten, never a jump */
-.card:hover .icon-draw,
-.card:focus-within .icon-draw {
-  stroke-opacity: 1;
+/* duplicate path, gradient-stroked, hidden until hover — a solid
+   color can't transition smoothly into a gradient fill, so instead
+   we cross-fade a second copy in on top of the gray one */
+.icon-line--glow {
+  stroke: url(#grad-brand);
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-.icon-draw,
-.icon-node {
-  transition: stroke-opacity 0.35s ease, filter 0.35s ease;
+.card:hover .icon-line--glow,
+.card:focus-within .icon-line--glow {
+  opacity: 1;
 }
 
-/* =============================================
-   DRAW-IN — plays on every hover / keyboard focus (see script.js)
-   ============================================= */
-/* fill-mode "both" (not just "forwards") is the key detail here: it lets
-   the keyframes' own 0% state cover the pre-animation delay, so we never
-   need a separate static opacity/dashoffset fallback on these rules. That
-   matters below — a lock-in (.is-settled) rule on the same element only
-   ever needs to replace the `animation` shorthand to animate a *different*
-   property (a transform bounce, an opacity pulse). When it does, this
-   element's dashoffset/opacity simply falls back to its plain resting
-   CSS (the unconditional base rules above), which is already the correct
-   finished look — instead of getting stuck on a static "undrawn" value
-   that had been living only on this rule. */
-.card.is-visible .icon-draw {
-  animation: icon-draw-in var(--dur, 700ms) cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: var(--delay, 0ms);
-}
-
-@keyframes icon-draw-in {
-  from { stroke-dashoffset: 1; }
-  to { stroke-dashoffset: 0; }
-}
-
-.card.is-visible .icon-node {
-  animation: icon-node-in 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: var(--delay, 0ms);
-}
-
-@keyframes icon-node-in {
-  from { opacity: 0; transform: scale(0.75); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* Digital Experiences: node colors */
-.card[data-icon="digital"] .icon-curve { stroke: url(#grad-digital-curve); }
-
-/* Digital Experiences: one highlight travels the curve once settled.
-   Uses offset-path; browsers without support simply never show the
-   dot (icon still reads fine without it). */
-.icon-pulse-dot {
-  fill: #fff;
+.icon-traveler {
+  fill: var(--brand-coral);
   opacity: 0;
 }
 
-.icon-pulse-dot--digital {
-  offset-path: path('M32,82 C46,96 50,58 66,66 C78,72 74,50 92,44');
-  offset-rotate: 0deg;
+@media (prefers-reduced-motion: no-preference) {
+  .icon-traveler {
+    offset-path: path('M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36');
+    offset-rotate: 0deg;
+  }
+
+  .card:hover .icon-traveler,
+  .card:focus-within .icon-traveler {
+    animation: icon-travel 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .card:hover .icon-ring,
+  .card:focus-within .icon-ring {
+    animation: icon-ring-pulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .card:hover .icon-ring--mid,
+  .card:focus-within .icon-ring--mid {
+    animation-delay: 60ms;
+  }
+
+  .card:hover .icon-dot--target,
+  .card:focus-within .icon-dot--target {
+    animation: icon-target-flash 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
 }
 
-.card[data-icon="digital"].is-settled .icon-pulse-dot--digital {
-  animation: icon-digital-pulse-once 900ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
-}
-
-@keyframes icon-digital-pulse-once {
-  0% { offset-distance: 0%; opacity: 0; }
-  12% { opacity: 1; }
-  88% { opacity: 1; }
+@keyframes icon-travel {
+  0% { offset-distance: 0%; opacity: 0; fill: var(--brand-coral); }
+  8% { opacity: 1; }
+  50% { fill: var(--brand-pink); }
+  85% { fill: var(--brand-purple); }
+  92% { offset-distance: 100%; opacity: 1; fill: var(--brand-blue); }
   100% { offset-distance: 100%; opacity: 0; }
 }
 
-/* =============================================
-   PER-ICON COLORS + LOCK-IN — the finishing touch each icon
-   plays once its hover-triggered draw-in has finished (.is-settled)
-   ============================================= */
+@keyframes icon-ring-pulse {
+  0%, 82% { stroke: var(--icon-line); transform: scale(1); }
+  90% { stroke: var(--brand-blue); transform: scale(1.14); }
+  100% { stroke: var(--brand-purple); transform: scale(1); }
+}
 
-/* --- Brand & Identity --- */
-.card[data-icon="brand"] .icon-loop--1 { stroke: var(--icon-orange); }
-.card[data-icon="brand"] .icon-loop--2 { stroke: var(--icon-green); }
-.card[data-icon="brand"] .icon-loop--3 { stroke: var(--icon-blue); }
-.card[data-icon="brand"] .icon-loop--4 { stroke: var(--icon-tan); }
+@keyframes icon-target-flash {
+  0%, 82% { fill: var(--icon-line); }
+  90% { fill: var(--brand-blue); }
+  100% { fill: var(--brand-purple); }
+}
 
-.card[data-icon="brand"] .icon-center {
+/* ---- Brand & Identity: a grid coming into alignment ---- */
+.icon-grid__dot {
   fill: none;
   stroke: var(--icon-line);
-  stroke-width: 1.6;
-  opacity: 1;
-  /* the diamond is a plain square rotated via CSS transform (not the SVG
-     transform attribute) so it can share a transform chain with the
-     scale keyframes below without one silently overriding the other */
-  transform: rotate(45deg) scale(1);
+  stroke-width: 1.8;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-/* center: fades/scales in first, then a tiny settle once loops resolve */
-.card[data-icon="brand"].is-visible .icon-center {
-  animation: icon-brand-center-in 1710ms cubic-bezier(0.22, 1, 0.36, 1) both;
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover .icon-grid__dot,
+  .card:focus-within .icon-grid__dot {
+    animation: icon-grid-wave 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    animation-delay: calc((var(--gx, 0) + var(--gy, 0)) * 70ms);
+  }
 }
 
-@keyframes icon-brand-center-in {
-  0% { opacity: 0; transform: rotate(45deg) scale(0.85); }
-  24% { opacity: 1; transform: rotate(45deg) scale(1); }
-  88% { opacity: 1; transform: rotate(45deg) scale(1); }
-  94% { transform: rotate(45deg) scale(1.03); }
-  100% { transform: rotate(45deg) scale(1); }
+@keyframes icon-grid-wave {
+  0%, 100% { stroke: var(--icon-line); transform: scale(1); }
+  16% { stroke: var(--brand-coral); transform: scale(1.3); }
+  32% { stroke: var(--brand-purple); transform: scale(1); }
 }
 
-/* --- Product Design --- */
-.card[data-icon="product"] .icon-spoke--a,
-.card[data-icon="product"] .icon-node--a { stroke: var(--icon-tan); fill: var(--icon-tan); }
-.card[data-icon="product"] .icon-spoke--b,
-.card[data-icon="product"] .icon-node--b { stroke: var(--icon-orange); fill: var(--icon-orange); }
-.card[data-icon="product"] .icon-spoke--c,
-.card[data-icon="product"] .icon-node--c { stroke: var(--icon-blue); fill: var(--icon-blue); }
-
-/* lock-in: ring contracts slightly, spokes brighten briefly, once settled */
-.card[data-icon="product"].is-settled .icon-ring {
-  animation: icon-ring-lock-in 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+/* ---- Product Design: layers separating, then resolving ---- */
+.icon-layer {
+  fill: none;
+  stroke: var(--icon-line);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transition: stroke 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes icon-ring-lock-in {
-  0% { transform: scale(1.03); }
-  100% { transform: scale(1); }
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover .icon-layer--top,
+  .card:focus-within .icon-layer--top {
+    animation: icon-layer-top 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .card:hover .icon-layer--mid,
+  .card:focus-within .icon-layer--mid {
+    animation: icon-layer-mid 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .card:hover .icon-layer--bottom,
+  .card:focus-within .icon-layer--bottom {
+    animation: icon-layer-bottom 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
 }
 
-.card[data-icon="product"].is-settled .icon-spoke {
-  animation: icon-spoke-lock-in 500ms ease-out both;
+@keyframes icon-layer-top {
+  0% { transform: translateY(0); stroke: var(--icon-line); }
+  45% { transform: translateY(-11px); stroke: var(--brand-coral); }
+  100% { transform: translateY(0); stroke: var(--brand-coral); }
 }
 
-@keyframes icon-spoke-lock-in {
-  0% { stroke-opacity: 0.9; }
-  35% { stroke-opacity: 1; }
-  100% { stroke-opacity: 0.9; }
+@keyframes icon-layer-mid {
+  0% { stroke: var(--icon-line); }
+  45% { stroke: var(--brand-pink); }
+  100% { stroke: var(--brand-pink); }
 }
 
-/* --- Creative Systems --- */
-.card[data-icon="creative"] .icon-dot { fill: var(--icon-line); }
-.card[data-icon="creative"] .icon-ripple--orange { stroke: var(--icon-orange); }
-.card[data-icon="creative"] .icon-ripple--gold { stroke: var(--icon-tan); }
-.card[data-icon="creative"] .icon-ripple--blue { stroke: var(--icon-blue); }
-
-.card[data-icon="creative"].is-visible .icon-dot {
-  animation: icon-creative-dot-in 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+@keyframes icon-layer-bottom {
+  0% { transform: translateY(0); stroke: var(--icon-line); }
+  45% { transform: translateY(11px); stroke: var(--brand-blue); }
+  100% { transform: translateY(0); stroke: var(--brand-blue); }
 }
 
-@keyframes icon-creative-dot-in {
-  from { opacity: 0; transform: scale(0.7); }
-  to { opacity: 1; transform: scale(1); }
+/* ---- Creative Systems: one decision, rippling outward ---- */
+.icon-ripple-ring {
+  fill: none;
+  stroke: var(--icon-line);
+  stroke-width: 1.8;
+  stroke-opacity: 0.6;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-/* finishing touch: every ring briefly brightens together, then settles */
-.card[data-icon="creative"].is-settled .icon-ripple {
-  animation: icon-ripple-flash 500ms ease-out both;
+.icon-dot--center {
+  fill: var(--icon-line);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: fill 0.3s ease;
 }
 
-@keyframes icon-ripple-flash {
-  0% { stroke-opacity: 0.9; }
-  40% { stroke-opacity: 1; }
-  100% { stroke-opacity: 0.9; }
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover .icon-dot--center,
+  .card:focus-within .icon-dot--center {
+    fill: var(--brand-coral);
+    animation: icon-dot-pulse 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .card:hover .icon-ripple-ring,
+  .card:focus-within .icon-ripple-ring {
+    animation: icon-ripple-wave 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    animation-delay: calc(var(--ring, 0) * 160ms + 160ms);
+  }
+}
+
+@keyframes icon-dot-pulse {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.3); }
+  30% { transform: scale(1); }
+}
+
+@keyframes icon-ripple-wave {
+  0%, 100% { stroke: var(--icon-line); stroke-opacity: 0.5; }
+  22% { stroke: var(--brand-purple); stroke-opacity: 1; }
+  44% { stroke: var(--icon-line); stroke-opacity: 0.5; }
 }
 
 /* =============================================
-   REDUCED MOTION — show the finished icon immediately; hover
-   and focus keep only the plain opacity change (see the
-   .card:hover / .card:focus-within rule above), no draw-in
+   HOW WE THINK + LET'S TALK + VALUES
+   ============================================= */
+.think {
+  background: #ffffff;
+  padding: 60px var(--side-padding);
+}
+
+.think > * {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.think__cols {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.think__col {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.think__col h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text-dark);
+}
+
+.think__col p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-card);
+}
+
+.contact {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 12px;
+  padding: 48px;
+  margin-bottom: 32px;
+  box-shadow: 1px 9px 8.3px rgba(0, 0, 0, 0.01), 0 1px 0.1px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.contact__art {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #ffe4d1 0%, #ffd3e6 32%, #e6d3ff 66%, #cfe5fb 100%);
+}
+
+.contact__art::before,
+.contact__art::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.contact__art::before {
+  width: 340px;
+  height: 340px;
+  right: -60px;
+  top: -120px;
+}
+
+.contact__art::after {
+  width: 220px;
+  height: 220px;
+  right: 120px;
+  bottom: -90px;
+}
+
+.contact__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.contact__content h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--text-dark);
+}
+
+.contact__content p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-card);
+}
+
+.values {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  padding-top: 20px;
+}
+
+.values__word {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1.28px;
+  text-transform: uppercase;
+}
+
+.values__sep {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-dark);
+  opacity: 0.3;
+  flex-shrink: 0;
+}
+
+.values__line {
+  flex: 1 1 60px;
+  height: 1px;
+  background: rgba(63, 63, 63, 0.15);
+  min-width: 40px;
+}
+
+.values__desc {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text-dark);
+  max-width: 380px;
+  flex-shrink: 0;
+}
+
+/* =============================================
+   REDUCED MOTION — icons stay static thin-gray lines; only a
+   plain (non-moving) color acknowledgement is allowed on hover
    ============================================= */
 @media (prefers-reduced-motion: reduce) {
-  .icon-draw,
-  .icon-node,
-  .icon-pulse-dot,
-  .icon-dot {
-    animation: none !important;
-    stroke-dashoffset: 0 !important;
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
+  .icon-line--path,
+  .icon-line--start,
+  .icon-ring,
+  .icon-dot--target,
+  .icon-grid__dot,
+  .icon-layer,
+  .icon-ripple-ring,
+  .icon-dot--center {
+    transition: none;
   }
 
-  /* the diamond keeps its 45deg rotation — only the scale/settle motion is dropped */
-  .icon-center {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: rotate(45deg) !important;
-    filter: none !important;
+  .icon-traveler {
+    display: none;
   }
-
-  .icon-pulse-dot { opacity: 0 !important; }
 }
 
 /* =============================================
@@ -660,6 +813,11 @@ button {
   :root {
     --side-padding: 64px;
   }
+
+  .hero__copy h1 {
+    font-size: 52px;
+    line-height: 58px;
+  }
 }
 
 @media (max-width: 1080px) {
@@ -667,13 +825,22 @@ button {
     --side-padding: 40px;
   }
 
-  .hero__copy h1 {
-    font-size: 44px;
-  }
-
   .cards {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+  }
+
+  .think__cols {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .contact {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact__content {
+    max-width: 100%;
   }
 }
 
@@ -686,7 +853,7 @@ button {
     position: fixed;
     inset: 72px 0 0 0;
     height: calc(100vh - 72px);
-    background: var(--bg-warm-end);
+    background: var(--bg-page);
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -718,6 +885,7 @@ button {
 
   .hero__copy h1 {
     font-size: 40px;
+    line-height: 46px;
   }
 
   .hero__copy p {
@@ -725,27 +893,48 @@ button {
   }
 
   .top-region__bg {
-    background-position: 78% 50%;
-    opacity: 0.85;
+    background-position: center, 74% 42%;
   }
 
   .services {
-    padding-top: 40px;
-    padding-bottom: 64px;
+    padding-top: 24px;
+    padding-bottom: 48px;
   }
 
   .section-heading h2 {
-    font-size: 28px;
+    font-size: 26px;
+    line-height: 1.3;
   }
 
   .cards {
     grid-template-columns: 1fr;
+  }
+
+  .think {
+    padding: 48px var(--side-padding);
+  }
+
+  .contact {
+    padding: 32px;
+  }
+
+  .contact__content h3 {
+    font-size: 26px;
+  }
+
+  .values__line {
+    display: none;
+  }
+
+  .values__desc {
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .hero__copy h1 {
     font-size: 32px;
+    line-height: 38px;
   }
 
   .nav-brand__word {

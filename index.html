@@ -3,22 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Four Circles — Design brought into focus</title>
-  <meta name="description" content="Four Circles is a design studio made at the intersection of skill, purpose, and need.">
+  <title>Four Circles — We make complex design look easy</title>
+  <meta name="description" content="Four Circles is a design studio working at the intersection of passion, mission, vocation, and profession.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Inter:wght@400;500&family=Public+Sans:wght@300;400;500&family=Merriweather:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=Public+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Shared SVG defs (gradients reused by inline icons below) -->
+  <!-- Shared SVG defs: the gradient every icon fades into on hover -->
   <svg class="icon-defs" aria-hidden="true" focusable="false" width="0" height="0">
     <defs>
-      <linearGradient id="grad-digital-curve" x1="0%" y1="100%" x2="100%" y2="0%">
-        <stop offset="0%" class="grad-stop-orange"></stop>
+      <linearGradient id="grad-brand" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" class="grad-stop-coral"></stop>
+        <stop offset="38%" class="grad-stop-pink"></stop>
+        <stop offset="68%" class="grad-stop-purple"></stop>
         <stop offset="100%" class="grad-stop-blue"></stop>
       </linearGradient>
+      <radialGradient id="grad-brand-dot" cx="35%" cy="35%" r="75%">
+        <stop offset="0%" class="grad-stop-coral"></stop>
+        <stop offset="100%" class="grad-stop-purple"></stop>
+      </radialGradient>
     </defs>
   </svg>
 
@@ -34,9 +40,9 @@
           </a>
 
           <nav class="nav-links" id="nav-links">
-            <a href="#services">What we do</a>
             <a href="#top">About Us</a>
-            <a href="mailto:hello@fourcircles.com" class="nav-links__cta">Let's Talk</a>
+            <a href="#services">What we do</a>
+            <a href="#contact" class="nav-links__cta">Let's Talk</a>
           </nav>
 
           <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
@@ -50,119 +56,176 @@
       <section class="hero">
         <div class="hero__content reveal">
           <div class="hero__copy">
-            <h1>We make complex<br>design look easy</h1>
+            <h1>We make complex design look easy<span class="hero__dot">.</span></h1>
             <p>Through brand, product, and digital design, we turn scattered inputs into clear, cohesive experiences.</p>
           </div>
-          <a href="mailto:hello@fourcircles.com" class="btn-primary">Connect with us</a>
+          <a href="#contact" class="btn-primary">
+            Connect with us
+            <svg class="btn-primary__arrow" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true">
+              <path d="M5.75,10 L14.25,10 M10.75,5.75 L15,10 L10.75,14.25" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
         </div>
       </section>
 
       <section class="services" id="services">
         <div class="section-heading reveal">
-          <span class="label">What we do</span>
-          <h2>Our services</h2>
+          <span class="label"><span class="label__dot"></span>What we do</span>
+          <h2>Our Services</h2>
         </div>
 
         <div class="cards">
-          <article class="card reveal" data-icon="digital">
+          <article class="card" data-icon="digital">
             <div class="card__icon">
               <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <!-- 1. frame draws first, corner to corner, ~700ms (path, not rect:
-                     pathLength on non-path shapes is unreliable in older Safari) -->
-                <path class="icon-draw icon-frame" d="M30,28 H90 A16,16 0 0 1 106,44 V76 A16,16 0 0 1 90,92 H30 A16,16 0 0 1 14,76 V44 A16,16 0 0 1 30,28 Z" pathLength="1" style="--delay:0ms;--dur:700ms"></path>
-                <!-- 2. journey curve draws left-to-right after the frame, ~750ms -->
-                <path class="icon-draw icon-curve" d="M32,82 C46,96 50,58 66,66 C78,72 74,50 92,44" pathLength="1" style="--delay:700ms;--dur:750ms"></path>
-                <!-- 3. nodes reveal only once the curve reaches them -->
-                <circle class="icon-node icon-node--start" cx="32" cy="82" r="3.4" style="--delay:760ms;fill:var(--icon-orange)"></circle>
-                <circle class="icon-node icon-node--end" cx="92" cy="44" r="3.4" style="--delay:1430ms;fill:var(--icon-blue)"></circle>
-                <!-- 4. one highlight travels the path once entrance settles, then loops gently -->
-                <circle class="icon-pulse-dot icon-pulse-dot--digital" r="2.6"></circle>
+                <!-- Digital Experiences: a path from a single starting point that
+                     bends its way to a precise target — a user's journey arriving
+                     exactly where it needs to. On hover a traveling dot retraces
+                     the path in the brand gradient and the target lights up when
+                     it lands. -->
+                <path class="icon-line icon-line--path" d="M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36" pathLength="1"></path>
+                <path class="icon-line icon-line--path icon-line--glow" d="M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36" pathLength="1"></path>
+                <circle class="icon-line icon-line--start" cx="24" cy="86" r="6"></circle>
+                <circle class="icon-ring icon-ring--outer" cx="90" cy="26" r="14"></circle>
+                <circle class="icon-ring icon-ring--mid" cx="90" cy="26" r="9"></circle>
+                <circle class="icon-dot icon-dot--target" cx="90" cy="26" r="3"></circle>
+                <circle class="icon-traveler" r="3"></circle>
               </svg>
             </div>
             <h3>Digital Experiences</h3>
             <p>Human-centered experiences that feel intuitive, useful, and distinctly yours.</p>
-            <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Digital Experiences">
+            <a href="#contact" class="card__arrow" aria-label="Talk to us about Digital Experiences">
               <img src="assets/icon-arrow.svg" alt="">
             </a>
           </article>
 
-          <article class="card reveal" data-icon="brand">
+          <article class="card" data-icon="brand">
             <div class="card__icon">
-              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <!-- 1. four loops draw one at a time, clockwise from top-left, ~120ms apart
-                     (paths, not circles: pathLength on <circle> is unreliable in older Safari) -->
-                <path class="icon-draw icon-loop icon-loop--1" d="M24,48 A24,24 0 1 1 72,48 A24,24 0 1 1 24,48" pathLength="1" style="--delay:400ms;--dur:600ms"></path>
-                <path class="icon-draw icon-loop icon-loop--2" d="M48,48 A24,24 0 1 1 96,48 A24,24 0 1 1 48,48" pathLength="1" style="--delay:520ms;--dur:600ms"></path>
-                <path class="icon-draw icon-loop icon-loop--3" d="M48,72 A24,24 0 1 1 96,72 A24,24 0 1 1 48,72" pathLength="1" style="--delay:640ms;--dur:600ms"></path>
-                <path class="icon-draw icon-loop icon-loop--4" d="M24,72 A24,24 0 1 1 72,72 A24,24 0 1 1 24,72" pathLength="1" style="--delay:760ms;--dur:600ms"></path>
-                <!-- 2. center diamond fades in first and settles once all loops resolve -->
-                <rect class="icon-node icon-center" x="55" y="55" width="10" height="10"></rect>
+              <svg class="service-icon icon-grid" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- Brand & Identity: a grid of consistent marks — the same small
+                     unit repeated and recolored, the way a single identity flexes
+                     across many touchpoints. On hover the grid comes alive in a
+                     diagonal sweep of the brand colors. -->
+                <circle class="icon-grid__dot" style="--gx:0;--gy:0" cx="32" cy="32" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:1;--gy:0" cx="52" cy="32" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:2;--gy:0" cx="72" cy="32" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:3;--gy:0" cx="92" cy="32" r="4"></circle>
+
+                <circle class="icon-grid__dot" style="--gx:0;--gy:1" cx="32" cy="52" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:1;--gy:1" cx="52" cy="52" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:2;--gy:1" cx="72" cy="52" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:3;--gy:1" cx="92" cy="52" r="4"></circle>
+
+                <circle class="icon-grid__dot" style="--gx:0;--gy:2" cx="32" cy="72" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:1;--gy:2" cx="52" cy="72" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:2;--gy:2" cx="72" cy="72" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:3;--gy:2" cx="92" cy="72" r="4"></circle>
+
+                <circle class="icon-grid__dot" style="--gx:0;--gy:3" cx="32" cy="92" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:1;--gy:3" cx="52" cy="92" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:2;--gy:3" cx="72" cy="92" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:3;--gy:3" cx="92" cy="92" r="4"></circle>
               </svg>
             </div>
             <h3>Brand &amp; Identity</h3>
             <p>Flexible identities built from a clear visual idea and a consistent point of view.</p>
-            <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Brand &amp; Identity">
+            <a href="#contact" class="card__arrow" aria-label="Talk to us about Brand &amp; Identity">
               <img src="assets/icon-arrow.svg" alt="">
             </a>
           </article>
 
-          <article class="card reveal" data-icon="product">
+          <article class="card" data-icon="product">
             <div class="card__icon">
               <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <!-- 1. outer structure (path, not rect: see Digital Experiences note) -->
-                <path class="icon-draw icon-frame" d="M36,18 H84 A18,18 0 0 1 102,36 V84 A18,18 0 0 1 84,102 H36 A18,18 0 0 1 18,84 V36 A18,18 0 0 1 36,18 Z" pathLength="1" style="--delay:0ms;--dur:650ms"></path>
-                <!-- 2. central ring + core (path, not circle: see Brand & Identity note) -->
-                <path class="icon-draw icon-ring" d="M46,60 A14,14 0 1 1 74,60 A14,14 0 1 1 46,60" pathLength="1" style="--delay:650ms;--dur:450ms"></path>
-                <circle class="icon-node icon-core" cx="60" cy="60" r="4.5" style="--delay:900ms"></circle>
-                <!-- 3. connecting spokes draw outward, staggered ~100ms (path, not line: see note above) -->
-                <path class="icon-draw icon-spoke icon-spoke--a" d="M60,60 L90,26" pathLength="1" style="--delay:1100ms;--dur:350ms"></path>
-                <path class="icon-draw icon-spoke icon-spoke--b" d="M60,60 L90,92" pathLength="1" style="--delay:1200ms;--dur:350ms"></path>
-                <path class="icon-draw icon-spoke icon-spoke--c" d="M60,60 L28,90" pathLength="1" style="--delay:1300ms;--dur:350ms"></path>
-                <!-- 4. anchor nodes reveal as each spoke arrives -->
-                <circle class="icon-node icon-node--a" cx="90" cy="26" r="3.2" style="--delay:1350ms"></circle>
-                <circle class="icon-node icon-node--b" cx="90" cy="92" r="3.2" style="--delay:1450ms"></circle>
-                <circle class="icon-node icon-node--c" cx="28" cy="90" r="3.2" style="--delay:1550ms"></circle>
+                <!-- Product Design: three stacked planes — structure, interaction,
+                     and interface layered into one product. On hover they separate
+                     into an exploded view, each layer taking on its own color,
+                     then settle back into a single resolved stack. -->
+                <polygon class="icon-layer icon-layer--top" points="60,26 93,42 60,58 27,42"></polygon>
+                <polygon class="icon-layer icon-layer--mid" points="60,46 93,62 60,78 27,62"></polygon>
+                <polygon class="icon-layer icon-layer--bottom" points="60,66 93,82 60,98 27,82"></polygon>
               </svg>
             </div>
             <h3>Product Design</h3>
             <p>Thoughtful interfaces and systems that make complex tasks feel simple.</p>
-            <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Product Design">
+            <a href="#contact" class="card__arrow" aria-label="Talk to us about Product Design">
               <img src="assets/icon-arrow.svg" alt="">
             </a>
           </article>
 
-          <article class="card reveal" data-icon="creative">
+          <article class="card" data-icon="creative">
             <div class="card__icon">
               <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <!-- 1. the foundational decision: one dot, first -->
-                <circle class="icon-node icon-dot" cx="60" cy="62" r="4.5"></circle>
-                <!-- 2. ripple rings draw outward, ring by ring, segments staggered ~80ms -->
-                <path class="icon-draw icon-ripple" d="M73.79,63.04 A14,6 0 0 1 60.0,68.0" pathLength="1" style="--delay:350ms;--dur:400ms"></path>
-                <path class="icon-draw icon-ripple" d="M51.0,66.6 A14,6 0 0 1 47.88,59.0" pathLength="1" style="--delay:430ms;--dur:400ms"></path>
-                <path class="icon-draw icon-ripple" d="M55.21,56.36 A14,6 0 0 1 72.12,59.0" pathLength="1" style="--delay:510ms;--dur:400ms"></path>
-
-                <path class="icon-draw icon-ripple" d="M83.64,63.74 A24,10 0 0 1 60.0,72.0" pathLength="1" style="--delay:590ms;--dur:420ms"></path>
-                <path class="icon-draw icon-ripple icon-ripple--orange" d="M44.57,69.66 A24,10 0 0 1 39.22,57.0" pathLength="1" style="--delay:670ms;--dur:420ms"></path>
-                <path class="icon-draw icon-ripple" d="M51.79,52.6 A24,10 0 0 1 80.78,57.0" pathLength="1" style="--delay:750ms;--dur:420ms"></path>
-
-                <path class="icon-draw icon-ripple icon-ripple--gold" d="M93.48,64.43 A34,14 0 0 1 60.0,76.0" pathLength="1" style="--delay:830ms;--dur:440ms"></path>
-                <path class="icon-draw icon-ripple" d="M38.15,72.72 A34,14 0 0 1 30.56,55.0" pathLength="1" style="--delay:910ms;--dur:440ms"></path>
-                <path class="icon-draw icon-ripple" d="M48.37,48.84 A34,14 0 0 1 89.44,55.0" pathLength="1" style="--delay:990ms;--dur:440ms"></path>
-
-                <path class="icon-draw icon-ripple icon-ripple--blue" d="M105.3,65.3 A46,19 0 0 1 60.0,81.0" pathLength="1" style="--delay:1070ms;--dur:460ms"></path>
-                <path class="icon-draw icon-ripple" d="M30.43,76.55 A46,19 0 0 1 20.16,52.5" pathLength="1" style="--delay:1150ms;--dur:460ms"></path>
-                <path class="icon-draw icon-ripple" d="M44.27,44.15 A46,19 0 0 1 99.84,52.5" pathLength="1" style="--delay:1230ms;--dur:460ms"></path>
+                <!-- Creative Systems: one central decision, rippling outward
+                     through concentric rings — the way a single reusable
+                     component radiates consistency across an entire system.
+                     On hover the ripple travels outward through the brand
+                     gradient, ring by ring. -->
+                <circle class="icon-ripple-ring" style="--ring:0" cx="60" cy="60" r="14"></circle>
+                <circle class="icon-ripple-ring" style="--ring:1" cx="60" cy="60" r="24"></circle>
+                <circle class="icon-ripple-ring" style="--ring:2" cx="60" cy="60" r="34"></circle>
+                <circle class="icon-ripple-ring" style="--ring:3" cx="60" cy="60" r="44"></circle>
+                <circle class="icon-dot icon-dot--center" cx="60" cy="60" r="5"></circle>
               </svg>
             </div>
             <h3>Creative Systems</h3>
             <p>Reusable components and scalable patterns that keep every touchpoint connected.</p>
-            <a href="mailto:hello@fourcircles.com" class="card__arrow" aria-label="Talk to us about Creative Systems">
+            <a href="#contact" class="card__arrow" aria-label="Talk to us about Creative Systems">
               <img src="assets/icon-arrow.svg" alt="">
             </a>
           </article>
         </div>
       </section>
     </div>
+
+    <section class="think">
+      <div class="section-heading reveal">
+        <span class="label"><span class="label__dot label__dot--dark"></span>Why Four Circles</span>
+        <h2>How We Think</h2>
+      </div>
+
+      <div class="think__cols reveal">
+        <div class="think__col">
+          <h3>No compromising aesthetics.</h3>
+          <p>It should work beautifully and look the part. We don't settle for design that simply gets the job done.</p>
+        </div>
+        <div class="think__col">
+          <h3>We get it right, fast.</h3>
+          <p>We make it happen without making it complicated. We pride ourselves in meeting our commitments.</p>
+        </div>
+        <div class="think__col">
+          <h3>We care.</h3>
+          <p>And sometimes, too much. About the details, the bigger picture, the people we work with, and the work we put into the world.</p>
+        </div>
+      </div>
+
+      <div class="contact reveal" id="contact">
+        <div class="contact__art" aria-hidden="true"></div>
+        <div class="contact__content">
+          <h3>Let's Talk</h3>
+          <p>We partner with ambitious teams to build clarity and deliver meaningful results.</p>
+          <a href="mailto:hello@fourcircles.com" class="btn-primary btn-primary--dark">
+            Start a project
+            <svg class="btn-primary__arrow" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true">
+              <path d="M5.75,10 L14.25,10 M10.75,5.75 L15,10 L10.75,14.25" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="values reveal">
+        <span class="values__word" style="color:#cc2e7a">Passion</span>
+        <span class="values__sep"></span>
+        <span class="values__word" style="color:#ef8e6a">Mission</span>
+        <span class="values__sep"></span>
+        <span class="values__word" style="color:#9a73ff">Vocation</span>
+        <span class="values__sep"></span>
+        <span class="values__word" style="color:#0e8de1">Profession</span>
+        <span class="values__sep"></span>
+        <span class="values__line"></span>
+        <p class="values__desc">That intersection guides how we think, what we build, and the care we bring to every detail.</p>
+      </div>
+    </section>
   </main>
 
   <script src="script.js"></script>

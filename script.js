@@ -18,48 +18,6 @@ function initNavToggle() {
   });
 }
 
-/**
- * Service icon animations: the draw-in sequence (and its per-icon "lock-in"
- * finishing touch) plays only on hover or keyboard focus — never on load,
- * never on scroll, and nothing loops while idle. At rest the icon just
- * shows fully drawn (the plain, unanimated CSS state), so the page never
- * looks unfinished if JS fails to load. All the actual motion lives in
- * CSS keyframes (styles.css, "SERVICE ICON ANIMATIONS"); this only resets
- * and re-triggers them on each hover/focus so they can replay every time.
- *
- * `settleMs` mirrors the CSS: it's when the draw-in finishes, which is
- * also when each icon's "lock-in" (.is-settled) touch should start.
- */
-function initIconAnimations() {
-  const cards = document.querySelectorAll('.card[data-icon]');
-  if (!cards.length) return;
-
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return; // base CSS already renders icons fully drawn; hover keeps only its plain opacity change
-
-  const SETTLE_MS = {
-    digital: 1780,
-    brand: 1710,
-    product: 1900,
-    creative: 1690
-  };
-
-  cards.forEach(card => {
-    const settleMs = SETTLE_MS[card.dataset.icon] || 1800;
-
-    const replay = () => {
-      clearTimeout(card._iconSettleTimer);
-      card.classList.remove('is-visible', 'is-settled');
-      void card.offsetWidth; // force reflow so the animation restarts on every hover, not just the first
-      card.classList.add('is-visible');
-      card._iconSettleTimer = setTimeout(() => card.classList.add('is-settled'), settleMs);
-    };
-
-    card.addEventListener('mouseenter', replay);
-    card.addEventListener('focusin', replay);
-  });
-}
-
 function initNavScroll() {
   const nav = document.querySelector('.nav');
   if (!nav) return;
@@ -107,5 +65,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavToggle();
   initNavScroll();
   initScrollReveal();
-  initIconAnimations();
 });
