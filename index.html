@@ -12,6 +12,22 @@
 </head>
 <body>
 
+  <!-- Shared SVG defs: the gradient every icon fades into on hover -->
+  <svg class="icon-defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <linearGradient id="grad-brand" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" class="grad-stop-coral"></stop>
+        <stop offset="38%" class="grad-stop-pink"></stop>
+        <stop offset="68%" class="grad-stop-purple"></stop>
+        <stop offset="100%" class="grad-stop-blue"></stop>
+      </linearGradient>
+      <radialGradient id="grad-brand-dot" cx="35%" cy="35%" r="75%">
+        <stop offset="0%" class="grad-stop-coral"></stop>
+        <stop offset="100%" class="grad-stop-purple"></stop>
+      </radialGradient>
+    </defs>
+  </svg>
+
   <main>
     <div class="top-region">
       <div class="top-region__bg" aria-hidden="true"></div>
@@ -61,7 +77,20 @@
         <div class="cards">
           <article class="card reveal" data-icon="digital">
             <div class="card__icon">
-              <img class="service-icon" src="assets/icon-digital.png" alt="" loading="lazy">
+              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- Digital Experiences: a path from a single starting point that
+                     bends its way to a precise target — a user's journey arriving
+                     exactly where it needs to. On hover a traveling dot retraces
+                     the path in the brand gradient and the target lights up when
+                     it lands. -->
+                <path class="icon-line icon-line--path" d="M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36" pathLength="1"></path>
+                <path class="icon-line icon-line--path icon-line--glow" d="M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36" pathLength="1"></path>
+                <circle class="icon-line icon-line--start" cx="24" cy="86" r="6"></circle>
+                <circle class="icon-ring icon-ring--outer" cx="90" cy="26" r="14"></circle>
+                <circle class="icon-ring icon-ring--mid" cx="90" cy="26" r="9"></circle>
+                <circle class="icon-dot icon-dot--target" cx="90" cy="26" r="3"></circle>
+                <circle class="icon-traveler" r="3"></circle>
+              </svg>
             </div>
             <h3>Digital Experiences</h3>
             <p>Human-centered experiences that feel intuitive, useful, and distinctly yours.</p>
@@ -72,7 +101,31 @@
 
           <article class="card reveal" data-icon="brand">
             <div class="card__icon">
-              <img class="service-icon" src="assets/icon-brand.png" alt="" loading="lazy">
+              <svg class="service-icon icon-grid" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- Brand & Identity: a grid of consistent marks — the same small
+                     unit repeated and recolored, the way a single identity flexes
+                     across many touchpoints. On hover the grid comes alive in a
+                     diagonal sweep of the brand colors. -->
+                <circle class="icon-grid__dot" style="--gx:0;--gy:0" cx="32" cy="32" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:1;--gy:0" cx="52" cy="32" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:2;--gy:0" cx="72" cy="32" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:3;--gy:0" cx="92" cy="32" r="4"></circle>
+
+                <circle class="icon-grid__dot" style="--gx:0;--gy:1" cx="32" cy="52" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:1;--gy:1" cx="52" cy="52" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:2;--gy:1" cx="72" cy="52" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:3;--gy:1" cx="92" cy="52" r="4"></circle>
+
+                <circle class="icon-grid__dot" style="--gx:0;--gy:2" cx="32" cy="72" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:1;--gy:2" cx="52" cy="72" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:2;--gy:2" cx="72" cy="72" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:3;--gy:2" cx="92" cy="72" r="4"></circle>
+
+                <circle class="icon-grid__dot" style="--gx:0;--gy:3" cx="32" cy="92" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:1;--gy:3" cx="52" cy="92" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:2;--gy:3" cx="72" cy="92" r="4"></circle>
+                <circle class="icon-grid__dot" style="--gx:3;--gy:3" cx="92" cy="92" r="4"></circle>
+              </svg>
             </div>
             <h3>Brand &amp; Identity</h3>
             <p>Flexible identities built from a clear visual idea and a consistent point of view.</p>
@@ -83,7 +136,15 @@
 
           <article class="card reveal" data-icon="product">
             <div class="card__icon">
-              <img class="service-icon" src="assets/icon-product.png" alt="" loading="lazy">
+              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- Product Design: three stacked planes — structure, interaction,
+                     and interface layered into one product. On hover they separate
+                     into an exploded view, each layer taking on its own color,
+                     then settle back into a single resolved stack. -->
+                <polygon class="icon-layer icon-layer--top" points="60,26 93,42 60,58 27,42"></polygon>
+                <polygon class="icon-layer icon-layer--mid" points="60,46 93,62 60,78 27,62"></polygon>
+                <polygon class="icon-layer icon-layer--bottom" points="60,66 93,82 60,98 27,82"></polygon>
+              </svg>
             </div>
             <h3>Product Design</h3>
             <p>Thoughtful interfaces and systems that make complex tasks feel simple.</p>
@@ -94,7 +155,18 @@
 
           <article class="card reveal" data-icon="creative">
             <div class="card__icon">
-              <img class="service-icon" src="assets/icon-creative.png" alt="" loading="lazy">
+              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <!-- Creative Systems: one central decision, rippling outward
+                     through concentric rings — the way a single reusable
+                     component radiates consistency across an entire system.
+                     On hover the ripple travels outward through the brand
+                     gradient, ring by ring. -->
+                <circle class="icon-ripple-ring" style="--ring:0" cx="60" cy="60" r="14"></circle>
+                <circle class="icon-ripple-ring" style="--ring:1" cx="60" cy="60" r="24"></circle>
+                <circle class="icon-ripple-ring" style="--ring:2" cx="60" cy="60" r="34"></circle>
+                <circle class="icon-ripple-ring" style="--ring:3" cx="60" cy="60" r="44"></circle>
+                <circle class="icon-dot icon-dot--center" cx="60" cy="60" r="5"></circle>
+              </svg>
             </div>
             <h3>Creative Systems</h3>
             <p>Reusable components and scalable patterns that keep every touchpoint connected.</p>
@@ -129,7 +201,6 @@
 
       <div class="contact reveal" id="contact">
         <div class="contact__art" aria-hidden="true"></div>
-        <img class="contact__glass" src="assets/contact-swirl.svg" alt="" aria-hidden="true" loading="lazy">
         <div class="contact__content">
           <h3>Let's Talk</h3>
           <p>We partner with ambitious teams to build clarity and deliver meaningful results.</p>
@@ -139,21 +210,20 @@
               <path d="M5.75,10 L14.25,10 M10.75,5.75 L15,10 L10.75,14.25" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </a>
-
-          <div class="values">
-            <div class="values__row">
-              <span class="values__word" style="color:#cc2e7a">Passion</span>
-              <span class="values__sep"></span>
-              <span class="values__word" style="color:#ef8e6a">Mission</span>
-              <span class="values__sep"></span>
-              <span class="values__word" style="color:#9a73ff">Vocation</span>
-              <span class="values__sep"></span>
-              <span class="values__word" style="color:#0e8de1">Profession</span>
-            </div>
-            <span class="values__line"></span>
-            <p class="values__desc">That intersection guides how we think, what we build, and the care we bring to every detail.</p>
-          </div>
         </div>
+      </div>
+
+      <div class="values reveal">
+        <span class="values__word" style="color:#cc2e7a">Passion</span>
+        <span class="values__sep"></span>
+        <span class="values__word" style="color:#ef8e6a">Mission</span>
+        <span class="values__sep"></span>
+        <span class="values__word" style="color:#9a73ff">Vocation</span>
+        <span class="values__sep"></span>
+        <span class="values__word" style="color:#0e8de1">Profession</span>
+        <span class="values__sep"></span>
+        <span class="values__line"></span>
+        <p class="values__desc">That intersection guides how we think, what we build, and the care we bring to every detail.</p>
       </div>
     </section>
   </main>
