@@ -11,6 +11,18 @@
 </head>
 <body>
 
+  <!-- Shared SVG defs for icon gradients -->
+  <svg class="icon-defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <linearGradient id="grad-brand" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" class="grad-stop-coral"></stop>
+        <stop offset="38%" class="grad-stop-pink"></stop>
+        <stop offset="68%" class="grad-stop-purple"></stop>
+        <stop offset="100%" class="grad-stop-blue"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <!-- Navigation -->
   <nav class="nav">
     <a href="#" class="nav-brand">
@@ -64,7 +76,15 @@
       <div class="accordion-item">
         <button class="accordion-trigger" type="button">
           <div class="accordion-icon">
-            <img src="assets/service-digital.png" alt="">
+            <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+              <path class="icon-line icon-line--path" d="M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36" pathLength="1"></path>
+              <path class="icon-line icon-line--path icon-line--glow" d="M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36" pathLength="1"></path>
+              <circle class="icon-line icon-line--start" cx="24" cy="86" r="6"></circle>
+              <circle class="icon-ring icon-ring--outer" cx="90" cy="26" r="14"></circle>
+              <circle class="icon-ring icon-ring--mid" cx="90" cy="26" r="9"></circle>
+              <circle class="icon-dot icon-dot--target" cx="90" cy="26" r="3"></circle>
+              <circle class="icon-traveler" r="3"></circle>
+            </svg>
           </div>
           <div class="accordion-row">
             <h3 class="accordion-title">Digital Experiences</h3>
@@ -89,7 +109,24 @@
       <div class="accordion-item">
         <button class="accordion-trigger" type="button">
           <div class="accordion-icon">
-            <img src="assets/service-brand.png" alt="">
+            <svg class="service-icon icon-grid" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+              <circle class="icon-grid__dot" style="--gx:0;--gy:0" cx="32" cy="32" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:1;--gy:0" cx="52" cy="32" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:2;--gy:0" cx="72" cy="32" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:3;--gy:0" cx="92" cy="32" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:0;--gy:1" cx="32" cy="52" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:1;--gy:1" cx="52" cy="52" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:2;--gy:1" cx="72" cy="52" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:3;--gy:1" cx="92" cy="52" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:0;--gy:2" cx="32" cy="72" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:1;--gy:2" cx="52" cy="72" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:2;--gy:2" cx="72" cy="72" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:3;--gy:2" cx="92" cy="72" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:0;--gy:3" cx="32" cy="92" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:1;--gy:3" cx="52" cy="92" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:2;--gy:3" cx="72" cy="92" r="4"></circle>
+              <circle class="icon-grid__dot" style="--gx:3;--gy:3" cx="92" cy="92" r="4"></circle>
+            </svg>
           </div>
           <div class="accordion-row">
             <h3 class="accordion-title">Brand &amp; Identity</h3>
@@ -114,7 +151,11 @@
       <div class="accordion-item">
         <button class="accordion-trigger" type="button">
           <div class="accordion-icon">
-            <img src="assets/service-product.png" alt="">
+            <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+              <polygon class="icon-layer icon-layer--top" points="60,26 93,42 60,58 27,42"></polygon>
+              <polygon class="icon-layer icon-layer--mid" points="60,46 93,62 60,78 27,62"></polygon>
+              <polygon class="icon-layer icon-layer--bottom" points="60,66 93,82 60,98 27,82"></polygon>
+            </svg>
           </div>
           <div class="accordion-row">
             <h3 class="accordion-title">Product Design</h3>
@@ -139,7 +180,13 @@
       <div class="accordion-item accordion-item--last">
         <button class="accordion-trigger" type="button">
           <div class="accordion-icon">
-            <img src="assets/service-systems.png" alt="">
+            <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+              <circle class="icon-ripple-ring" style="--ring:0" cx="60" cy="60" r="14"></circle>
+              <circle class="icon-ripple-ring" style="--ring:1" cx="60" cy="60" r="24"></circle>
+              <circle class="icon-ripple-ring" style="--ring:2" cx="60" cy="60" r="34"></circle>
+              <circle class="icon-ripple-ring" style="--ring:3" cx="60" cy="60" r="44"></circle>
+              <circle class="icon-dot icon-dot--center" cx="60" cy="60" r="5"></circle>
+            </svg>
           </div>
           <div class="accordion-row">
             <h3 class="accordion-title">Creative Systems</h3>
