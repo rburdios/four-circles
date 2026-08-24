@@ -179,12 +179,13 @@ button {
 }
 
 .hero-left {
-  width: 50%;
+  width: 73.3%;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 48px;
   padding: 120px 80px;
+  border-right: 1px solid var(--color-border);
 }
 
 .hero-headline {
@@ -277,27 +278,24 @@ button {
 .accordion-item {
   border-bottom: 1px solid var(--color-border);
   position: relative;
-  transition: transform 0.3s ease;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-.accordion-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 35% 90% at 50% 100%,
-    rgba(204, 46, 122, 0.18) 0%,
-    rgba(239, 142, 106, 0.12) 35%,
-    rgba(154, 115, 255, 0.05) 65%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
+.accordion-item:hover {
+  background-color: var(--color-black);
 }
 
-.accordion-item:hover::before {
-  opacity: 1;
+.accordion-item:hover .accordion-title,
+.accordion-item:hover .accordion-desc,
+.accordion-item:hover .accordion-chevron {
+  color: #fff;
+  filter: brightness(0) invert(1);
+}
+
+.accordion-item:hover .accordion-title,
+.accordion-item:hover .accordion-desc {
+  filter: none;
+  color: #fff;
 }
 
 .accordion-item--last {
@@ -350,6 +348,7 @@ button {
   color: var(--color-text-dark);
   width: 400px;
   flex-shrink: 0;
+  transition: color 0.35s ease;
 }
 
 .accordion-desc {
@@ -359,13 +358,14 @@ button {
   line-height: 24px;
   color: var(--color-text-dark);
   flex: 1;
+  transition: color 0.35s ease;
 }
 
 .accordion-chevron {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, filter 0.35s ease;
 }
 
 .accordion-item.is-open .accordion-chevron {
@@ -405,6 +405,15 @@ button {
   font-size: 16px;
   font-weight: 600;
   color: var(--color-text);
+  transition: color 0.35s ease;
+}
+
+.accordion-item:hover .bullet-item {
+  color: #fff;
+}
+
+.accordion-item:hover .bullet-item .dot {
+  filter: brightness(0) invert(1);
 }
 
 /* =============================================
@@ -755,7 +764,7 @@ button {
    ============================================= */
 @media (max-width: 1280px) {
   .hero-left {
-    width: 50%;
+    width: 65%;
   }
 
   .hero-headline {
