@@ -281,23 +281,24 @@ button {
   transition: transform 0.3s ease;
 }
 
-.accordion-item::after {
+.accordion-item::before {
   content: '';
   position: absolute;
-  left: 3%;
-  right: 3%;
-  bottom: -4px;
-  height: 12px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, var(--color-pink), var(--color-orange), var(--color-purple));
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(204, 46, 122, 0.10) 0%,
+    rgba(239, 142, 106, 0.07) 30%,
+    rgba(154, 115, 255, 0.04) 60%,
+    transparent 100%
+  );
   opacity: 0;
-  filter: blur(12px);
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease;
   pointer-events: none;
 }
 
-.accordion-item:hover::after {
-  opacity: 0.8;
+.accordion-item:hover::before {
+  opacity: 1;
 }
 
 .accordion-item--last {
