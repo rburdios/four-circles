@@ -610,11 +610,12 @@ button {
 }
 
 .icon-digital-end {
-  fill: var(--color-blue);
-  stroke: none;
+  fill: none;
+  stroke: #55534e;
+  stroke-width: 2.5;
   transform-box: fill-box;
   transform-origin: center;
-  transition: fill 0.4s ease;
+  transition: stroke 0.4s ease;
 }
 
 .accordion-item:hover .icon-digital-path--glow {
@@ -632,8 +633,8 @@ button {
 }
 
 @keyframes icon-digital-ring {
-  0%, 100% { fill: var(--color-blue); transform: scale(1); }
-  50% { fill: var(--color-purple); transform: scale(1.15); }
+  0%, 100% { stroke: var(--color-blue); transform: scale(1); }
+  50% { stroke: var(--color-purple); transform: scale(1.15); }
 }
 
 @keyframes icon-digital-dot {
