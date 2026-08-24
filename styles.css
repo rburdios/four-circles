@@ -286,10 +286,10 @@ button {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse 70% 120% at 50% 100%,
+    ellipse 35% 90% at 50% 100%,
     rgba(204, 46, 122, 0.18) 0%,
-    rgba(239, 142, 106, 0.12) 30%,
-    rgba(154, 115, 255, 0.06) 60%,
+    rgba(239, 142, 106, 0.12) 35%,
+    rgba(154, 115, 255, 0.05) 65%,
     transparent 100%
   );
   opacity: 0;
