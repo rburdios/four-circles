@@ -365,6 +365,7 @@ button {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+  margin-right: 20px;
   transition: transform 0.3s ease, filter 0.35s ease;
 }
 
