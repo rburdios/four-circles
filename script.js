@@ -1,50 +1,34 @@
-function initNavToggle() {
-  const toggle = document.getElementById('nav-toggle');
-  const links = document.getElementById('nav-links');
-  if (!toggle || !links) return;
+function initAccordion() {
+  const items = document.querySelectorAll('.accordion-item');
 
-  toggle.addEventListener('click', () => {
-    const isOpen = links.classList.toggle('is-open');
-    toggle.classList.toggle('is-open', isOpen);
-    toggle.setAttribute('aria-expanded', String(isOpen));
-  });
+  items.forEach(item => {
+    const trigger = item.querySelector('.accordion-trigger');
+    const panel = item.querySelector('.accordion-panel');
 
-  links.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      links.classList.remove('is-open');
-      toggle.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+
+      items.forEach(other => {
+        other.classList.remove('is-open');
+        const otherPanel = other.querySelector('.accordion-panel');
+        if (otherPanel) otherPanel.style.maxHeight = '0';
+      });
+
+      if (!isOpen) {
+        item.classList.add('is-open');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
     });
   });
 }
 
-function initNavScroll() {
-  const nav = document.querySelector('.nav');
-  if (!nav) return;
-
-  const THRESHOLD = 40; // px scrolled before the solid backing fades in
-  let ticking = false;
-
-  const update = () => {
-    nav.classList.toggle('is-scrolled', window.scrollY > THRESHOLD);
-    ticking = false;
-  };
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(update);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  update(); // set correct state on load (e.g. page opened mid-scroll on refresh)
-}
-
 function initScrollReveal() {
-  const revealElements = document.querySelectorAll('.reveal');
-  if (!revealElements.length || !('IntersectionObserver' in window)) return;
+  const revealElements = document.querySelectorAll(
+    '.hero-left, .hero-right, .services-header, .accordion-item, ' +
+    '.hwt-left, .hwt-card, .lets-talk-content, .footer'
+  );
 
-  revealElements.forEach(el => el.classList.add('reveal-init'));
+  revealElements.forEach(el => el.classList.add('reveal'));
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -58,11 +42,30 @@ function initScrollReveal() {
     rootMargin: '0px 0px -40px 0px'
   });
 
-  revealElements.forEach(el => observer.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+function initNavScroll() {
+  const nav = document.querySelector('.nav');
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        if (window.scrollY > 50) {
+          nav.style.boxShadow = '0 1px 8px rgba(0,0,0,0.06)';
+        } else {
+          nav.style.boxShadow = 'none';
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initNavToggle();
-  initNavScroll();
+  initAccordion();
   initScrollReveal();
+  initNavScroll();
 });

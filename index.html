@@ -3,230 +3,224 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Four Circles — We make complex design look easy</title>
-  <meta name="description" content="Four Circles is a design studio working at the intersection of passion, mission, vocation, and profession.">
+  <title>Four Circles — Design Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=Public+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Public+Sans:wght@400;600&family=Inter:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Shared SVG defs: the gradient every icon fades into on hover -->
-  <svg class="icon-defs" aria-hidden="true" focusable="false" width="0" height="0">
-    <defs>
-      <linearGradient id="grad-brand" x1="0%" y1="100%" x2="100%" y2="0%">
-        <stop offset="0%" class="grad-stop-coral"></stop>
-        <stop offset="38%" class="grad-stop-pink"></stop>
-        <stop offset="68%" class="grad-stop-purple"></stop>
-        <stop offset="100%" class="grad-stop-blue"></stop>
-      </linearGradient>
-      <radialGradient id="grad-brand-dot" cx="35%" cy="35%" r="75%">
-        <stop offset="0%" class="grad-stop-coral"></stop>
-        <stop offset="100%" class="grad-stop-purple"></stop>
-      </radialGradient>
-    </defs>
-  </svg>
-
-  <main>
-    <div class="top-region">
-      <div class="top-region__bg" aria-hidden="true"></div>
-
-      <header class="nav" id="top">
-        <div class="nav__inner">
-          <a href="#top" class="nav-brand">
-            <img src="assets/logo-mark.svg" alt="" class="nav-brand__mark">
-            <img src="assets/logo-wordmark.svg" alt="Four Circles" class="nav-brand__word">
-          </a>
-
-          <nav class="nav-links" id="nav-links">
-            <a href="#top">About Us</a>
-            <a href="#services">What we do</a>
-            <a href="#contact" class="nav-links__cta">Let's Talk</a>
-          </nav>
-
-          <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </header>
-
-      <section class="hero">
-        <div class="hero__content reveal">
-          <div class="hero__copy">
-            <h1>We make complex design look easy<span class="hero__dot">.</span></h1>
-            <p>Through brand, product, and digital design, we turn scattered inputs into clear, cohesive experiences.</p>
-          </div>
-          <a href="#contact" class="btn-primary">
-            Connect with us
-            <svg class="btn-primary__arrow" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true">
-              <path d="M5.75,10 L14.25,10 M10.75,5.75 L15,10 L10.75,14.25" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </a>
-        </div>
-      </section>
-
-      <section class="services" id="services">
-        <div class="section-heading reveal">
-          <span class="label"><span class="label__dot"></span>What we do</span>
-          <h2>Our Services</h2>
-        </div>
-
-        <div class="cards">
-          <article class="card reveal" data-icon="digital">
-            <div class="card__icon">
-              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <!-- Digital Experiences: a path from a single starting point that
-                     bends its way to a precise target — a user's journey arriving
-                     exactly where it needs to. On hover a traveling dot retraces
-                     the path in the brand gradient and the target lights up when
-                     it lands. -->
-                <path class="icon-line icon-line--path" d="M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36" pathLength="1"></path>
-                <path class="icon-line icon-line--path icon-line--glow" d="M24,86 C34,70 44,92 56,76 C66,62 74,48 80,36" pathLength="1"></path>
-                <circle class="icon-line icon-line--start" cx="24" cy="86" r="6"></circle>
-                <circle class="icon-ring icon-ring--outer" cx="90" cy="26" r="14"></circle>
-                <circle class="icon-ring icon-ring--mid" cx="90" cy="26" r="9"></circle>
-                <circle class="icon-dot icon-dot--target" cx="90" cy="26" r="3"></circle>
-                <circle class="icon-traveler" r="3"></circle>
-              </svg>
-            </div>
-            <h3>Digital Experiences</h3>
-            <p>Human-centered experiences that feel intuitive, useful, and distinctly yours.</p>
-            <a href="#contact" class="card__arrow" aria-label="Talk to us about Digital Experiences">
-              <img src="assets/icon-arrow.svg" alt="">
-            </a>
-          </article>
-
-          <article class="card reveal" data-icon="brand">
-            <div class="card__icon">
-              <svg class="service-icon icon-grid" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <!-- Brand & Identity: a grid of consistent marks — the same small
-                     unit repeated and recolored, the way a single identity flexes
-                     across many touchpoints. On hover the grid comes alive in a
-                     diagonal sweep of the brand colors. -->
-                <circle class="icon-grid__dot" style="--gx:0;--gy:0" cx="32" cy="32" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:1;--gy:0" cx="52" cy="32" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:2;--gy:0" cx="72" cy="32" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:3;--gy:0" cx="92" cy="32" r="4"></circle>
-
-                <circle class="icon-grid__dot" style="--gx:0;--gy:1" cx="32" cy="52" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:1;--gy:1" cx="52" cy="52" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:2;--gy:1" cx="72" cy="52" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:3;--gy:1" cx="92" cy="52" r="4"></circle>
-
-                <circle class="icon-grid__dot" style="--gx:0;--gy:2" cx="32" cy="72" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:1;--gy:2" cx="52" cy="72" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:2;--gy:2" cx="72" cy="72" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:3;--gy:2" cx="92" cy="72" r="4"></circle>
-
-                <circle class="icon-grid__dot" style="--gx:0;--gy:3" cx="32" cy="92" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:1;--gy:3" cx="52" cy="92" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:2;--gy:3" cx="72" cy="92" r="4"></circle>
-                <circle class="icon-grid__dot" style="--gx:3;--gy:3" cx="92" cy="92" r="4"></circle>
-              </svg>
-            </div>
-            <h3>Brand &amp; Identity</h3>
-            <p>Flexible identities built from a clear visual idea and a consistent point of view.</p>
-            <a href="#contact" class="card__arrow" aria-label="Talk to us about Brand &amp; Identity">
-              <img src="assets/icon-arrow.svg" alt="">
-            </a>
-          </article>
-
-          <article class="card reveal" data-icon="product">
-            <div class="card__icon">
-              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <!-- Product Design: three stacked planes — structure, interaction,
-                     and interface layered into one product. On hover they separate
-                     into an exploded view, each layer taking on its own color,
-                     then settle back into a single resolved stack. -->
-                <polygon class="icon-layer icon-layer--top" points="60,26 93,42 60,58 27,42"></polygon>
-                <polygon class="icon-layer icon-layer--mid" points="60,46 93,62 60,78 27,62"></polygon>
-                <polygon class="icon-layer icon-layer--bottom" points="60,66 93,82 60,98 27,82"></polygon>
-              </svg>
-            </div>
-            <h3>Product Design</h3>
-            <p>Thoughtful interfaces and systems that make complex tasks feel simple.</p>
-            <a href="#contact" class="card__arrow" aria-label="Talk to us about Product Design">
-              <img src="assets/icon-arrow.svg" alt="">
-            </a>
-          </article>
-
-          <article class="card reveal" data-icon="creative">
-            <div class="card__icon">
-              <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <!-- Creative Systems: one central decision, rippling outward
-                     through concentric rings — the way a single reusable
-                     component radiates consistency across an entire system.
-                     On hover the ripple travels outward through the brand
-                     gradient, ring by ring. -->
-                <circle class="icon-ripple-ring" style="--ring:0" cx="60" cy="60" r="14"></circle>
-                <circle class="icon-ripple-ring" style="--ring:1" cx="60" cy="60" r="24"></circle>
-                <circle class="icon-ripple-ring" style="--ring:2" cx="60" cy="60" r="34"></circle>
-                <circle class="icon-ripple-ring" style="--ring:3" cx="60" cy="60" r="44"></circle>
-                <circle class="icon-dot icon-dot--center" cx="60" cy="60" r="5"></circle>
-              </svg>
-            </div>
-            <h3>Creative Systems</h3>
-            <p>Reusable components and scalable patterns that keep every touchpoint connected.</p>
-            <a href="#contact" class="card__arrow" aria-label="Talk to us about Creative Systems">
-              <img src="assets/icon-arrow.svg" alt="">
-            </a>
-          </article>
-        </div>
-      </section>
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="#" class="nav-brand">
+      <img src="assets/logo-icon.svg" alt="Four Circles" class="nav-logo-icon">
+      <img src="assets/logo-text.svg" alt="FOUR CIRCLES" class="nav-logo-text">
+    </a>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">About Us</a>
+      <a href="#services" class="nav-link">What we do</a>
+      <a href="#contact" class="nav-link">Let's Talk</a>
     </div>
+  </nav>
 
-    <section class="think">
-      <div class="section-heading reveal">
-        <span class="label"><span class="label__dot label__dot--dark"></span>Why Four Circles</span>
-        <h2>How We Think</h2>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-content">
+        <h1 class="hero-headline">We make complex design look easy<span class="text-purple">.</span></h1>
+      </div>
+      <div class="hero-bottom">
+        <p class="hero-sub">Through brand, product, and digital design, we turn scattered inputs into clear, cohesive experiences.</p>
+        <a href="#contact" class="btn-primary">
+          <span>Start a project</span>
+          <img src="assets/arrow-icon.svg" alt="" class="btn-arrow">
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-image">
+        <img src="assets/hero-image.png" alt="Four Circles work">
+      </div>
+      <div class="hero-tags">
+        <span>Branding</span>
+        <img src="assets/dot-gray.svg" alt="" class="dot">
+        <span>Product Design</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="services">
+    <div class="services-header">
+      <div class="section-tag">
+        <img src="assets/dot-gray.svg" alt="" class="dot">
+        <span>What we Do</span>
+      </div>
+      <h2 class="services-heading">Our Services</h2>
+    </div>
+    <div class="accordion">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button">
+          <div class="accordion-icon">
+            <img src="assets/service-digital.png" alt="">
+          </div>
+          <div class="accordion-row">
+            <h3 class="accordion-title">Digital Experiences</h3>
+            <p class="accordion-desc">Human-centered experiences that feel intuitive, useful, and distinctly yours.</p>
+            <img src="assets/chevron-down.svg" alt="" class="accordion-chevron">
+          </div>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-bullets">
+            <div class="bullet-row">
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Product Design</span></div>
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Development</span></div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>UX Strategy</span></div>
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Prototyping</span></div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="think__cols">
-        <div class="think__col reveal">
-          <h3>No compromising aesthetics.</h3>
-          <p>It should work beautifully and look the part. We don't settle for design that simply gets the job done.</p>
-        </div>
-        <div class="think__col reveal">
-          <h3>We get it right, fast.</h3>
-          <p>We make it happen without making it complicated. We pride ourselves in meeting our commitments.</p>
-        </div>
-        <div class="think__col reveal">
-          <h3>We care.</h3>
-          <p>And sometimes, too much. About the details, the bigger picture, the people we work with, and the work we put into the world.</p>
-        </div>
-      </div>
-
-      <div class="contact reveal" id="contact">
-        <div class="contact__art" aria-hidden="true"></div>
-        <div class="contact__content">
-          <h3>Let's Talk</h3>
-          <p>We partner with ambitious teams to build clarity and deliver meaningful results.</p>
-          <a href="mailto:hello@fourcircles.com" class="btn-primary btn-primary--dark">
-            Start a project
-            <svg class="btn-primary__arrow" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true">
-              <path d="M5.75,10 L14.25,10 M10.75,5.75 L15,10 L10.75,14.25" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </a>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button">
+          <div class="accordion-icon">
+            <img src="assets/service-brand.png" alt="">
+          </div>
+          <div class="accordion-row">
+            <h3 class="accordion-title">Brand &amp; Identity</h3>
+            <p class="accordion-desc">Flexible identities built from a clear visual idea and a consistent point of view.</p>
+            <img src="assets/chevron-down.svg" alt="" class="accordion-chevron">
+          </div>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-bullets">
+            <div class="bullet-row">
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Brand Strategy</span></div>
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Visual Identity</span></div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Brand Guidelines</span></div>
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Art Direction</span></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="values reveal">
-        <span class="values__word" style="color:#cc2e7a">Passion</span>
-        <span class="values__sep"></span>
-        <span class="values__word" style="color:#ef8e6a">Mission</span>
-        <span class="values__sep"></span>
-        <span class="values__word" style="color:#9a73ff">Vocation</span>
-        <span class="values__sep"></span>
-        <span class="values__word" style="color:#0e8de1">Profession</span>
-        <span class="values__sep"></span>
-        <span class="values__line"></span>
-        <p class="values__desc">That intersection guides how we think, what we build, and the care we bring to every detail.</p>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button">
+          <div class="accordion-icon">
+            <img src="assets/service-product.png" alt="">
+          </div>
+          <div class="accordion-row">
+            <h3 class="accordion-title">Product Design</h3>
+            <p class="accordion-desc">Thoughtful interfaces and systems that make complex tasks feel simple.</p>
+            <img src="assets/chevron-down.svg" alt="" class="accordion-chevron">
+          </div>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-bullets">
+            <div class="bullet-row">
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>UI Design</span></div>
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Design Systems</span></div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>User Research</span></div>
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Interaction Design</span></div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
-  </main>
+
+      <div class="accordion-item accordion-item--last">
+        <button class="accordion-trigger" type="button">
+          <div class="accordion-icon">
+            <img src="assets/service-systems.png" alt="">
+          </div>
+          <div class="accordion-row">
+            <h3 class="accordion-title">Creative Systems</h3>
+            <p class="accordion-desc">Reusable components and scalable patterns that keep every touchpoint connected.</p>
+            <img src="assets/chevron-down.svg" alt="" class="accordion-chevron">
+          </div>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-bullets">
+            <div class="bullet-row">
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Component Libraries</span></div>
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Design Tokens</span></div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Documentation</span></div>
+              <div class="bullet-item"><img src="assets/dot-gray.svg" alt="" class="dot"><span>Governance</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- How We Think -->
+  <section id="about" class="how-we-think">
+    <div class="hwt-left">
+      <div class="section-tag section-tag--light">
+        <img src="assets/dot-white.svg" alt="" class="dot">
+        <span>Why Four circles</span>
+      </div>
+      <h2 class="hwt-heading">How We Think</h2>
+    </div>
+    <div class="hwt-cards">
+      <div class="hwt-divider"></div>
+      <div class="hwt-card">
+        <img src="assets/line-orange.svg" alt="" class="hwt-line">
+        <h3>No compromising aesthetics.</h3>
+        <p>It should work beautifully and look the part. We don't settle for design that simply gets the job done.</p>
+      </div>
+      <div class="hwt-divider"></div>
+      <div class="hwt-card">
+        <img src="assets/line-purple.svg" alt="" class="hwt-line">
+        <h3>We get it right, fast.</h3>
+        <p>We make it happen without making it complicated. We pride ourselves in meeting our commitments.</p>
+      </div>
+      <div class="hwt-divider"></div>
+      <div class="hwt-card">
+        <img src="assets/line-pink.svg" alt="" class="hwt-line">
+        <h3>We care.</h3>
+        <p>And some times, too much. About the details, the bigger picture, the people we work with, and the work we put into the world.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Let's Talk -->
+  <section id="contact" class="lets-talk">
+    <img src="assets/lets-talk-bg.png" alt="" class="lets-talk-bg">
+    <div class="lets-talk-content">
+      <h2>Let's Talk</h2>
+      <p>We partner with ambitious teams to build clarity and deliver meaningful results</p>
+      <a href="mailto:hello@fourcircles.co" class="btn-primary">
+        <span>Start a project</span>
+        <img src="assets/arrow-icon.svg" alt="" class="btn-arrow">
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-values">
+      <span class="value value--pink">Passion</span>
+      <img src="assets/dot-pink.svg" alt="" class="dot">
+      <span class="value value--orange">Mission</span>
+      <img src="assets/dot-orange.svg" alt="" class="dot">
+      <span class="value value--purple">Vocation</span>
+      <img src="assets/dot-purple.svg" alt="" class="dot">
+      <span class="value value--blue">Profession</span>
+    </div>
+    <p class="footer-text">That intersection guides how we think, what we build, and the care we bring to every detail</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
