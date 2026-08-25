@@ -25,7 +25,7 @@ function initAccordion() {
 function initScrollReveal() {
   const revealElements = document.querySelectorAll(
     '.hero-left, .hero-right, .services-header, .accordion-item, ' +
-    '.hwt-left, .hwt-card, .industries-header, .industry-card, .lets-talk-content, .footer'
+    '.hwt-left, .hwt-card, .lets-talk-content, .footer'
   );
 
   revealElements.forEach(el => el.classList.add('reveal'));
