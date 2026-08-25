@@ -576,12 +576,17 @@ button {
 .footer {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  padding: 40px 60px;
 }
 
 .footer-values {
-  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 40px 60px;
+}
+
+.footer-values-left {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -613,8 +618,8 @@ button {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding-top: 32px;
-  border-top: 1px solid var(--color-border);
+  padding: 48px 60px;
+  background: var(--color-text-dark);
 }
 
 .footer-brand {
@@ -623,10 +628,18 @@ button {
   gap: 16px;
 }
 
+.footer-brand .nav-logo-icon {
+  filter: brightness(0) invert(1);
+}
+
+.footer-brand .nav-logo-text {
+  filter: brightness(0) invert(1);
+}
+
 .footer-tagline {
   font-family: var(--font-body);
   font-size: 14px;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.6);
   max-width: 360px;
   line-height: 1.5;
 }
@@ -640,12 +653,12 @@ button {
 .footer-link {
   font-family: var(--font-body);
   font-size: 14px;
-  color: var(--color-text);
+  color: #fff;
   transition: opacity 0.3s ease;
 }
 
 .footer-link:hover {
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .footer-link--icon {
@@ -660,15 +673,15 @@ button {
 }
 
 .footer-bottom {
-  padding-top: 24px;
-  border-top: 1px solid var(--color-border);
+  padding: 24px 60px;
+  background: var(--color-text-dark);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-copy {
   font-family: var(--font-body);
   font-size: 13px;
-  color: var(--color-text);
-  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 /* =============================================
@@ -962,13 +975,20 @@ button {
     padding: 48px 40px;
   }
 
-  .footer {
+  .footer-values {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 40px;
   }
 
   .footer-simple {
     flex-direction: column;
     gap: 32px;
+    padding: 40px;
+  }
+
+  .footer-bottom {
+    padding: 24px 40px;
   }
 }
 
@@ -1095,11 +1115,11 @@ button {
     width: 100%;
   }
 
-  .footer {
+  .footer-values {
     padding: 32px 24px;
   }
 
-  .footer-values {
+  .footer-values-left {
     flex-wrap: wrap;
     gap: 12px;
   }
@@ -1113,10 +1133,18 @@ button {
     font-size: 14px;
   }
 
+  .footer-simple {
+    padding: 32px 24px;
+  }
+
   .footer-links {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+
+  .footer-bottom {
+    padding: 20px 24px;
   }
 }
 
@@ -1178,7 +1206,15 @@ button {
     font-size: 32px;
   }
 
-  .footer {
+  .footer-values {
     padding: 24px 20px;
+  }
+
+  .footer-simple {
+    padding: 24px 20px;
+  }
+
+  .footer-bottom {
+    padding: 16px 20px;
   }
 }
