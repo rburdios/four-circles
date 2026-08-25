@@ -25,7 +25,7 @@ function initAccordion() {
 function initScrollReveal() {
   const revealElements = document.querySelectorAll(
     '.hero-left, .hero-right, .services-header, .accordion-item, ' +
-    '.hwt-left, .hwt-card, .lets-talk-content, .footer'
+    '.hwt-left, .hwt-card, .industries-header, .industry-card, .lets-talk-content, .footer'
   );
 
   revealElements.forEach(el => el.classList.add('reveal'));
@@ -64,8 +64,24 @@ function initNavScroll() {
   });
 }
 
+function initDigitalIconMotion() {
+  const item = document.querySelector('.accordion-item');
+  if (!item) return;
+  const motion = item.querySelector('.icon-digital-motion');
+  if (!motion) return;
+
+  item.addEventListener('mouseenter', () => {
+    motion.beginElement();
+  });
+
+  item.addEventListener('mouseleave', () => {
+    motion.endElement();
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initAccordion();
   initScrollReveal();
   initNavScroll();
+  initDigitalIconMotion();
 });

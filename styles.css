@@ -485,6 +485,76 @@ button {
 }
 
 /* =============================================
+   INDUSTRIES
+   ============================================= */
+.industries {
+  padding: 80px 80px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.industries-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.industries-heading {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 50px;
+  color: var(--color-text);
+}
+
+.industries-grid {
+  display: flex;
+  gap: 32px;
+}
+
+.industry-card {
+  flex: 1;
+  padding: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.industry-card:hover {
+  background: var(--color-black);
+}
+
+.industry-title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  transition: color 0.35s ease;
+}
+
+.industry-card:hover .industry-title {
+  color: #fff;
+}
+
+.industry-desc {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--color-text);
+  transition: color 0.35s ease;
+}
+
+.industry-card:hover .industry-desc {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* =============================================
    LET'S TALK
    ============================================= */
 .lets-talk {
@@ -617,6 +687,16 @@ button {
   transform-box: fill-box;
   transform-origin: center;
   transition: stroke 0.4s ease;
+}
+
+.icon-digital-traveler {
+  fill: url(#grad-brand);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.accordion-item:hover .icon-digital-traveler {
+  opacity: 1;
 }
 
 .accordion-item:hover .icon-digital-path--glow {
@@ -830,6 +910,14 @@ button {
     width: 100%;
   }
 
+  .industries {
+    padding: 60px 40px;
+  }
+
+  .industries-grid {
+    flex-direction: column;
+  }
+
   .hwt-cards {
     flex-direction: column;
   }
@@ -920,6 +1008,19 @@ button {
   .hwt-heading {
     font-size: 36px;
     line-height: 40px;
+  }
+
+  .industries {
+    padding: 48px 24px;
+  }
+
+  .industries-heading {
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .industry-card {
+    padding: 28px;
   }
 
   .lets-talk {
