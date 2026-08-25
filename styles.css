@@ -421,9 +421,8 @@ button {
 .industries-bar {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 24px 0;
   border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   margin-top: 12px;
 }
 
@@ -435,6 +434,9 @@ button {
   text-transform: uppercase;
   color: var(--color-text);
   flex-shrink: 0;
+  padding: 20px 24px 20px 0;
+  border-right: 1px solid var(--color-border);
+  margin-right: 24px;
 }
 
 .industries-list {
@@ -1009,12 +1011,20 @@ button {
   .industries-bar {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+  }
+
+  .industries-label {
+    border-right: none;
+    margin-right: 0;
+    padding: 16px 0 12px;
+    border-bottom: 1px solid var(--color-border);
+    width: 100%;
   }
 
   .industries-list {
     flex-wrap: wrap;
     gap: 8px 16px;
+    padding: 12px 0 16px;
   }
 
   .how-we-think {
