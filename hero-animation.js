@@ -6,8 +6,6 @@
   let w, h, dpr, time = 0;
   let mouse = { x: -9999, y: -9999, smoothX: -9999, smoothY: -9999, active: false };
 
-  const colors = ['#f0a0b0', '#c0a0e8', '#f0b898', '#a0c8e8'];
-
   const circles = [];
 
   function resize() {
@@ -28,10 +26,10 @@
 
     const dim = Math.min(w, h);
     const configs = [
-      { rBase: dim * 0.38, home: { x: 0.65, y: 0.35 }, freq: 0.0008, amp: 0.06, phase: 0 },
-      { rBase: dim * 0.30, home: { x: 0.30, y: 0.55 }, freq: 0.0011, amp: 0.07, phase: 1.8 },
-      { rBase: dim * 0.22, home: { x: 0.75, y: 0.70 }, freq: 0.0014, amp: 0.08, phase: 3.6 },
-      { rBase: dim * 0.15, home: { x: 0.45, y: 0.25 }, freq: 0.0018, amp: 0.09, phase: 5.2 }
+      { rBase: dim * 0.42, home: { x: 0.58, y: 0.38 }, freq: 0.0006, amp: 0.10, phase: 0, strokeAlpha: 0.35, lineWidth: 1.8 },
+      { rBase: dim * 0.33, home: { x: 0.28, y: 0.62 }, freq: 0.0009, amp: 0.12, phase: 2.1, strokeAlpha: 0.25, lineWidth: 1.4 },
+      { rBase: dim * 0.24, home: { x: 0.78, y: 0.68 }, freq: 0.0013, amp: 0.14, phase: 4.0, strokeAlpha: 0.18, lineWidth: 1.1 },
+      { rBase: dim * 0.16, home: { x: 0.42, y: 0.22 }, freq: 0.0017, amp: 0.16, phase: 5.8, strokeAlpha: 0.40, lineWidth: 1.6 }
     ];
 
     for (let i = 0; i < 4; i++) {
@@ -43,13 +41,12 @@
         y: cfg.home.y * h,
         rBase: cfg.rBase,
         r: cfg.rBase,
-        color: colors[i],
         freq: cfg.freq,
         amp: cfg.amp,
         phase: cfg.phase,
         breathPhase: i * 1.5,
-        offsetX: 0,
-        offsetY: 0
+        strokeAlpha: cfg.strokeAlpha,
+        lineWidth: cfg.lineWidth
       });
     }
   }
@@ -68,34 +65,39 @@
     time++;
 
     if (mouse.active) {
-      mouse.smoothX += (mouse.x - mouse.smoothX) * 0.06;
-      mouse.smoothY += (mouse.y - mouse.smoothY) * 0.06;
+      mouse.smoothX += (mouse.x - mouse.smoothX) * 0.04;
+      mouse.smoothY += (mouse.y - mouse.smoothY) * 0.04;
     } else {
-      mouse.smoothX += (-9999 - mouse.smoothX) * 0.03;
-      mouse.smoothY += (-9999 - mouse.smoothY) * 0.03;
+      mouse.smoothX += (-9999 - mouse.smoothX) * 0.02;
+      mouse.smoothY += (-9999 - mouse.smoothY) * 0.02;
     }
 
-    for (const c of circles) {
-      const driftX = Math.sin(time * c.freq + c.phase) * w * c.amp;
-      const driftY = Math.cos(time * c.freq * 0.7 + c.phase + 1) * h * c.amp;
+    for (let i = 0; i < circles.length; i++) {
+      const c = circles[i];
+
+      const driftX = Math.sin(time * c.freq + c.phase) * w * c.amp
+                   + Math.sin(time * c.freq * 1.7 + c.phase * 0.5) * w * c.amp * 0.3;
+      const driftY = Math.cos(time * c.freq * 0.8 + c.phase + 1) * h * c.amp
+                   + Math.cos(time * c.freq * 1.3 + c.phase * 1.2) * h * c.amp * 0.25;
 
       let targetX = c.homeX + driftX;
       let targetY = c.homeY + driftY;
 
       if (mouse.smoothX > -1000) {
-        const dx = mouse.smoothX - c.homeX;
-        const dy = mouse.smoothY - c.homeY;
+        const dx = mouse.smoothX - targetX;
+        const dy = mouse.smoothY - targetY;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const pull = Math.max(0, 1 - dist / (Math.max(w, h) * 0.8));
-        const strength = pull * pull * 0.35;
+        const range = Math.max(w, h) * 0.7;
+        const pull = Math.max(0, 1 - dist / range);
+        const strength = pull * pull * 0.4;
         targetX += dx * strength;
         targetY += dy * strength;
       }
 
-      c.x += (targetX - c.x) * 0.02;
-      c.y += (targetY - c.y) * 0.02;
+      c.x += (targetX - c.x) * 0.015;
+      c.y += (targetY - c.y) * 0.015;
 
-      const breath = 1 + Math.sin(time * 0.015 + c.breathPhase) * 0.03;
+      const breath = 1 + Math.sin(time * 0.012 + c.breathPhase) * 0.04;
       c.r = c.rBase * breath;
     }
   }
@@ -103,23 +105,16 @@
   function draw() {
     drawBackground();
 
-    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalCompositeOperation = 'lighter';
 
-    const sorted = [...circles].sort((a, b) => b.r - a.r);
-    for (const c of sorted) {
-      ctx.globalAlpha = 0.55;
+    for (const c of circles) {
       ctx.beginPath();
       ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-      ctx.fillStyle = c.color;
-      ctx.fill();
-
-      ctx.globalAlpha = 0.45;
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = 'rgba(255, 255, 255, ' + c.strokeAlpha + ')';
+      ctx.lineWidth = c.lineWidth;
       ctx.stroke();
     }
 
-    ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
   }
 
