@@ -238,11 +238,13 @@ button {
   min-height: 0;
 }
 
-.hero-image img {
+.hero-image img,
+.hero-image canvas {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: right top;
+  display: block;
 }
 
 .hero-tags {
@@ -413,13 +415,18 @@ button {
 
 .bullet-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   color: var(--color-text);
   transition: color 0.35s ease;
+}
+
+.bullet-item .dot {
+  margin-top: 6px;
+  flex-shrink: 0;
 }
 
 .accordion-item:hover .bullet-item {
@@ -873,7 +880,7 @@ button {
   }
 
   .accordion-bullets {
-    padding-left: 400px;
+    padding-left: 0;
   }
 }
 
@@ -913,7 +920,7 @@ button {
   }
 
   .accordion-bullets {
-    padding-left: 320px;
+    padding-left: 0;
   }
 
   .bullet-row {
