@@ -68,30 +68,25 @@
 .contact-email {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   margin-top: 12px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  transition: border-color 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .contact-email:hover {
-  border-color: #fff;
+  opacity: 0.8;
 }
 
-.contact-email-label {
-  font-family: var(--font-heading);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1.44px;
-  text-transform: uppercase;
+.contact-email-icon {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.contact-email-text {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
   color: #fff;
-}
-
-.contact-email-arrow {
-  width: 12px;
-  height: 10px;
-  filter: brightness(0) invert(1);
 }
 
 /* ---------- Right Column ---------- */
@@ -202,38 +197,15 @@
 }
 
 /* ---------- Submit Button ---------- */
-.form-submit {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 20px 32px;
-  background: var(--color-pink);
-  color: #fff;
-  border: none;
-  border-radius: 0;
-  cursor: pointer;
-  font-family: var(--font-heading);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1.44px;
-  text-transform: uppercase;
-  transition: background 0.3s ease, opacity 0.3s ease;
+.form-submit-btn {
+  align-self: flex-start;
+  margin-top: 8px;
 }
 
-.form-submit:hover {
-  background: #b0266a;
-}
-
-.form-submit:disabled {
+.form-submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.form-submit-arrow {
-  width: 16px;
-  height: 13px;
-  filter: brightness(0) invert(1);
+  transform: none;
 }
 
 /* ---------- Success Screen ---------- */
