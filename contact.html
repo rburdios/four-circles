@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Let's Talk — Four Circles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Public+Sans:wght@400;600&family=Inter:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/logo-icon.svg" alt="Four Circles" class="nav-logo-icon">
+      <img src="assets/logo-text.svg" alt="FOUR CIRCLES" class="nav-logo-text">
+    </a>
+    <div class="nav-links">
+      <a href="index.html#about" class="nav-link">About Us</a>
+      <a href="index.html#services" class="nav-link">What we do</a>
+      <a href="contact.html" class="nav-link nav-link--active">Let's Talk</a>
+    </div>
+  </nav>
+
+  <!-- Contact Section -->
+  <section class="contact">
+    <div class="contact-left">
+      <div class="section-tag section-tag--light">
+        <img src="assets/dot-white.svg" alt="" class="dot">
+        <span>Let's Talk — 05</span>
+      </div>
+      <h1 class="contact-heading">Let's Talk</h1>
+      <p class="contact-intro">We partner with ambitious teams to build clarity and deliver meaningful results</p>
+
+      <div class="contact-perks">
+        <div class="perk">
+          <span class="perk-dot perk-dot--pink"></span>
+          <span class="perk-text">A reply from a founder, not a form robot</span>
+        </div>
+        <div class="perk">
+          <span class="perk-dot perk-dot--orange"></span>
+          <span class="perk-text">One business day, typically</span>
+        </div>
+        <div class="perk">
+          <span class="perk-dot perk-dot--purple"></span>
+          <span class="perk-text">No pitch deck required</span>
+        </div>
+      </div>
+
+      <a href="mailto:hello@fourcircles.co" class="contact-email">
+        <span class="contact-email-label">Or email hello@fourcircles.co</span>
+        <img src="assets/arrow-icon.svg" alt="" class="contact-email-arrow">
+      </a>
+    </div>
+
+    <div class="contact-right">
+      <!-- Form -->
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="name">01 — Your Name</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="Jordan Reyes" required>
+          <span class="form-error" id="nameError">Please enter your name</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">02 — Email</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="jordan@company.com" required>
+          <span class="form-error" id="emailError">Please enter a valid email address</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="company">03 — Company</label>
+          <input class="form-input" type="text" id="company" name="company" placeholder="Acme Inc.">
+          <span class="form-error" id="companyError"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">04 — What do you need?</label>
+          <div class="form-chips" id="serviceChips">
+            <button type="button" class="chip" data-value="digital">Digital</button>
+            <button type="button" class="chip" data-value="brand">Brand</button>
+            <button type="button" class="chip" data-value="product">Product</button>
+            <button type="button" class="chip" data-value="systems">Systems</button>
+            <button type="button" class="chip" data-value="not-sure">Not sure yet</button>
+          </div>
+          <span class="form-error" id="serviceError">Please select at least one service</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="project">05 — A line about the project</label>
+          <textarea class="form-input form-textarea" id="project" name="project" placeholder="We're relaunching in the spring and need..." rows="1" required></textarea>
+          <span class="form-error" id="projectError">Please tell us a bit about your project</span>
+        </div>
+
+        <button type="submit" class="form-submit" id="submitBtn">
+          <span>Start a Project</span>
+          <img src="assets/arrow-icon.svg" alt="" class="form-submit-arrow">
+        </button>
+      </form>
+
+      <!-- Success Screen -->
+      <div class="contact-success" id="contactSuccess">
+        <div class="success-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="30" stroke="#cc2e7a" stroke-width="2.5"/>
+            <path d="M20 33l8 8 16-18" stroke="#cc2e7a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="success-heading">We got your message</h2>
+        <p class="success-text">A founder will get back to you within one business day. No robots, no runaround.</p>
+        <a href="index.html" class="btn-primary">
+          <span>Back to Home</span>
+          <img src="assets/arrow-icon.svg" alt="" class="btn-arrow">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script src="contact.js"></script>
+</body>
+</html>
