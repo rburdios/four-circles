@@ -3,15 +3,10 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  let w, h, dpr;
-  let mouse = { x: -9999, y: -9999, active: false };
+  let w, h, dpr, time = 0;
+  let mouse = { x: -9999, y: -9999, smoothX: -9999, smoothY: -9999, active: false };
 
-  const palette = [
-    { inner: '#f7a0b8', outer: '#e88bc0' },
-    { inner: '#d4a0f0', outer: '#b07de8' },
-    { inner: '#f5c0a0', outer: '#f09060' },
-    { inner: '#a8d4f0', outer: '#80b8e8' }
-  ];
+  const colors = ['#f0a0b0', '#c0a0e8', '#f0b898', '#a0c8e8'];
 
   const circles = [];
 
@@ -31,21 +26,30 @@
     resize();
     circles.length = 0;
 
-    const sizes = [
-      { r: Math.min(w, h) * 0.38 },
-      { r: Math.min(w, h) * 0.30 },
-      { r: Math.min(w, h) * 0.22 },
-      { r: Math.min(w, h) * 0.14 }
+    const dim = Math.min(w, h);
+    const configs = [
+      { rBase: dim * 0.38, home: { x: 0.65, y: 0.35 }, freq: 0.0008, amp: 0.06, phase: 0 },
+      { rBase: dim * 0.30, home: { x: 0.30, y: 0.55 }, freq: 0.0011, amp: 0.07, phase: 1.8 },
+      { rBase: dim * 0.22, home: { x: 0.75, y: 0.70 }, freq: 0.0014, amp: 0.08, phase: 3.6 },
+      { rBase: dim * 0.15, home: { x: 0.45, y: 0.25 }, freq: 0.0018, amp: 0.09, phase: 5.2 }
     ];
 
     for (let i = 0; i < 4; i++) {
+      const cfg = configs[i];
       circles.push({
-        x: Math.random() * w * 0.6 + w * 0.2,
-        y: Math.random() * h * 0.6 + h * 0.2,
-        r: sizes[i].r,
-        vx: (Math.random() - 0.5) * 1.2,
-        vy: (Math.random() - 0.5) * 1.2,
-        color: palette[i]
+        homeX: cfg.home.x * w,
+        homeY: cfg.home.y * h,
+        x: cfg.home.x * w,
+        y: cfg.home.y * h,
+        rBase: cfg.rBase,
+        r: cfg.rBase,
+        color: colors[i],
+        freq: cfg.freq,
+        amp: cfg.amp,
+        phase: cfg.phase,
+        breathPhase: i * 1.5,
+        offsetX: 0,
+        offsetY: 0
       });
     }
   }
@@ -53,111 +57,70 @@
   function drawBackground() {
     const grad = ctx.createLinearGradient(0, 0, w, h);
     grad.addColorStop(0, '#f0c8d8');
-    grad.addColorStop(0.3, '#e8b0d0');
-    grad.addColorStop(0.6, '#d0b8e8');
+    grad.addColorStop(0.35, '#e8b0d0');
+    grad.addColorStop(0.65, '#d0b8e8');
     grad.addColorStop(1, '#f0c0a0');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
   }
 
-  function drawCircle(c) {
-    const grad = ctx.createRadialGradient(
-      c.x - c.r * 0.2, c.y - c.r * 0.2, c.r * 0.1,
-      c.x, c.y, c.r
-    );
-    grad.addColorStop(0, c.color.inner);
-    grad.addColorStop(1, c.color.outer);
-
-    ctx.globalAlpha = 0.65;
-    ctx.beginPath();
-    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    ctx.globalAlpha = 0.5;
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.globalAlpha = 1;
-  }
-
-  function collide(a, b) {
-    const dx = b.x - a.x;
-    const dy = b.y - a.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    const minDist = a.r + b.r;
-
-    if (dist < minDist && dist > 0) {
-      const nx = dx / dist;
-      const ny = dy / dist;
-      const overlap = (minDist - dist) * 0.5;
-      a.x -= nx * overlap * 0.3;
-      a.y -= ny * overlap * 0.3;
-      b.x += nx * overlap * 0.3;
-      b.y += ny * overlap * 0.3;
-
-      const dvx = a.vx - b.vx;
-      const dvy = a.vy - b.vy;
-      const dot = dvx * nx + dvy * ny;
-
-      if (dot > 0) {
-        const massA = a.r * a.r;
-        const massB = b.r * b.r;
-        const total = massA + massB;
-        a.vx -= (2 * massB / total) * dot * nx * 0.4;
-        a.vy -= (2 * massB / total) * dot * ny * 0.4;
-        b.vx += (2 * massA / total) * dot * nx * 0.4;
-        b.vy += (2 * massA / total) * dot * ny * 0.4;
-      }
-    }
-  }
-
   function update() {
-    const mouseRadius = 150;
-    const mouseForce = 0.8;
+    time++;
+
+    if (mouse.active) {
+      mouse.smoothX += (mouse.x - mouse.smoothX) * 0.06;
+      mouse.smoothY += (mouse.y - mouse.smoothY) * 0.06;
+    } else {
+      mouse.smoothX += (-9999 - mouse.smoothX) * 0.03;
+      mouse.smoothY += (-9999 - mouse.smoothY) * 0.03;
+    }
 
     for (const c of circles) {
-      if (mouse.active) {
-        const dx = c.x - mouse.x;
-        const dy = c.y - mouse.y;
+      const driftX = Math.sin(time * c.freq + c.phase) * w * c.amp;
+      const driftY = Math.cos(time * c.freq * 0.7 + c.phase + 1) * h * c.amp;
+
+      let targetX = c.homeX + driftX;
+      let targetY = c.homeY + driftY;
+
+      if (mouse.smoothX > -1000) {
+        const dx = mouse.smoothX - c.homeX;
+        const dy = mouse.smoothY - c.homeY;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < mouseRadius + c.r && dist > 0) {
-          const force = (1 - dist / (mouseRadius + c.r)) * mouseForce;
-          c.vx += (dx / dist) * force;
-          c.vy += (dy / dist) * force;
-        }
+        const pull = Math.max(0, 1 - dist / (Math.max(w, h) * 0.8));
+        const strength = pull * pull * 0.35;
+        targetX += dx * strength;
+        targetY += dy * strength;
       }
 
-      c.x += c.vx;
-      c.y += c.vy;
+      c.x += (targetX - c.x) * 0.02;
+      c.y += (targetY - c.y) * 0.02;
 
-      c.vx *= 0.995;
-      c.vy *= 0.995;
-
-      const speed = Math.sqrt(c.vx * c.vx + c.vy * c.vy);
-      if (speed < 0.15) {
-        c.vx += (Math.random() - 0.5) * 0.08;
-        c.vy += (Math.random() - 0.5) * 0.08;
-      }
-
-      const pad = c.r * 0.3;
-      if (c.x - c.r < -pad) { c.x = c.r - pad; c.vx = Math.abs(c.vx) * 0.6; }
-      if (c.x + c.r > w + pad) { c.x = w - c.r + pad; c.vx = -Math.abs(c.vx) * 0.6; }
-      if (c.y - c.r < -pad) { c.y = c.r - pad; c.vy = Math.abs(c.vy) * 0.6; }
-      if (c.y + c.r > h + pad) { c.y = h - c.r + pad; c.vy = -Math.abs(c.vy) * 0.6; }
-    }
-
-    for (let i = 0; i < circles.length; i++) {
-      for (let j = i + 1; j < circles.length; j++) {
-        collide(circles[i], circles[j]);
-      }
+      const breath = 1 + Math.sin(time * 0.015 + c.breathPhase) * 0.03;
+      c.r = c.rBase * breath;
     }
   }
 
   function draw() {
     drawBackground();
-    const sorted = [...circles].sort((a, b) => a.r - b.r);
-    for (const c of sorted) drawCircle(c);
+
+    ctx.globalCompositeOperation = 'source-over';
+
+    const sorted = [...circles].sort((a, b) => b.r - a.r);
+    for (const c of sorted) {
+      ctx.globalAlpha = 0.55;
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+      ctx.fillStyle = c.color;
+      ctx.fill();
+
+      ctx.globalAlpha = 0.45;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
   }
 
   function loop() {
@@ -193,10 +156,14 @@
     const prevW = w;
     const prevH = h;
     resize();
+    const scale = Math.min(w, h) / Math.min(prevW, prevH);
     for (const c of circles) {
+      c.homeX = (c.homeX / prevW) * w;
+      c.homeY = (c.homeY / prevH) * h;
       c.x = (c.x / prevW) * w;
       c.y = (c.y / prevH) * h;
-      c.r = c.r * (Math.min(w, h) / Math.min(prevW, prevH));
+      c.rBase *= scale;
+      c.r = c.rBase;
     }
   });
 
