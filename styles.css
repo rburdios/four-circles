@@ -94,17 +94,30 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--color-black);
   color: #fff;
   padding: 12px 32px;
   border-radius: 100px;
   font-family: var(--font-button);
   font-size: 14px;
   font-weight: 500;
-  border: 1.5px solid var(--color-cyan-border);
+  border: none;
+  background: var(--color-black);
+  position: relative;
   box-shadow: 0 4px 5.5px rgba(251, 181, 134, 0.19), 5px 7px 13.4px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex-shrink: 0;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 100px;
+  padding: 1.5px;
+  background: conic-gradient(from 180deg, #F9B298, #E163E6, #BDA4FE, #96d3e0, #99CFF3, #FFB2D7, #F9B298);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
 }
 
 .btn-primary:hover {
@@ -423,7 +436,7 @@ button {
   align-items: center;
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
-  padding: 0 60px;
+  padding: 0 80px;
 }
 
 .industries-label {
@@ -583,7 +596,7 @@ button {
   align-items: flex-start;
   justify-content: space-between;
   padding: 48px 60px;
-  background: var(--color-text-dark);
+  background: #000;
 }
 
 .footer-brand {
@@ -634,7 +647,7 @@ button {
 
 .footer-bottom {
   padding: 24px 60px;
-  background: var(--color-text-dark);
+  background: #000;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
