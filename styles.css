@@ -421,8 +421,10 @@ button {
 .services-specialties {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding-top: 24px;
+  gap: 20px;
+  padding: 32px 0 12px;
+  border-top: 1px solid var(--color-border);
+  margin-top: 12px;
 }
 
 .specialties-label {
@@ -432,6 +434,7 @@ button {
   letter-spacing: 1.44px;
   text-transform: uppercase;
   color: var(--color-text);
+  flex-shrink: 0;
 }
 
 .specialty-tags {
@@ -443,9 +446,11 @@ button {
   font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-text);
-  padding: 6px 20px;
-  border: 1px solid var(--color-border);
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 10px 28px;
+  background: var(--color-black);
   border-radius: 100px;
 }
 
@@ -717,34 +722,34 @@ button {
 
 @media (prefers-reduced-motion: no-preference) {
   .accordion-item:hover .icon-layer--top {
-    animation: icon-layer-top 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: icon-layer-top 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   }
 
   .accordion-item:hover .icon-layer--mid {
-    animation: icon-layer-mid 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: icon-layer-mid 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   }
 
   .accordion-item:hover .icon-layer--bottom {
-    animation: icon-layer-bottom 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: icon-layer-bottom 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   }
 }
 
 @keyframes icon-layer-top {
-  0% { transform: translateY(0); stroke: #55534e; }
-  45% { transform: translateY(-11px); stroke: var(--color-orange); }
-  100% { transform: translateY(0); stroke: var(--color-orange); }
+  0%, 100% { transform: translateY(0); stroke: #55534e; }
+  25% { transform: translateY(-11px); stroke: var(--color-orange); }
+  50% { transform: translateY(0); stroke: var(--color-orange); }
 }
 
 @keyframes icon-layer-mid {
-  0% { stroke: #55534e; }
-  45% { stroke: var(--color-pink); }
-  100% { stroke: var(--color-pink); }
+  0%, 100% { stroke: #55534e; }
+  25% { stroke: var(--color-pink); }
+  50% { stroke: var(--color-pink); }
 }
 
 @keyframes icon-layer-bottom {
-  0% { transform: translateY(0); stroke: #55534e; }
-  45% { transform: translateY(11px); stroke: var(--color-blue); }
-  100% { transform: translateY(0); stroke: var(--color-blue); }
+  0%, 100% { transform: translateY(0); stroke: #55534e; }
+  25% { transform: translateY(11px); stroke: var(--color-blue); }
+  50% { transform: translateY(0); stroke: var(--color-blue); }
 }
 
 .icon-ripple-ring {
@@ -934,6 +939,11 @@ button {
     gap: 16px;
   }
 
+  .accordion-icon {
+    width: 56px;
+    height: 60px;
+  }
+
   .accordion-row {
     flex-wrap: wrap;
   }
@@ -945,6 +955,11 @@ button {
 
   .accordion-desc {
     width: 100%;
+    font-size: 14px;
+  }
+
+  .accordion-chevron {
+    margin-right: 8px;
   }
 
   .accordion-bullets {
@@ -956,6 +971,17 @@ button {
     gap: 16px;
   }
 
+  .services-specialties {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .specialty-tag {
+    padding: 8px 20px;
+    font-size: 12px;
+  }
+
   .how-we-think {
     padding: 48px 24px;
   }
@@ -963,6 +989,14 @@ button {
   .hwt-heading {
     font-size: 36px;
     line-height: 40px;
+  }
+
+  .hwt-card h3 {
+    font-size: 20px;
+  }
+
+  .hwt-card p {
+    font-size: 14px;
   }
 
   .lets-talk {
@@ -986,5 +1020,77 @@ button {
   .footer-values {
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .value {
+    font-size: 14px;
+  }
+
+  .footer-text {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-logo-text {
+    display: none;
+  }
+
+  .hero-left {
+    padding: 40px 20px;
+    gap: 32px;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .hero-right {
+    height: 280px;
+  }
+
+  .services {
+    padding: 32px 20px;
+  }
+
+  .services-heading {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .accordion-title {
+    font-size: 18px;
+  }
+
+  .accordion-desc {
+    font-size: 13px;
+  }
+
+  .how-we-think {
+    padding: 40px 20px;
+  }
+
+  .hwt-heading {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .lets-talk {
+    padding: 40px 20px;
+  }
+
+  .lets-talk-content h2 {
+    font-size: 32px;
+  }
+
+  .footer {
+    padding: 24px 20px;
   }
 }
