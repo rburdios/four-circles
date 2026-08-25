@@ -592,10 +592,6 @@ button {
   gap: 16px;
 }
 
-.footer-brand .nav-logo-icon {
-  filter: brightness(0) invert(1);
-}
-
 .footer-brand .nav-logo-text {
   filter: brightness(0) invert(1);
 }
