@@ -423,7 +423,7 @@ button {
   align-items: center;
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
-  margin-top: 12px;
+  padding: 0 60px;
 }
 
 .industries-label {
@@ -574,14 +574,46 @@ button {
    FOOTER
    ============================================= */
 .footer {
-  padding: 0 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 40px 60px;
 }
 
-.footer-top {
+.footer-values {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.value {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 1.28px;
+  text-transform: uppercase;
+}
+
+.value--pink { color: var(--color-pink); }
+.value--orange { color: var(--color-orange); }
+.value--purple { color: var(--color-purple); }
+.value--blue { color: var(--color-blue); }
+
+.footer-text {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text);
+  max-width: 480px;
+}
+
+.footer-simple {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 48px 0;
+  padding-top: 32px;
   border-top: 1px solid var(--color-border);
 }
 
@@ -628,7 +660,7 @@ button {
 }
 
 .footer-bottom {
-  padding: 24px 0;
+  padding-top: 24px;
   border-top: 1px solid var(--color-border);
 }
 
@@ -922,15 +954,19 @@ button {
     align-self: auto;
   }
 
+  .industries-bar {
+    padding: 0 40px;
+  }
+
   .lets-talk {
     padding: 48px 40px;
   }
 
   .footer {
-    padding: 0 40px;
+    padding: 40px;
   }
 
-  .footer-top {
+  .footer-simple {
     flex-direction: column;
     gap: 32px;
   }
@@ -1011,6 +1047,7 @@ button {
   .industries-bar {
     flex-direction: column;
     align-items: flex-start;
+    padding: 0 24px;
   }
 
   .industries-label {
@@ -1059,7 +1096,21 @@ button {
   }
 
   .footer {
-    padding: 0 24px;
+    padding: 32px 24px;
+  }
+
+  .footer-values {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .value {
+    font-size: 14px;
+  }
+
+  .footer-text {
+    width: 100%;
+    font-size: 14px;
   }
 
   .footer-links {
@@ -1128,6 +1179,6 @@ button {
   }
 
   .footer {
-    padding: 0 20px;
+    padding: 24px 20px;
   }
 }
