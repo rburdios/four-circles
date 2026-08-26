@@ -39,11 +39,17 @@
       <img src="assets/logo-icon.svg" alt="Four Circles" class="nav-logo-icon">
       <img src="assets/logo-text.svg" alt="FOUR CIRCLES" class="nav-logo-text">
     </a>
+    <button class="nav-hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
     <div class="nav-links">
       <a href="#about" class="nav-link">About Us</a>
       <a href="#services" class="nav-link">What we do</a>
       <a href="contact.html" class="nav-link">Let's Talk</a>
     </div>
+    <div class="nav-overlay"></div>
   </nav>
 
   <!-- Hero -->
@@ -84,15 +90,18 @@
       <div class="accordion-item">
         <button class="accordion-trigger" type="button">
           <div class="accordion-icon">
-            <svg class="service-icon" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-              <circle class="icon-digital-start" cx="22" cy="92" r="6"></circle>
-              <path class="icon-digital-path" d="M22,82 C22,58 22,48 50,48 L72,48 C82,48 90,40 90,30"></path>
-              <path class="icon-digital-path icon-digital-path--glow" d="M22,82 C22,58 22,48 50,48 L72,48 C82,48 90,40 90,30"></path>
-              <circle class="icon-digital-end" cx="90" cy="24" r="10"></circle>
-              <circle class="icon-digital-traveler" cx="0" cy="0" r="4">
-                <animateMotion class="icon-digital-motion" dur="1.6s" repeatCount="indefinite" begin="indefinite" fill="freeze"
-                  path="M22,92 L22,82 C22,58 22,48 50,48 L72,48 C82,48 90,40 90,30 L90,24"/>
+            <svg class="service-icon icon-maze" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+              <path class="icon-maze-arc" d="M15,95 A40,40 0 0,1 15,55" style="--arc:0"/>
+              <path class="icon-maze-arc" d="M15,50 A35,35 0 0,0 50,15" style="--arc:1"/>
+              <path class="icon-maze-arc" d="M55,15 A30,30 0 0,1 85,45" style="--arc:2"/>
+              <path class="icon-maze-arc" d="M85,50 A25,25 0 0,0 110,75" style="--arc:3"/>
+              <path class="icon-maze-arc" d="M110,80 A20,20 0 0,1 90,100" style="--arc:4"/>
+              <path class="icon-maze-trail" d="M15,95 L15,55 L15,50 A35,35 0 0,0 50,15 L55,15 A30,30 0 0,1 85,45 L85,50 A25,25 0 0,0 110,75 L110,80 A20,20 0 0,1 90,100 L105,100"/>
+              <circle class="icon-maze-dot" cx="0" cy="0" r="4">
+                <animateMotion class="icon-maze-motion" dur="2.4s" repeatCount="indefinite" begin="indefinite" fill="freeze" keyPoints="0;1" keyTimes="0;1" keySplines="0.42 0 0.58 1" calcMode="spline"
+                  path="M15,95 L15,55 L15,50 C15,30.67 30.67,15 50,15 L55,15 C71.57,15 85,28.43 85,45 L85,50 C85,63.81 96.19,75 110,75 L110,80 C110,91.05 101.05,100 90,100 L105,100"/>
               </circle>
+              <circle class="icon-maze-end" cx="105" cy="100" r="3"/>
             </svg>
           </div>
           <div class="accordion-row">
