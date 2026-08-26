@@ -6,26 +6,18 @@
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isMobile = window.innerWidth < 768;
 
-  function hexToRgba(hex, a) {
-    var r = parseInt(hex.slice(1, 3), 16);
-    var g = parseInt(hex.slice(3, 5), 16);
-    var b = parseInt(hex.slice(5, 7), 16);
-    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-  }
-
   function lerp(a, b, t) { return a + (b - a) * t; }
   function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
   var w, h, dpr;
   var frameCount = 0;
   var startTime = 0;
-  var introProgress = 0; // 0 → 1 over ~2.5s
+  var introProgress = 0;
   var introDone = false;
   var scrollOpacity = 1;
 
   var mouse = { x: -9999, y: -9999, sx: -9999, sy: -9999, active: false };
 
-  // Convergence point — where circles naturally overlap
   var focal = { x: 0.48, y: 0.50 };
   var beamIntensity = 0;
   var beamTargetIntensity = 0;
@@ -59,16 +51,15 @@
     var dim = Math.min(w, h);
 
     var configs = [
-      { rBase: dim * 0.38, home: { x: 0.55, y: 0.40 }, strokeAlpha: 0.55, lineWidth: 1.8, colors: ['#F9B298', '#E163E6'], disperseAngle: -0.8, disperseDist: 0.18 },
-      { rBase: dim * 0.24, home: { x: 0.30, y: 0.60 }, strokeAlpha: 0.45, lineWidth: 1.4, colors: ['#BDA4FE', '#99CFF3'], disperseAngle: 2.5, disperseDist: 0.22 },
-      { rBase: dim * 0.14, home: { x: 0.75, y: 0.65 }, strokeAlpha: 0.40, lineWidth: 1.2, colors: ['#FFB2D7', '#F9B298'], disperseAngle: 1.2, disperseDist: 0.20 },
-      { rBase: dim * 0.08, home: { x: 0.40, y: 0.25 }, strokeAlpha: 0.65, lineWidth: 1.8, colors: ['#99CFF3', '#BDA4FE'], disperseAngle: -2.0, disperseDist: 0.15 }
+      { rBase: dim * 0.38, home: { x: 0.55, y: 0.40 }, strokeAlpha: 0.55, lineWidth: 1.8, disperseAngle: -0.8, disperseDist: 0.18, cogDir: 1 },
+      { rBase: dim * 0.24, home: { x: 0.30, y: 0.60 }, strokeAlpha: 0.45, lineWidth: 1.4, disperseAngle: 2.5, disperseDist: 0.22, cogDir: -1 },
+      { rBase: dim * 0.14, home: { x: 0.75, y: 0.65 }, strokeAlpha: 0.40, lineWidth: 1.2, disperseAngle: 1.2, disperseDist: 0.20, cogDir: 1 },
+      { rBase: dim * 0.08, home: { x: 0.40, y: 0.25 }, strokeAlpha: 0.65, lineWidth: 1.8, disperseAngle: -2.0, disperseDist: 0.15, cogDir: -1 }
     ];
 
     for (var i = 0; i < 4; i++) {
       var cfg = configs[i];
       var maxDim = Math.max(w, h);
-      // Dispersed starting positions — offset from home
       var dx = Math.cos(cfg.disperseAngle) * cfg.disperseDist * maxDim;
       var dy = Math.sin(cfg.disperseAngle) * cfg.disperseDist * maxDim;
 
@@ -77,15 +68,16 @@
         homeY: cfg.home.y * h,
         x: prefersReduced ? cfg.home.x * w : cfg.home.x * w + dx,
         y: prefersReduced ? cfg.home.y * h : cfg.home.y * h + dy,
+        vx: 0, vy: 0,
         rBase: cfg.rBase,
         r: cfg.rBase,
         strokeAlpha: prefersReduced ? cfg.strokeAlpha : cfg.strokeAlpha * 0.15,
         baseAlpha: cfg.strokeAlpha,
         lineWidth: cfg.lineWidth,
-        colors: cfg.colors,
-        breathPhase: i * 2.4,
-        mouseOffsetX: 0,
-        mouseOffsetY: 0
+        cogDir: cfg.cogDir,
+        // Cog rotation angle — used to orbit around contact points
+        cogAngle: i * Math.PI * 0.5,
+        cogSpeed: 0
       });
     }
 
@@ -100,11 +92,10 @@
 
     for (var i = 0; i < blobs.length; i++) {
       var b = blobs[i];
-      // Very subtle breathing in idle — 1-3px movement over 10s cycles
       var breathScale = introDone ? 1 : introProgress;
       var t = frameCount;
-      var bx = (b.x + Math.sin(t * b.freq * 0.3 + b.phase) * 0.008 * breathScale) * w;
-      var by = (b.y + Math.cos(t * b.freq * 0.25 + b.phase + 1) * 0.006 * breathScale) * h;
+      var bx = (b.x + Math.sin(t * b.freq * 0.3 + b.phase) * 0.005 * breathScale) * w;
+      var by = (b.y + Math.cos(t * b.freq * 0.25 + b.phase + 1) * 0.004 * breathScale) * h;
       var br = b.r * Math.max(w, h);
       var grad = ctx.createRadialGradient(bx, by, 0, bx, by, br);
       var alpha = 0.85 * scrollOpacity;
@@ -121,21 +112,19 @@
     var elapsed = (timestamp - startTime) / 1000;
     frameCount++;
 
-    // --- Intro progression ---
+    // --- Intro ---
     if (!introDone) {
-      // Smooth ease-out over 2.5s
       introProgress = clamp(elapsed / 2.5, 0, 1);
-      var eased = 1 - Math.pow(1 - introProgress, 3); // cubic ease-out
+      var eased = 1 - Math.pow(1 - introProgress, 3);
 
       for (var i = 0; i < circles.length; i++) {
         var c = circles[i];
-        c.x = lerp(c.x, c.homeX, eased * 0.08 + 0.02);
-        c.y = lerp(c.y, c.homeY, eased * 0.08 + 0.02);
-        c.strokeAlpha = lerp(c.strokeAlpha, c.baseAlpha, eased * 0.06);
+        c.x = lerp(c.x, c.homeX, eased * 0.06 + 0.015);
+        c.y = lerp(c.y, c.homeY, eased * 0.06 + 0.015);
+        c.strokeAlpha = lerp(c.strokeAlpha, c.baseAlpha, eased * 0.05);
       }
 
-      // Beam builds as circles converge
-      beamTargetIntensity = eased * 0.6;
+      beamTargetIntensity = eased * 0.5;
 
       if (introProgress >= 1) {
         introDone = true;
@@ -147,94 +136,125 @@
       }
     }
 
-    // --- Mouse interaction (desktop only, post-intro) ---
+    // --- Mouse interaction (desktop, post-intro) ---
     if (!isMobile && introDone) {
-      // Smooth cursor trailing
       if (mouse.active) {
-        mouse.sx += (mouse.x - mouse.sx) * 0.06;
-        mouse.sy += (mouse.y - mouse.sy) * 0.06;
+        mouse.sx += (mouse.x - mouse.sx) * 0.035;
+        mouse.sy += (mouse.y - mouse.sy) * 0.035;
       } else {
-        mouse.sx += (-9999 - mouse.sx) * 0.02;
-        mouse.sy += (-9999 - mouse.sy) * 0.02;
+        mouse.sx += (-9999 - mouse.sx) * 0.015;
+        mouse.sy += (-9999 - mouse.sy) * 0.015;
       }
 
       var focalX = focal.x * w;
       var focalY = focal.y * h;
-      var influenceRadius = 300;
-      var maxDisplace = 10;
+      var influenceRadius = 320;
 
-      // Distance from cursor to focal point
       var cfx = mouse.sx - focalX;
       var cfy = mouse.sy - focalY;
       var cursorToFocal = Math.sqrt(cfx * cfx + cfy * cfy);
       var focalProximity = clamp(1 - cursorToFocal / (influenceRadius * 1.5), 0, 1);
 
-      // Beam responds to cursor near focal
-      beamTargetIntensity = 0.3 + focalProximity * 0.7;
+      beamTargetIntensity = 0.25 + focalProximity * 0.75;
 
+      // Apply mouse force to each circle
       for (var i = 0; i < circles.length; i++) {
         var c = circles[i];
-        var dx = mouse.sx - c.x;
-        var dy = mouse.sy - c.y;
+        var dx = mouse.sx - c.homeX;
+        var dy = mouse.sy - c.homeY;
         var dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < influenceRadius && mouse.sx > -1000) {
           var proximity = 1 - dist / influenceRadius;
-          var strength = proximity * proximity; // quadratic falloff
-
-          // Subtle refraction — bend away from cursor
+          var strength = proximity * proximity * proximity;
+          var pushDist = strength * 12;
           var angle = Math.atan2(dy, dx);
-          var displace = strength * maxDisplace;
 
-          // Near focal point: paths organize (pull toward home)
-          var organizeStrength = focalProximity * 0.3;
-          var targetOx = -Math.cos(angle) * displace * (1 - focalProximity * 0.6);
-          var targetOy = -Math.sin(angle) * displace * (1 - focalProximity * 0.6);
+          // Push circle away from cursor
+          c.vx += -Math.cos(angle) * pushDist * 0.008;
+          c.vy += -Math.sin(angle) * pushDist * 0.008;
 
-          c.mouseOffsetX += (targetOx - c.mouseOffsetX) * 0.04;
-          c.mouseOffsetY += (targetOy - c.mouseOffsetY) * 0.04;
-
-          // Near focal: brighten strokes, shift toward white
-          c.strokeAlpha += ((c.baseAlpha + focalProximity * 0.35) - c.strokeAlpha) * 0.06;
+          c.strokeAlpha += ((c.baseAlpha + focalProximity * 0.3) - c.strokeAlpha) * 0.03;
         } else {
-          c.mouseOffsetX *= 0.94;
-          c.mouseOffsetY *= 0.94;
-          c.strokeAlpha += (c.baseAlpha - c.strokeAlpha) * 0.03;
+          c.strokeAlpha += (c.baseAlpha - c.strokeAlpha) * 0.02;
         }
       }
     } else if (introDone) {
-      // Reset mouse offsets on mobile
-      for (var i = 0; i < circles.length; i++) {
-        circles[i].mouseOffsetX *= 0.95;
-        circles[i].mouseOffsetY *= 0.95;
-      }
-      beamTargetIntensity = 0.3;
+      beamTargetIntensity = 0.25;
     }
 
-    // --- Idle breathing (post-intro) ---
+    // --- Cog collision: circles push each other like interlocking gears ---
     if (introDone) {
       for (var i = 0; i < circles.length; i++) {
+        for (var j = i + 1; j < circles.length; j++) {
+          var a = circles[i];
+          var b = circles[j];
+          var dx = b.x - a.x;
+          var dy = b.y - a.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var minDist = a.r + b.r;
+
+          if (dist < minDist && dist > 0.1) {
+            var overlap = minDist - dist;
+            var nx = dx / dist;
+            var ny = dy / dist;
+
+            // Mass-proportional separation
+            var totalR = a.r + b.r;
+            var ratioA = b.r / totalR;
+            var ratioB = a.r / totalR;
+
+            a.vx -= nx * overlap * ratioA * 0.06;
+            a.vy -= ny * overlap * ratioA * 0.06;
+            b.vx += nx * overlap * ratioB * 0.06;
+            b.vy += ny * overlap * ratioB * 0.06;
+
+            // Cog effect: tangential velocity transfer
+            // When circles touch, they impart tangential force (like gears)
+            var tangentX = -ny;
+            var tangentY = nx;
+            var aSpeed = a.vx * nx + a.vy * ny;
+            var cogTransfer = aSpeed * 0.15;
+
+            b.vx += tangentX * cogTransfer * b.cogDir * 0.5;
+            b.vy += tangentY * cogTransfer * b.cogDir * 0.5;
+            a.vx += -tangentX * cogTransfer * a.cogDir * 0.3;
+            a.vy += -tangentY * cogTransfer * a.cogDir * 0.3;
+          }
+        }
+      }
+
+      // --- Apply velocities with heavy damping for smooth feel ---
+      var breathT = frameCount * 0.0008;
+      for (var i = 0; i < circles.length; i++) {
         var c = circles[i];
-        // 10s cycle, 1-3px movement
-        var breathT = frameCount * 0.001;
-        var bx = Math.sin(breathT * 0.6 + c.breathPhase) * 2
-               + Math.sin(breathT * 0.37 + c.breathPhase * 1.3) * 1;
-        var by = Math.cos(breathT * 0.5 + c.breathPhase + 1) * 1.5
-               + Math.cos(breathT * 0.42 + c.breathPhase * 0.8) * 0.8;
 
-        c.x = c.homeX + bx + c.mouseOffsetX;
-        c.y = c.homeY + by + c.mouseOffsetY;
+        // Very subtle idle drift (1-2px, 10-12s cycle)
+        var idleX = Math.sin(breathT * 0.5 + c.cogAngle) * 1.5;
+        var idleY = Math.cos(breathT * 0.4 + c.cogAngle + 0.7) * 1.2;
 
-        // Very subtle size breathing
-        var breathSize = 1 + Math.sin(breathT * 0.45 + c.breathPhase) * 0.008;
+        // Spring back to home
+        var homeForceX = (c.homeX - c.x) * 0.012;
+        var homeForceY = (c.homeY - c.y) * 0.012;
+        c.vx += homeForceX;
+        c.vy += homeForceY;
+
+        // Heavy damping for buttery-smooth movement
+        c.vx *= 0.92;
+        c.vy *= 0.92;
+
+        c.x += c.vx + idleX * 0.05;
+        c.y += c.vy + idleY * 0.05;
+
+        // Very subtle size pulse
+        var breathSize = 1 + Math.sin(breathT * 0.35 + c.cogAngle) * 0.005;
         c.r = c.rBase * breathSize;
       }
     }
 
     // --- Beam & light spill ---
-    beamIntensity += (beamTargetIntensity - beamIntensity) * 0.04;
-    // Light spill trails beam by ~100-150ms (4-5 frames at 60fps)
-    lightSpill += (beamIntensity - lightSpill) * 0.025;
+    beamIntensity += (beamTargetIntensity - beamIntensity) * 0.03;
+    lightSpill += (beamIntensity - lightSpill) * 0.02;
   }
 
   function draw() {
@@ -243,24 +263,7 @@
     var focalX = focal.x * w;
     var focalY = focal.y * h;
 
-    // --- Circle fills with color-burn ---
-    ctx.globalCompositeOperation = 'color-burn';
-    for (var i = 0; i < circles.length; i++) {
-      var c = circles[i];
-      var grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
-      var fillAlpha = c.strokeAlpha * 0.45 * scrollOpacity;
-      grad.addColorStop(0, hexToRgba(c.colors[0], fillAlpha));
-      grad.addColorStop(0.5, hexToRgba(c.colors[1], fillAlpha * 0.5));
-      grad.addColorStop(0.85, hexToRgba(c.colors[1], fillAlpha * 0.1));
-      grad.addColorStop(1, hexToRgba(c.colors[1], 0));
-      ctx.beginPath();
-      ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
-      ctx.fill();
-    }
-    ctx.globalCompositeOperation = 'source-over';
-
-    // --- Circle strokes ---
+    // --- Circle strokes only (no gradient fill) ---
     for (var i = 0; i < circles.length; i++) {
       var c = circles[i];
       ctx.beginPath();
@@ -270,13 +273,13 @@
       ctx.stroke();
     }
 
-    // --- Convergence point glow ---
+    // --- Convergence glow ---
     if (beamIntensity > 0.05) {
-      var glowR = 30 + beamIntensity * 20;
+      var glowR = 25 + beamIntensity * 18;
       var glowGrad = ctx.createRadialGradient(focalX, focalY, 0, focalX, focalY, glowR);
-      var glowAlpha = beamIntensity * 0.35 * scrollOpacity;
+      var glowAlpha = beamIntensity * 0.3 * scrollOpacity;
       glowGrad.addColorStop(0, 'rgba(255,255,255,' + glowAlpha + ')');
-      glowGrad.addColorStop(0.4, 'rgba(255,245,240,' + (glowAlpha * 0.4) + ')');
+      glowGrad.addColorStop(0.4, 'rgba(255,245,240,' + (glowAlpha * 0.35) + ')');
       glowGrad.addColorStop(1, 'rgba(255,240,235,0)');
       ctx.fillStyle = glowGrad;
       ctx.fillRect(focalX - glowR, focalY - glowR, glowR * 2, glowR * 2);
@@ -284,33 +287,31 @@
 
     // --- Beam ---
     if (beamIntensity > 0.1) {
-      var beamLen = 60 + beamIntensity * 80 + (1 - scrollOpacity) * 40;
-      var beamWidth = 1 + beamIntensity * 2.5;
-      var beamAlpha = beamIntensity * 0.5 * scrollOpacity;
+      var beamLen = 50 + beamIntensity * 70 + (1 - scrollOpacity) * 30;
+      var beamWidth = 0.8 + beamIntensity * 2;
+      var beamAlpha = beamIntensity * 0.4 * scrollOpacity;
 
       ctx.save();
       ctx.translate(focalX, focalY);
-      // Beam extends right (toward edge of canvas)
+
       var beamGrad = ctx.createLinearGradient(0, 0, beamLen, 0);
       beamGrad.addColorStop(0, 'rgba(255,255,255,' + beamAlpha + ')');
-      beamGrad.addColorStop(0.3, 'rgba(255,255,255,' + (beamAlpha * 0.7) + ')');
+      beamGrad.addColorStop(0.3, 'rgba(255,255,255,' + (beamAlpha * 0.6) + ')');
       beamGrad.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = beamGrad;
       ctx.fillRect(0, -beamWidth / 2, beamLen, beamWidth);
 
-      // Mirrored beam extends left
-      var beamGrad2 = ctx.createLinearGradient(0, 0, -beamLen * 0.6, 0);
-      beamGrad2.addColorStop(0, 'rgba(255,255,255,' + (beamAlpha * 0.6) + ')');
+      var beamGrad2 = ctx.createLinearGradient(0, 0, -beamLen * 0.5, 0);
+      beamGrad2.addColorStop(0, 'rgba(255,255,255,' + (beamAlpha * 0.5) + ')');
       beamGrad2.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = beamGrad2;
-      ctx.fillRect(-beamLen * 0.6, -beamWidth / 2, beamLen * 0.6, beamWidth);
+      ctx.fillRect(-beamLen * 0.5, -beamWidth / 2, beamLen * 0.5, beamWidth);
       ctx.restore();
 
-      // --- Light spill (trails beam) ---
       if (lightSpill > 0.15) {
-        var spillR = 50 + lightSpill * 40;
+        var spillR = 40 + lightSpill * 35;
         var spillGrad = ctx.createRadialGradient(focalX, focalY, 0, focalX, focalY, spillR);
-        var spillAlpha = (lightSpill - 0.15) * 0.12 * scrollOpacity;
+        var spillAlpha = (lightSpill - 0.15) * 0.1 * scrollOpacity;
         spillGrad.addColorStop(0, 'rgba(255,250,245,' + spillAlpha + ')');
         spillGrad.addColorStop(1, 'rgba(255,245,240,0)');
         ctx.fillStyle = spillGrad;
@@ -325,7 +326,6 @@
     requestAnimationFrame(loop);
   }
 
-  // --- Mouse events (desktop only) ---
   if (!isMobile) {
     document.addEventListener('mousemove', function(e) {
       var rect = canvas.getBoundingClientRect();
@@ -339,7 +339,6 @@
     });
   }
 
-  // --- Scroll fade ---
   if (!prefersReduced) {
     var heroSection = canvas.closest('.hero');
     if (heroSection && 'IntersectionObserver' in window) {
@@ -355,7 +354,6 @@
     }
   }
 
-  // --- Resize ---
   window.addEventListener('resize', function() {
     var prevW = w;
     var prevH = h;
