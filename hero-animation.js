@@ -3,6 +3,13 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
+  function hexToRgba(hex, a) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+  }
+
   let w, h, dpr, time = 0;
   let mouse = { x: -9999, y: -9999, smoothX: -9999, smoothY: -9999, active: false, vx: 0, vy: 0, prevX: -9999, prevY: -9999, speed: 0 };
 
@@ -26,10 +33,10 @@
 
     const dim = Math.min(w, h);
     const configs = [
-      { rBase: dim * 0.55, home: { x: 0.55, y: 0.40 }, freq: 0.0005, amp: 0.08, phase: 0, strokeAlpha: 0.30, lineWidth: 1.8 },
-      { rBase: dim * 0.32, home: { x: 0.30, y: 0.60 }, freq: 0.0008, amp: 0.10, phase: 2.1, strokeAlpha: 0.25, lineWidth: 1.4 },
-      { rBase: dim * 0.18, home: { x: 0.75, y: 0.65 }, freq: 0.0012, amp: 0.12, phase: 4.0, strokeAlpha: 0.22, lineWidth: 1.2 },
-      { rBase: dim * 0.09, home: { x: 0.40, y: 0.25 }, freq: 0.0018, amp: 0.15, phase: 5.8, strokeAlpha: 0.45, lineWidth: 1.8 }
+      { rBase: dim * 0.55, home: { x: 0.55, y: 0.40 }, freq: 0.0005, amp: 0.08, phase: 0, strokeAlpha: 0.30, lineWidth: 1.8, colors: ['#F9B298', '#E163E6'] },
+      { rBase: dim * 0.32, home: { x: 0.30, y: 0.60 }, freq: 0.0008, amp: 0.10, phase: 2.1, strokeAlpha: 0.25, lineWidth: 1.4, colors: ['#BDA4FE', '#99CFF3'] },
+      { rBase: dim * 0.18, home: { x: 0.75, y: 0.65 }, freq: 0.0012, amp: 0.12, phase: 4.0, strokeAlpha: 0.22, lineWidth: 1.2, colors: ['#FFB2D7', '#F9B298'] },
+      { rBase: dim * 0.09, home: { x: 0.40, y: 0.25 }, freq: 0.0018, amp: 0.15, phase: 5.8, strokeAlpha: 0.45, lineWidth: 1.8, colors: ['#99CFF3', '#BDA4FE'] }
     ];
 
     for (let i = 0; i < 4; i++) {
@@ -49,7 +56,8 @@
         baseAlpha: cfg.strokeAlpha,
         lineWidth: cfg.lineWidth,
         orbitAngle: i * Math.PI * 0.5,
-        sizeBoost: 0
+        sizeBoost: 0,
+        colors: cfg.colors
       });
     }
   }
@@ -146,9 +154,13 @@
     ctx.globalCompositeOperation = 'lighter';
 
     for (const c of circles) {
+      const grad = ctx.createLinearGradient(c.x - c.r, c.y - c.r, c.x + c.r, c.y + c.r);
+      const a = c.strokeAlpha;
+      grad.addColorStop(0, hexToRgba(c.colors[0], a));
+      grad.addColorStop(1, hexToRgba(c.colors[1], a));
       ctx.beginPath();
       ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255, 255, 255, ' + c.strokeAlpha + ')';
+      ctx.strokeStyle = grad;
       ctx.lineWidth = c.lineWidth;
       ctx.stroke();
     }
