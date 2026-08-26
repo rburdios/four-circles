@@ -1133,7 +1133,7 @@ button {
     font-size: 11px;
     padding: 16px 16px 16px 24px;
     margin-right: 0;
-    flex: 1;
+    flex: 0 0 40%;
     align-self: flex-start;
     border-right: none;
   }
@@ -1141,7 +1141,7 @@ button {
   .industries-list {
     flex-direction: column;
     gap: 4px;
-    flex: 1;
+    flex: 0 0 60%;
     padding: 16px 24px 16px 16px;
     border-left: 1px solid var(--color-border);
   }
