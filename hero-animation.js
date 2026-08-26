@@ -146,6 +146,30 @@
       const breath = 1 + Math.sin(time * 0.012 + c.breathPhase) * 0.04;
       c.r = c.rBase * breath * (1 + c.sizeBoost);
     }
+
+    for (let i = 0; i < circles.length; i++) {
+      for (let j = i + 1; j < circles.length; j++) {
+        const a = circles[i];
+        const b = circles[j];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const minDist = a.r + b.r;
+        if (dist < minDist && dist > 0) {
+          const overlap = (minDist - dist) * 0.5;
+          const nx = dx / dist;
+          const ny = dy / dist;
+          const pushStrength = 0.15;
+          const totalR = a.r + b.r;
+          const ratioA = b.r / totalR;
+          const ratioB = a.r / totalR;
+          a.x -= nx * overlap * pushStrength * ratioA;
+          a.y -= ny * overlap * pushStrength * ratioA;
+          b.x += nx * overlap * pushStrength * ratioB;
+          b.y += ny * overlap * pushStrength * ratioB;
+        }
+      }
+    }
   }
 
   function draw() {
@@ -155,9 +179,10 @@
 
     for (const c of circles) {
       const grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
-      const fillAlpha = c.strokeAlpha * 0.15;
-      grad.addColorStop(0, hexToRgba(c.colors[0], fillAlpha * 1.5));
-      grad.addColorStop(0.6, hexToRgba(c.colors[1], fillAlpha));
+      const fillAlpha = c.strokeAlpha * 0.5;
+      grad.addColorStop(0, hexToRgba(c.colors[0], fillAlpha));
+      grad.addColorStop(0.5, hexToRgba(c.colors[1], fillAlpha * 0.6));
+      grad.addColorStop(0.85, hexToRgba(c.colors[1], fillAlpha * 0.15));
       grad.addColorStop(1, hexToRgba(c.colors[1], 0));
       ctx.beginPath();
       ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
