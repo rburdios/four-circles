@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Public+Sans:wght@400;600&family=Inter:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
 
@@ -91,20 +91,19 @@
         <button class="accordion-trigger" type="button">
           <div class="accordion-icon">
             <svg class="service-icon icon-maze" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-              <!-- Concentric arcs with alternating openings -->
-              <path class="icon-maze-arc" d="M60,12 A48,48 0 0,1 108,60" style="--arc:0"/>
-              <path class="icon-maze-arc" d="M108,60 A48,48 0 0,1 60,108" style="--arc:1"/>
-              <path class="icon-maze-arc" d="M60,24 A36,36 0 0,0 24,60" style="--arc:2"/>
-              <path class="icon-maze-arc" d="M24,60 A36,36 0 0,0 60,96" style="--arc:3"/>
-              <path class="icon-maze-arc" d="M84,60 A24,24 0 0,1 60,84" style="--arc:4"/>
-              <path class="icon-maze-arc" d="M60,36 A24,24 0 0,1 84,60" style="--arc:5"/>
-              <path class="icon-maze-arc" d="M48,60 A12,12 0 0,0 60,48" style="--arc:6"/>
-              <!-- Dot navigates through the gaps -->
+              <path class="icon-maze-arc" d="M86,22 A46,46 0 1,1 34,22" style="--arc:0"/>
+              <path class="icon-maze-arc" d="M88,80 A34,34 0 1,1 88,40" style="--arc:1"/>
+              <path class="icon-maze-arc" d="M47,78 A22,22 0 1,1 73,78" style="--arc:2"/>
+              <path class="icon-maze-arc" d="M52,54 A10,10 0 1,1 52,66" style="--arc:3"/>
               <circle class="icon-maze-dot" cx="0" cy="0" r="3.5">
-                <animateMotion class="icon-maze-motion" dur="3s" repeatCount="indefinite" begin="indefinite" fill="freeze" keyPoints="0;1" keyTimes="0;1" keySplines="0.42 0 0.58 1" calcMode="spline"
-                  path="M60,12 A48,48 0 0,1 108,60 L96,60 A36,36 0 0,0 60,96 L60,84 A24,24 0 0,1 84,60 L72,60 A12,12 0 0,0 60,48 L60,60"/>
+                <animateMotion class="icon-maze-motion" dur="3s" repeatCount="indefinite" begin="indefinite" fill="freeze"
+                  keyPoints="0;0.08;0.12;0.40;0.44;0.72;0.76;0.96;1"
+                  keyTimes="0;0.08;0.14;0.38;0.44;0.68;0.74;0.94;1"
+                  keySplines="0.25 0.1 0.25 1;0.42 0 0.58 1;0.25 0.1 0.25 1;0.42 0 0.58 1;0.25 0.1 0.25 1;0.42 0 0.58 1;0.25 0.1 0.25 1;0.42 0 0.58 1"
+                  calcMode="spline"
+                  path="M60,12 L60,20 A40,40 0 0,1 100,60 L88,60 A28,28 0 0,1 60,88 L60,76 A16,16 0 0,1 44,60 L60,60"/>
               </circle>
-              <circle class="icon-maze-end" cx="60" cy="60" r="3"/>
+              <circle class="icon-maze-end" cx="60" cy="60" r="2.5"/>
             </svg>
           </div>
           <div class="accordion-row">
