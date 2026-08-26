@@ -709,25 +709,21 @@ button {
 }
 
 .icon-maze-end {
-  fill: none;
-  stroke: #55534e;
-  stroke-width: 2;
-  transition: stroke 0.4s ease, fill 0.4s ease;
+  display: none;
 }
 
 .accordion-item:hover .icon-maze-dot {
   opacity: 1;
 }
 
-.accordion-item:hover .icon-maze-end {
-  fill: #BDA4FE;
+.accordion-item:hover .icon-maze-arc {
   stroke: #BDA4FE;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .accordion-item:hover .icon-maze-arc {
-    animation: icon-maze-spin var(--maze-dur, 12s) linear infinite var(--maze-dir, normal),
-               icon-maze-color 2.4s ease-in-out infinite calc(var(--arc, 0) * 200ms);
+    stroke: #BDA4FE;
+    animation: icon-maze-spin var(--maze-dur, 12s) linear infinite var(--maze-dir, normal);
   }
   .accordion-item:hover .icon-maze-arc:nth-child(1) { --maze-dur: 18s; }
   .accordion-item:hover .icon-maze-arc:nth-child(2) { --maze-dur: 14s; --maze-dir: reverse; }
