@@ -63,10 +63,10 @@
   }
 
   var blobs = [
-    { x: 0.2, y: 0.3, r: 0.6, color: [240, 200, 216], freq: 0.0003, phase: 0 },
-    { x: 0.8, y: 0.2, r: 0.5, color: [208, 184, 232], freq: 0.0004, phase: 1.5 },
-    { x: 0.5, y: 0.7, r: 0.55, color: [232, 176, 208], freq: 0.00035, phase: 3.0 },
-    { x: 0.9, y: 0.8, r: 0.45, color: [240, 192, 160], freq: 0.00045, phase: 4.5 }
+    { x: 0.2, y: 0.3, r: 0.6, color: [240, 170, 200], freq: 0.0003, phase: 0 },
+    { x: 0.8, y: 0.2, r: 0.5, color: [192, 160, 232], freq: 0.0004, phase: 1.5 },
+    { x: 0.5, y: 0.7, r: 0.55, color: [232, 150, 200], freq: 0.00035, phase: 3.0 },
+    { x: 0.9, y: 0.8, r: 0.45, color: [240, 180, 140], freq: 0.00045, phase: 4.5 }
   ];
 
   function drawBackground() {
@@ -79,8 +79,8 @@
       var by = (b.y + Math.cos(time * b.freq * 0.8 + b.phase + 1) * 0.1 + Math.cos(time * b.freq * 1.4 + b.phase * 1.3) * 0.05) * h;
       var br = b.r * Math.max(w, h);
       var grad = ctx.createRadialGradient(bx, by, 0, bx, by, br);
-      grad.addColorStop(0, 'rgba(' + b.color[0] + ',' + b.color[1] + ',' + b.color[2] + ',0.6)');
-      grad.addColorStop(0.5, 'rgba(' + b.color[0] + ',' + b.color[1] + ',' + b.color[2] + ',0.25)');
+      grad.addColorStop(0, 'rgba(' + b.color[0] + ',' + b.color[1] + ',' + b.color[2] + ',0.85)');
+      grad.addColorStop(0.4, 'rgba(' + b.color[0] + ',' + b.color[1] + ',' + b.color[2] + ',0.45)');
       grad.addColorStop(1, 'rgba(' + b.color[0] + ',' + b.color[1] + ',' + b.color[2] + ',0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
