@@ -25,6 +25,14 @@
   color: #fff;
 }
 
+.contact-subtitle {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .contact-intro {
   font-family: var(--font-body);
   font-size: 16px;
@@ -268,10 +276,6 @@
 
   .contact-heading {
     font-size: 52px;
-  }
-
-  .contact-perks {
-    margin-top: 40px;
   }
 
   .contact-right {
