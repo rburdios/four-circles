@@ -162,15 +162,11 @@
     requestAnimationFrame(loop);
   }
 
-  canvas.addEventListener('mousemove', (e) => {
+  document.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
     mouse.active = true;
-  });
-
-  canvas.addEventListener('mouseleave', () => {
-    mouse.active = false;
   });
 
   canvas.addEventListener('touchmove', (e) => {
