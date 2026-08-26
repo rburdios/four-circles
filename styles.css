@@ -429,7 +429,7 @@ button {
 }
 
 .bullet-item .dot {
-  margin-top: 6px;
+  margin-top: 8px;
   flex-shrink: 0;
 }
 
@@ -894,6 +894,22 @@ button {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* =============================================
+   FOCUS STYLES
+   ============================================= */
+:focus-visible {
+  outline: 2px solid var(--color-purple);
+  outline-offset: 3px;
+}
+
+.btn-primary:focus-visible {
+  outline-offset: 4px;
+}
+
+.accordion-trigger:focus-visible {
+  outline-offset: -2px;
 }
 
 /* =============================================

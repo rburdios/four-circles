@@ -54,14 +54,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!valid) return;
 
+    const nameVal = name.value.trim();
+    const emailVal = email.value.trim();
+    const company = document.getElementById('company').value.trim();
+    const projectVal = project.value.trim();
+    const services = Array.from(selectedServices).join(', ');
+
+    const subject = encodeURIComponent('New Project Inquiry from ' + nameVal);
+    const body = encodeURIComponent(
+      'Name: ' + nameVal + '\n' +
+      'Email: ' + emailVal + '\n' +
+      'Company: ' + (company || 'N/A') + '\n' +
+      'Services: ' + services + '\n\n' +
+      'Project Details:\n' + projectVal
+    );
+
+    window.location.href = 'mailto:hello@byfourcircles.com?subject=' + subject + '&body=' + body;
+
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.querySelector('span').textContent = 'Sending...';
+    btn.querySelector('span').textContent = 'Opening email...';
 
     setTimeout(() => {
       form.style.display = 'none';
       success.classList.add('is-visible');
-    }, 800);
+    }, 1500);
   });
 
   function showError(inputId, errorId) {
