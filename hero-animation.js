@@ -4,7 +4,7 @@
   const ctx = canvas.getContext('2d');
 
   let w, h, dpr, time = 0;
-  let mouse = { x: -9999, y: -9999, smoothX: -9999, smoothY: -9999, active: false };
+  let mouse = { x: -9999, y: -9999, smoothX: -9999, smoothY: -9999, active: false, vx: 0, vy: 0, prevX: -9999, prevY: -9999, speed: 0 };
 
   const circles = [];
 
@@ -26,10 +26,10 @@
 
     const dim = Math.min(w, h);
     const configs = [
-      { rBase: dim * 0.42, home: { x: 0.58, y: 0.38 }, freq: 0.0006, amp: 0.10, phase: 0, strokeAlpha: 0.35, lineWidth: 1.8 },
-      { rBase: dim * 0.33, home: { x: 0.28, y: 0.62 }, freq: 0.0009, amp: 0.12, phase: 2.1, strokeAlpha: 0.25, lineWidth: 1.4 },
-      { rBase: dim * 0.24, home: { x: 0.78, y: 0.68 }, freq: 0.0013, amp: 0.14, phase: 4.0, strokeAlpha: 0.18, lineWidth: 1.1 },
-      { rBase: dim * 0.16, home: { x: 0.42, y: 0.22 }, freq: 0.0017, amp: 0.16, phase: 5.8, strokeAlpha: 0.40, lineWidth: 1.6 }
+      { rBase: dim * 0.55, home: { x: 0.55, y: 0.40 }, freq: 0.0005, amp: 0.08, phase: 0, strokeAlpha: 0.30, lineWidth: 1.8 },
+      { rBase: dim * 0.32, home: { x: 0.30, y: 0.60 }, freq: 0.0008, amp: 0.10, phase: 2.1, strokeAlpha: 0.25, lineWidth: 1.4 },
+      { rBase: dim * 0.18, home: { x: 0.75, y: 0.65 }, freq: 0.0012, amp: 0.12, phase: 4.0, strokeAlpha: 0.22, lineWidth: 1.2 },
+      { rBase: dim * 0.09, home: { x: 0.40, y: 0.25 }, freq: 0.0018, amp: 0.15, phase: 5.8, strokeAlpha: 0.45, lineWidth: 1.8 }
     ];
 
     for (let i = 0; i < 4; i++) {
@@ -46,7 +46,10 @@
         phase: cfg.phase,
         breathPhase: i * 1.5,
         strokeAlpha: cfg.strokeAlpha,
-        lineWidth: cfg.lineWidth
+        baseAlpha: cfg.strokeAlpha,
+        lineWidth: cfg.lineWidth,
+        orbitAngle: i * Math.PI * 0.5,
+        sizeBoost: 0
       });
     }
   }
@@ -65,11 +68,17 @@
     time++;
 
     if (mouse.active) {
-      mouse.smoothX += (mouse.x - mouse.smoothX) * 0.04;
-      mouse.smoothY += (mouse.y - mouse.smoothY) * 0.04;
+      mouse.smoothX += (mouse.x - mouse.smoothX) * 0.12;
+      mouse.smoothY += (mouse.y - mouse.smoothY) * 0.12;
+      mouse.vx = mouse.x - mouse.prevX;
+      mouse.vy = mouse.y - mouse.prevY;
+      mouse.speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
+      mouse.prevX = mouse.x;
+      mouse.prevY = mouse.y;
     } else {
-      mouse.smoothX += (-9999 - mouse.smoothX) * 0.02;
-      mouse.smoothY += (-9999 - mouse.smoothY) * 0.02;
+      mouse.smoothX += (-9999 - mouse.smoothX) * 0.03;
+      mouse.smoothY += (-9999 - mouse.smoothY) * 0.03;
+      mouse.speed *= 0.95;
     }
 
     for (let i = 0; i < circles.length; i++) {
@@ -84,21 +93,50 @@
       let targetY = c.homeY + driftY;
 
       if (mouse.smoothX > -1000) {
-        const dx = mouse.smoothX - targetX;
-        const dy = mouse.smoothY - targetY;
+        const dx = mouse.smoothX - c.x;
+        const dy = mouse.smoothY - c.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const range = Math.max(w, h) * 0.7;
-        const pull = Math.max(0, 1 - dist / range);
-        const strength = pull * pull * 0.4;
-        targetX += dx * strength;
-        targetY += dy * strength;
+        const maxDim = Math.max(w, h);
+        const range = maxDim * 0.6;
+
+        if (dist < range) {
+          const proximity = 1 - dist / range;
+          const speedFactor = Math.min(mouse.speed / 15, 1);
+
+          c.orbitAngle += 0.02 + proximity * 0.04;
+          const orbitRadius = dist * 0.3 * (1 - proximity * 0.5);
+          const orbitX = Math.cos(c.orbitAngle) * orbitRadius * proximity;
+          const orbitY = Math.sin(c.orbitAngle) * orbitRadius * proximity;
+
+          const pullStrength = proximity * proximity * 0.6;
+          targetX += dx * pullStrength + orbitX;
+          targetY += dy * pullStrength + orbitY;
+
+          if (speedFactor > 0.2) {
+            const pushAngle = Math.atan2(dy, dx);
+            const pushDist = speedFactor * proximity * maxDim * 0.08;
+            targetX += Math.cos(pushAngle + Math.PI * 0.5 * (i % 2 === 0 ? 1 : -1)) * pushDist;
+            targetY += Math.sin(pushAngle + Math.PI * 0.5 * (i % 2 === 0 ? 1 : -1)) * pushDist;
+          }
+
+          const targetBoost = proximity * 0.15 + speedFactor * proximity * 0.1;
+          c.sizeBoost += (targetBoost - c.sizeBoost) * 0.08;
+
+          c.strokeAlpha += ((c.baseAlpha + proximity * 0.25) - c.strokeAlpha) * 0.1;
+        } else {
+          c.sizeBoost *= 0.95;
+          c.strokeAlpha += (c.baseAlpha - c.strokeAlpha) * 0.05;
+        }
+      } else {
+        c.sizeBoost *= 0.95;
+        c.strokeAlpha += (c.baseAlpha - c.strokeAlpha) * 0.05;
       }
 
-      c.x += (targetX - c.x) * 0.015;
-      c.y += (targetY - c.y) * 0.015;
+      c.x += (targetX - c.x) * 0.04;
+      c.y += (targetY - c.y) * 0.04;
 
       const breath = 1 + Math.sin(time * 0.012 + c.breathPhase) * 0.04;
-      c.r = c.rBase * breath;
+      c.r = c.rBase * breath * (1 + c.sizeBoost);
     }
   }
 

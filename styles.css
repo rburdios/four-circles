@@ -896,7 +896,8 @@ button {
   }
 
   .hero-right {
-    height: 400px;
+    flex: none;
+    height: 320px;
   }
 
   .hero-headline {
@@ -981,6 +982,10 @@ button {
 
   .hero-left {
     padding: 60px 24px;
+  }
+
+  .hero-right {
+    height: 260px;
   }
 
   .hero-headline {
@@ -1125,7 +1130,7 @@ button {
   }
 
   .hero-right {
-    height: 280px;
+    height: 200px;
   }
 
   .services {
