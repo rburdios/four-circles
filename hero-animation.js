@@ -154,13 +154,16 @@
     ctx.globalCompositeOperation = 'lighter';
 
     for (const c of circles) {
-      const grad = ctx.createLinearGradient(c.x - c.r, c.y - c.r, c.x + c.r, c.y + c.r);
-      const a = c.strokeAlpha;
-      grad.addColorStop(0, hexToRgba(c.colors[0], a));
-      grad.addColorStop(1, hexToRgba(c.colors[1], a));
+      const grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
+      const fillAlpha = c.strokeAlpha * 0.15;
+      grad.addColorStop(0, hexToRgba(c.colors[0], fillAlpha * 1.5));
+      grad.addColorStop(0.6, hexToRgba(c.colors[1], fillAlpha));
+      grad.addColorStop(1, hexToRgba(c.colors[1], 0));
       ctx.beginPath();
       ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-      ctx.strokeStyle = grad;
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, ' + c.strokeAlpha + ')';
       ctx.lineWidth = c.lineWidth;
       ctx.stroke();
     }
