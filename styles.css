@@ -713,7 +713,7 @@ button {
   align-items: flex-start;
   justify-content: space-between;
   padding: 48px 60px;
-  background: #000;
+  background: #f2f0ed;
 }
 
 .footer-brand {
@@ -722,14 +722,10 @@ button {
   gap: 16px;
 }
 
-.footer-brand .nav-logo-text {
-  filter: brightness(0) invert(1);
-}
-
 .footer-tagline {
   font-family: var(--font-body);
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 0, 0, 0.5);
   max-width: 360px;
   line-height: 1.5;
 }
@@ -743,7 +739,7 @@ button {
 .footer-link {
   font-family: var(--font-body);
   font-size: 14px;
-  color: #fff;
+  color: var(--color-text);
   transition: opacity 0.3s ease;
 }
 
@@ -764,14 +760,14 @@ button {
 
 .footer-bottom {
   padding: 24px 60px;
-  background: #000;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #f2f0ed;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .footer-copy {
   font-family: var(--font-body);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 /* =============================================
