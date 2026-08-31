@@ -222,6 +222,10 @@ button {
   white-space: nowrap;
 }
 
+.mobile-break {
+  display: none;
+}
+
 .hero-bottom {
   display: flex;
   align-items: center;
@@ -1254,6 +1258,10 @@ button {
     line-height: 54px;
   }
 
+  .mobile-break {
+    display: block;
+  }
+
   .hero-sub {
     font-size: 16px;
     line-height: 24px;
@@ -1439,8 +1447,8 @@ button {
   }
 
   .hero-headline {
-    font-size: 48px;
-    line-height: 50px;
+    font-size: 44px;
+    line-height: 46px;
   }
 
   .hero-sub {
