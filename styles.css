@@ -445,6 +445,11 @@ button {
 .featured-work {
   padding: 60px 80px 48px;
   background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.featured-work > .section-tag {
+  margin-bottom: 12px;
 }
 
 .featured-work-header {
@@ -454,14 +459,8 @@ button {
   margin-bottom: 40px;
 }
 
-.featured-work-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 .featured-work-heading {
+  flex: 1;
   font-family: var(--font-heading);
   font-size: 48px;
   font-weight: 600;
