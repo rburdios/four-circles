@@ -48,16 +48,25 @@ function initScrollReveal() {
 
 function initNavScroll() {
   const nav = document.querySelector('.nav');
+  if (!nav) return;
+  let lastScrollY = 0;
   let ticking = false;
 
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        if (window.scrollY > 50) {
+        const currentY = window.scrollY;
+        if (currentY > lastScrollY && currentY > 80) {
+          nav.style.transform = 'translateY(-100%)';
+        } else {
+          nav.style.transform = 'translateY(0)';
+        }
+        if (currentY > 50) {
           nav.style.boxShadow = '0 1px 8px rgba(0,0,0,0.06)';
         } else {
           nav.style.boxShadow = 'none';
         }
+        lastScrollY = currentY;
         ticking = false;
       });
       ticking = true;

@@ -68,6 +68,7 @@
   flex: 1;
   background: #b2b2b2;
   min-width: 0;
+  aspect-ratio: 4 / 3;
   border-right: 1px solid var(--color-border);
 }
 
@@ -78,13 +79,13 @@
 .case-study-images img {
   flex: 1;
   min-width: 0;
-  height: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
 .case-study-services {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px;
   border-top: 1px solid var(--color-border);
   border-left: 1px solid var(--color-border);
