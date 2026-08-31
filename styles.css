@@ -602,6 +602,7 @@ button {
   gap: 32px;
   padding: 80px;
   align-items: flex-start;
+  position: relative;
 }
 
 .hwt-left {
@@ -1008,6 +1009,8 @@ button {
 }
 
 .featured-work::before,
+.how-we-think::before,
+.lets-talk::before,
 .footer-bottom::before {
   content: '';
   position: absolute;
@@ -1016,6 +1019,21 @@ button {
   transform: translateX(-50%);
   width: 100vw;
   border-top: 1px solid var(--color-border);
+  pointer-events: none;
+}
+
+.how-we-think::before {
+  border-top-color: var(--color-border);
+}
+
+.how-we-think::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  border-bottom: 1px solid var(--color-border);
   pointer-events: none;
 }
 
