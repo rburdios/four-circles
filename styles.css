@@ -502,7 +502,7 @@ button {
 
 .work-card:hover {
   box-shadow: 0 6px 12px rgba(251, 181, 134, 0.25), 5px 10px 20px rgba(0, 0, 0, 0.18);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
 .work-card-image {
@@ -1004,6 +1004,14 @@ button {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.reveal.visible.work-card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.visible.work-card:hover {
+  transform: translateY(-4px);
 }
 
 /* =============================================
