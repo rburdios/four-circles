@@ -61,7 +61,6 @@
 
 .case-study-images {
   display: flex;
-  gap: 10px;
   flex: 1;
 }
 
@@ -69,6 +68,11 @@
   flex: 1;
   background: #b2b2b2;
   min-width: 0;
+  border-right: 1px solid var(--color-border);
+}
+
+.case-study-images .placeholder:last-child {
+  border-right: none;
 }
 
 .case-study-images img {
@@ -83,6 +87,7 @@
   align-items: center;
   padding: 20px;
   border-top: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
   gap: 12px;
 }
 
