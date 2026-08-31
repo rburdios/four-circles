@@ -441,6 +441,114 @@ button {
   filter: brightness(0) invert(1);
 }
 
+/* ---------- Featured Work ---------- */
+.featured-work {
+  padding: 60px 80px 48px;
+  background: var(--color-bg);
+}
+
+.featured-work-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.featured-work-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featured-work-heading {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 52px;
+  color: var(--color-text);
+}
+
+.featured-work-desc {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text);
+}
+
+.featured-work-grid {
+  display: flex;
+  gap: 24px;
+}
+
+.work-card {
+  flex: 1;
+  background: #fffdfa;
+  border: 1px solid #cdcdcd;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.work-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.work-card-image {
+  padding: 8px 8px 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.work-card-image img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.work-card-info {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.work-card-category {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.68px;
+  text-transform: uppercase;
+  line-height: 20px;
+}
+
+.work-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.work-card-title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--color-text);
+}
+
+.work-card-arrow {
+  flex-shrink: 0;
+}
+
+.work-card-arrow svg {
+  display: block;
+}
+
 /* ---------- Specialties ---------- */
 .industries-bar {
   display: flex;
@@ -1229,6 +1337,34 @@ button {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+
+  .featured-work {
+    padding: 40px 24px 32px;
+  }
+
+  .featured-work-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .featured-work-heading {
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  .featured-work-desc {
+    font-size: 16px;
+  }
+
+  .featured-work-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .work-card-title {
+    font-size: 20px;
   }
 
   .footer-bottom {

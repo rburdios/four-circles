@@ -25,6 +25,7 @@ function initAccordion() {
 function initScrollReveal() {
   const revealElements = document.querySelectorAll(
     '.services-header, .accordion-item, ' +
+    '.featured-work-header, .work-card, ' +
     '.hwt-left, .hwt-card, .lets-talk-content, .footer'
   );
 
