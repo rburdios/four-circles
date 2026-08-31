@@ -149,7 +149,6 @@ button {
   align-items: center;
   justify-content: space-between;
   padding: 20px 60px;
-  border-bottom: 1px solid var(--color-border);
   position: sticky;
   transition: transform 0.3s ease;
   top: 0;
@@ -198,7 +197,7 @@ button {
    ============================================= */
 .hero {
   display: flex;
-  border-bottom: 1px solid var(--color-border);
+  position: relative;
 }
 
 .hero-left {
@@ -455,7 +454,7 @@ button {
 .featured-work {
   padding: 60px 80px 48px;
   background: var(--color-bg);
-  border-top: 1px solid var(--color-border);
+  position: relative;
 }
 
 .featured-work > .section-tag {
@@ -771,7 +770,7 @@ button {
 .footer-bottom {
   padding: 24px 60px;
   background: #f2f0ed;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .footer-copy {
@@ -991,6 +990,37 @@ button {
 
 .nav-overlay {
   display: none;
+}
+
+/* =============================================
+   FULL-WIDTH SEPARATOR LINES
+   ============================================= */
+.nav::after,
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  border-bottom: 1px solid var(--color-border);
+  pointer-events: none;
+}
+
+.featured-work::before,
+.footer-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  border-top: 1px solid var(--color-border);
+  pointer-events: none;
+}
+
+.footer-bottom::before {
+  border-top-color: rgba(0, 0, 0, 0.1);
 }
 
 /* =============================================
