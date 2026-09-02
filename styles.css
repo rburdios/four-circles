@@ -109,7 +109,7 @@ button {
   font-size: 14px;
   font-weight: 500;
   border: none;
-  background: var(--color-black);
+  background: linear-gradient(135deg, var(--color-black), var(--color-black));
   position: relative;
   box-shadow: 0 4px 5.5px rgba(251, 181, 134, 0.19), 5px 7px 13.4px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
