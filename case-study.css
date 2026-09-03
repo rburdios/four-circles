@@ -1,7 +1,7 @@
 /* ---------- Case Study Page ---------- */
 .case-study-section {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   position: relative;
 }
 
@@ -81,7 +81,6 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  align-self: stretch;
 }
 
 .case-study-images {
@@ -173,6 +172,67 @@
   color: #000;
 }
 
+/* ---------- Let's Talk (Dark) ---------- */
+.lets-talk--dark {
+  display: flex;
+  align-items: stretch;
+  background: #1b1b1b;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.lets-talk--dark .lets-talk-title {
+  width: 480px;
+  flex-shrink: 0;
+  padding: 80px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #cdcdcd;
+}
+
+.lets-talk--dark .lets-talk-title h2 {
+  font-family: var(--font-heading);
+  font-size: 60px;
+  font-weight: 700;
+  line-height: normal;
+  color: #fff;
+}
+
+.lets-talk--dark .lets-talk-body {
+  flex: 1;
+  min-width: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+}
+
+.lets-talk--dark .lets-talk-body p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  max-width: 366px;
+}
+
+.lets-talk--dark .btn-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 32px;
+  background: #000;
+  border: 1px solid #96d3e0;
+  border-radius: 20px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0px 4px 5.5px 0px rgba(251, 181, 134, 0.19),
+              5px 7px 13.4px 0px rgba(0, 0, 0, 0.15);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
   .case-study-details {
@@ -215,6 +275,25 @@
 
   .case-study-section--bordered .case-study-details {
     border-right: none;
+  }
+
+  .lets-talk--dark {
+    flex-direction: column;
+  }
+
+  .lets-talk--dark .lets-talk-title {
+    width: 100%;
+    padding: 40px 24px;
+    border-right: none;
+    border-bottom: 1px solid #cdcdcd;
+  }
+
+  .lets-talk--dark .lets-talk-title h2 {
+    font-size: 40px;
+  }
+
+  .lets-talk--dark .lets-talk-body {
+    padding: 40px 24px;
   }
 
   .case-study-images .placeholder {
