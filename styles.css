@@ -1376,11 +1376,11 @@ button {
   }
 
   .industries-bar {
-    margin: 0 16px 40px;
-    padding: 12px;
+    margin: 0 24px 40px;
+    padding: 10px 6px;
     align-items: center;
     flex-wrap: wrap;
-    gap: 4px 6px;
+    gap: 4px;
   }
 
   .industries-label {
