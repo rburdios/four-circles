@@ -1376,50 +1376,37 @@ button {
   }
 
   .industries-bar {
-    margin: 0 24px 40px;
-    padding: 0;
-    align-items: stretch;
+    margin: 0 16px 40px;
+    padding: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 6px;
   }
 
   .industries-label {
-    font-size: 11px;
-    padding: 12px;
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    padding: 0;
     margin-right: 0;
     flex: 0 0 auto;
-    width: 110px;
-    align-self: flex-start;
+    width: auto;
+    align-self: auto;
     border-right: none;
   }
 
   .industries-list {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    flex: 1;
-    padding: 12px 16px;
-    border-left: 1px solid var(--color-border);
+    display: contents;
   }
 
   .industries-list .dot {
-    display: none;
+    display: block;
+    width: 4px;
+    height: 4px;
   }
 
   .industry-item {
-    font-size: 11px;
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-  }
-
-  .industry-item::before {
-    content: '';
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #d64040;
-    flex-shrink: 0;
-    position: relative;
-    top: -1px;
+    font-size: 10px;
+    letter-spacing: 0.4px;
   }
 
   .how-we-think {
