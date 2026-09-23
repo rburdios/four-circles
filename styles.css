@@ -1341,6 +1341,7 @@ button {
 
   .industries-bar {
     margin: 0 24px 40px;
+    padding: 0;
     align-items: stretch;
   }
 
