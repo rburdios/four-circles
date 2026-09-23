@@ -166,7 +166,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 60px;
+  padding: 20px 80px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -187,17 +187,17 @@ button {
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 9px;
 }
 
 .nav-logo-icon {
-  width: 49px;
-  height: 49px;
+  width: 40px;
+  height: 40px;
 }
 
 .nav-logo-text {
-  width: 133px;
-  height: 11px;
+  width: 108px;
+  height: 9px;
 }
 
 .nav-links {
@@ -233,6 +233,16 @@ button {
 
 .nav-link:hover {
   color: var(--color-purple);
+}
+
+.nav-link--cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-link--cta svg {
+  flex-shrink: 0;
 }
 
 /* =============================================
