@@ -71,11 +71,42 @@ function initNavScroll() {
 }
 
 function initProjectSwitcher() {
-  const select = document.querySelector('.case-nav-select');
-  if (!select) return;
+  const trigger = document.querySelector('.case-nav-select');
+  const menu = document.querySelector('.case-nav-menu');
+  if (!trigger || !menu) return;
 
-  select.addEventListener('change', () => {
-    if (select.value) window.location.href = select.value;
+  function close() {
+    menu.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  function open() {
+    menu.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (menu.classList.contains('is-open')) {
+      close();
+    } else {
+      open();
+    }
+  });
+
+  menu.querySelectorAll('.case-nav-menu__item').forEach(item => {
+    item.addEventListener('click', () => {
+      const href = item.dataset.href;
+      if (href) window.location.href = href;
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && e.target !== trigger) close();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
   });
 }
 

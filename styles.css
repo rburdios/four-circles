@@ -576,10 +576,6 @@ button {
   display: block;
 }
 
-.work-card-image--contain img {
-  object-fit: contain;
-}
-
 .work-card-info {
   padding: 24px;
   display: flex;

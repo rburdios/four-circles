@@ -32,7 +32,7 @@
       <a href="index.html#work" class="nav-link">Work</a>
       <a href="index.html#about" class="nav-link">About Us</a>
       <a href="contact.html" class="nav-link nav-link--cta">Let's Talk
-        <svg width="9" height="7" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M5.75,10 L14.25,10 M10.75,5.75 L15,10 L10.75,14.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
       </svg></a>
     </div>
@@ -42,17 +42,21 @@
   <!-- Back + project switcher -->
   <div class="case-nav-bar">
     <a href="index.html#work" class="case-nav-back">
-      <svg width="9" height="7" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M14.25,10 L5.75,10 M9.25,5.75 L5,10 L9.25,14.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       All work
     </a>
     <div class="case-nav-switch">
-      <select id="project-switch" class="case-nav-select">
-        <option value="work-design-systems.html">Alexion Pharmaceuticals</option>
-        <option value="work-branding.html">Government Operational Case Management</option>
-        <option value="work-product-design.html" selected>Neighborhood Dealer Operations</option>
-      </select>
+      <button type="button" class="case-nav-select" aria-haspopup="listbox" aria-expanded="false">
+        <span>Neighborhood Dealer Operations</span>
+        <img src="assets/chevron-down.svg" alt="" class="case-nav-chevron">
+      </button>
+      <ul class="case-nav-menu" role="listbox">
+        <li role="option" aria-selected="false" class="case-nav-menu__item" data-href="work-design-systems.html">Alexion Pharmaceuticals</li>
+        <li role="option" aria-selected="false" class="case-nav-menu__item" data-href="work-branding.html">Government Operational Case Management</li>
+        <li role="option" aria-selected="true" class="case-nav-menu__item case-nav-menu__item--current" data-href="work-product-design.html">Neighborhood Dealer Operations</li>
+      </ul>
     </div>
   </div>
 

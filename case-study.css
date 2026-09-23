@@ -26,29 +26,85 @@
 }
 
 .case-nav-switch {
+  position: relative;
   display: flex;
   align-items: center;
 }
 
 .case-nav-select {
-  appearance: none;
-  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   font-family: var(--font-button);
   font-size: 14px;
   font-weight: 500;
   color: var(--color-text);
-  background: #fff url('assets/chevron-down.svg') no-repeat right 12px center;
-  background-size: 8px;
+  background: none;
   border: 0.5px solid var(--color-border);
-  padding: 8px 32px 8px 12px;
+  padding: 8px 12px;
   cursor: pointer;
   transition: border-color 0.25s ease;
 }
 
 .case-nav-select:hover,
-.case-nav-select:focus {
+.case-nav-select[aria-expanded="true"] {
   border-color: var(--color-purple);
   outline: none;
+}
+
+.case-nav-chevron {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.case-nav-select[aria-expanded="true"] .case-nav-chevron {
+  transform: rotate(180deg);
+}
+
+.case-nav-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 100%;
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  list-style: none;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.case-nav-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.case-nav-menu__item {
+  padding: 10px 12px;
+  font-family: var(--font-button);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.case-nav-menu__item:hover {
+  background: var(--color-bg);
+  color: var(--color-purple);
+}
+
+.case-nav-menu__item--current {
+  color: var(--color-purple);
+  font-weight: 600;
 }
 
 /* ---------- Case Study Page ---------- */
