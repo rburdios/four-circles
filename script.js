@@ -48,29 +48,34 @@ function initScrollReveal() {
 
 function initNavScroll() {
   const nav = document.querySelector('.nav');
-  if (!nav) return;
-  let lastScrollY = 0;
+  const progress = document.querySelector('.nav-progress');
+  if (!nav || !progress) return;
   let ticking = false;
+
+  const update = () => {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    progress.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    nav.style.boxShadow = window.scrollY > 50 ? '0 1px 8px rgba(0,0,0,0.06)' : 'none';
+    ticking = false;
+  };
 
   window.addEventListener('scroll', () => {
     if (!ticking) {
-      requestAnimationFrame(() => {
-        const currentY = window.scrollY;
-        if (currentY > lastScrollY && currentY > 80) {
-          nav.style.transform = 'translateY(-100%)';
-        } else {
-          nav.style.transform = 'translateY(0)';
-        }
-        if (currentY > 50) {
-          nav.style.boxShadow = '0 1px 8px rgba(0,0,0,0.06)';
-        } else {
-          nav.style.boxShadow = 'none';
-        }
-        lastScrollY = currentY;
-        ticking = false;
-      });
+      requestAnimationFrame(update);
       ticking = true;
     }
+  });
+
+  update();
+}
+
+function initProjectSwitcher() {
+  const select = document.querySelector('.case-nav-select');
+  if (!select) return;
+
+  select.addEventListener('change', () => {
+    if (select.value) window.location.href = select.value;
   });
 }
 
@@ -122,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAccordion();
   initScrollReveal();
   initNavScroll();
+  initProjectSwitcher();
   initMazeIconMotion();
   initHamburgerMenu();
 });

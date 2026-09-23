@@ -17,6 +17,7 @@
 
   <!-- Navigation -->
   <nav class="nav">
+    <div class="nav-progress" aria-hidden="true"></div>
     <a href="index.html" class="nav-brand">
       <img src="assets/logo-icon.svg" alt="Four Circles" class="nav-logo-icon">
       <img src="assets/logo-text.svg" alt="FOUR CIRCLES" class="nav-logo-text">
@@ -34,6 +35,24 @@
     </div>
     <div class="nav-overlay"></div>
   </nav>
+
+  <!-- Back + project switcher -->
+  <div class="case-nav-bar">
+    <a href="index.html#work" class="case-nav-back">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M14.25,10 L5.75,10 M9.25,5.75 L5,10 L9.25,14.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to Work
+    </a>
+    <div class="case-nav-switch">
+      <label for="project-switch" class="case-nav-switch-label">Switch project</label>
+      <select id="project-switch" class="case-nav-select">
+        <option value="work-design-systems.html">Alexion Pharmaceuticals</option>
+        <option value="work-branding.html">Government Operational Case Management</option>
+        <option value="work-product-design.html" selected>Neighborhood Dealer Operations</option>
+      </select>
+    </div>
+  </div>
 
   <!-- Section 1 -->
   <section class="case-study-section case-study-section--bordered">

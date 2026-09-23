@@ -256,10 +256,6 @@
   color: var(--color-text);
 }
 
-/* ---------- Nav active state ---------- */
-.nav-link--active {
-  opacity: 0.6;
-}
 
 /* =============================================
    RESPONSIVE

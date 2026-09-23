@@ -168,10 +168,20 @@ button {
   justify-content: space-between;
   padding: 20px 60px;
   position: sticky;
-  transition: transform 0.3s ease;
   top: 0;
   z-index: 100;
   background: var(--color-bg);
+}
+
+.nav-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0%;
+  background: var(--color-purple);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .nav-brand {
@@ -197,12 +207,28 @@ button {
 }
 
 .nav-link {
+  position: relative;
   font-family: var(--font-heading);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.42px;
   color: var(--color-text);
   transition: color 0.3s ease;
+}
+
+.nav-link--active {
+  font-weight: 600;
+  color: var(--color-purple);
+}
+
+.nav-link--active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: var(--color-purple);
 }
 
 .nav-link:hover {
