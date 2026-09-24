@@ -54,31 +54,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!valid) return;
 
-    const nameVal = name.value.trim();
-    const emailVal = email.value.trim();
-    const company = document.getElementById('company').value.trim();
-    const projectVal = project.value.trim();
-    const services = Array.from(selectedServices).join(', ');
-
-    const subject = encodeURIComponent('New Project Inquiry from ' + nameVal);
-    const body = encodeURIComponent(
-      'Name: ' + nameVal + '\n' +
-      'Email: ' + emailVal + '\n' +
-      'Company: ' + (company || 'N/A') + '\n' +
-      'Services: ' + services + '\n\n' +
-      'Project Details:\n' + projectVal
-    );
-
-    window.location.href = 'mailto:hello@byfourcircles.com?subject=' + subject + '&body=' + body;
+    document.getElementById('servicesInput').value = Array.from(selectedServices).join(', ');
 
     const btn = document.getElementById('submitBtn');
+    const btnLabel = btn.querySelector('span');
+    const submitError = document.getElementById('submitError');
+    submitError.classList.remove('is-visible');
     btn.disabled = true;
-    btn.querySelector('span').textContent = 'Opening email...';
+    btnLabel.textContent = 'Sending...';
 
-    setTimeout(() => {
-      form.style.display = 'none';
-      success.classList.add('is-visible');
-    }, 1500);
+    const body = new URLSearchParams(new FormData(form)).toString();
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Form submission failed');
+        form.style.display = 'none';
+        success.classList.add('is-visible');
+      })
+      .catch(() => {
+        submitError.classList.add('is-visible');
+        btn.disabled = false;
+        btnLabel.textContent = 'Start a project';
+      });
   });
 
   function showError(inputId, errorId) {

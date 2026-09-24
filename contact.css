@@ -173,6 +173,22 @@
   display: block;
 }
 
+.form-error--general {
+  margin-top: 12px;
+}
+
+.form-error--general.is-visible {
+  display: block;
+}
+
+.form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* ---------- Chips (multi-select) ---------- */
 .form-chips {
   display: flex;

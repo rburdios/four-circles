@@ -61,7 +61,13 @@
 
     <div class="contact-right">
       <!-- Form -->
-      <form class="contact-form" id="contactForm" novalidate>
+      <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="contact">
+        <p class="form-honeypot">
+          <label>Leave this field blank: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+        <input type="hidden" name="services" id="servicesInput">
+
         <div class="form-group">
           <label class="form-label" for="name">Your Name</label>
           <input class="form-input" type="text" id="name" name="name" placeholder="Jordan Reyes" required>
@@ -102,6 +108,7 @@
           <span>Start a project</span>
           <img src="assets/arrow-icon.svg" alt="" class="btn-arrow">
         </button>
+        <p class="form-error form-error--general" id="submitError">Something went wrong sending that — please try again, or email us directly.</p>
       </form>
 
       <!-- Success Screen -->
