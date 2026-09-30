@@ -30,6 +30,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -1249,6 +1250,10 @@ button {
 }
 
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+
   .nav {
     padding: 16px 24px;
   }
