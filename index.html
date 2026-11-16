@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/svg+xml" href="assets/logo-icon.svg">
+  <script>if(sessionStorage.getItem('fc-auth')!=='true')window.location.replace('password.html');</script>
   <title>Four Circles — A design agency that actually cares</title>
   <meta name="description" content="Four Circles is a design agency that actually cares. We deliver digital experiences, brand identity, product design, and creative systems for ambitious teams.">
   <meta name="keywords" content="design agency, branding, digital experience, UX design, product design, brand identity, design systems, creative agency">
@@ -38,7 +38,6 @@
 
   <!-- Navigation -->
   <nav class="nav">
-    <div class="nav-progress" aria-hidden="true"></div>
     <a href="index.html" class="nav-brand">
       <img src="assets/logo-icon.svg" alt="Four Circles" class="nav-logo-icon">
       <img src="assets/logo-text.svg" alt="FOUR CIRCLES" class="nav-logo-text">
@@ -52,10 +51,7 @@
       <a href="#services" class="nav-link">Our Services</a>
       <a href="#work" class="nav-link">Work</a>
       <a href="#about" class="nav-link">About Us</a>
-      <a href="contact.html" class="nav-link nav-link--cta">Let's Talk
-        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path d="M5.75,10 L14.25,10 M10.75,5.75 L15,10 L10.75,14.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg></a>
+      <a href="contact.html" class="nav-link">Let's Talk</a>
     </div>
     <div class="nav-overlay"></div>
   </nav>
@@ -251,10 +247,10 @@
     <div class="featured-work-grid">
       <a class="work-card" href="work-design-systems.html">
         <div class="work-card-image">
-          <img src="assets/work-card-digital-experiences.jpg" alt="Alexion Pharmaceuticals OneSource portal">
+          <img src="assets/project-design-systems.jpg" alt="Alexion Pharmaceuticals design system project">
         </div>
         <div class="work-card-info">
-          <span class="work-card-category" style="color: #cc2e7a">Digital Experiences</span>
+          <span class="work-card-category" style="color: #cc2e7a">Design Systems</span>
           <div class="work-card-title-row">
             <h3 class="work-card-title">Alexion Pharmaceuticals</h3>
             <span class="work-card-arrow">
@@ -268,12 +264,12 @@
       </a>
       <a class="work-card" href="work-branding.html">
         <div class="work-card-image">
-          <img src="assets/work-card-data-operations.jpg" alt="Data Operations Service dashboard">
+          <img src="assets/project-branding-new.jpg" alt="Alexion Pharmaceuticals branding project">
         </div>
         <div class="work-card-info">
-          <span class="work-card-category" style="color: #1173b4">Data Operations</span>
+          <span class="work-card-category" style="color: #1173b4">Branding</span>
           <div class="work-card-title-row">
-            <h3 class="work-card-title">Government Operational Case Management</h3>
+            <h3 class="work-card-title">Alexion Pharmaceuticals</h3>
             <span class="work-card-arrow">
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="16" cy="16" r="16" fill="#3f3f3f"/>
@@ -285,12 +281,12 @@
       </a>
       <a class="work-card" href="work-product-design.html">
         <div class="work-card-image">
-          <img src="assets/work-card-product-design.jpg" alt="Dealer Ops platform overview">
+          <img src="assets/project-product-design.png" alt="Alexion Pharmaceuticals product design project">
         </div>
         <div class="work-card-info">
           <span class="work-card-category" style="color: #9c36a9">Product Design</span>
           <div class="work-card-title-row">
-            <h3 class="work-card-title">Neighborhood Dealer Operations</h3>
+            <h3 class="work-card-title">Alexion Pharmaceuticals</h3>
             <span class="work-card-arrow">
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="16" cy="16" r="16" fill="#3f3f3f"/>
@@ -379,7 +375,7 @@
           </svg>
           <span>hello@byfourcircles.com</span>
         </a>
-        <a href="https://linkedin.com/company/fourcircles" target="_blank" rel="noopener noreferrer" class="footer-link footer-link--icon">
+        <a href="https://www.linkedin.com/company/four-circles-co" target="_blank" rel="noopener noreferrer" class="footer-link footer-link--icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
           </svg>
